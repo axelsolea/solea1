@@ -1,0 +1,15 @@
+#google.com
+youtube.com
+#discord.com
+#nextcloud.alexgghnetwork.de
+#zone1.solea.local
+#zone2.solea.local
+#resolver1.solea.local
+#resolver2.solea.local
+#vpn.solea.local
+#dhcp.solea.local
+#toip.solea.local
+#share.solea.local
+#gw.solea.local
+#zone1.solea.solea
+#zone2.solea.solea

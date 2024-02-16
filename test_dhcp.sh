@@ -11,3 +11,9 @@ fi
 
 dhclient -r >> dhcp_client.log
 dhclient -i ens160 >> dhcp_client.log
+
+if [ $? -eq 0 ]; then
+	echo "dhcp OK"
+else
+	echo "dhcp NOK"
+fi

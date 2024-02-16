@@ -1,6 +1,12 @@
-#!bash/bin
+#!/bin/sh
+# Author: Djetic Alexandre
+# Date: 16/02/2024
+# Modified: 16/03/2024
 
-# test à faire la machine A (aix) et machine B (val)
+ping -c 3 8.8.8.8 >> test_internet.log
 
-# test de connection Internet 
-ping 8.8.8.8
+if [ $? -eq 0 ]; then
+	echo "internet access OK"
+else
+	echo "internet access NOK"
+fi

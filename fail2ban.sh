@@ -12,4 +12,4 @@ do
 	echo "Tentative $i" 
 	sshpass -p motdepasseerrone ssh admin-solea@${ip}
 done
-
+echo "Script terminé"

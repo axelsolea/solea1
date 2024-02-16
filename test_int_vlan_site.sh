@@ -1,43 +1,50 @@
 #!/bin/bash
 #### TEST inter vlan IPv4/IPv6 ####
-# Gateway vlan18 serveur 
-echo " Test Vlan 18 "
+# Gateway vlan18 serveur
+echo " "
+echo "Test Vlan 18 "
 echo " "
 ping -c 3 172.18.0.254 
 ping -c 3 2001:470:C84C:100:FFFF:FFFF:FFFF:FF00%64 
 
 # Gateway vlan21 RND
-echo " Test Vlan 21 "
+echo " " 
+echo "Test Vlan 21 "
 echo " "
 ping -c 3 172.21.254.254 
 ping -c 3 2001:470:C84C:1400:FFFF:FFFF:FFFF:FF00%64 
 
 # Gateway vlan22 Direction 
-echo " Test Vlan 22 "
+echo " " 
+echo "Test Vlan 22 "
 echo " "
 ping -c 3 172.22.254.254 
 ping -c 3 2001:470:C84C:2400:FFFF:FFFF:FFFF:FF00%64 
 
 # Gateway vlan23 Employé
-echo " Test Vlan 23 "
+echo " "
+echo "Test Vlan 23 "
 echo " "
 ping -c 3 172.23.254.254
 ping -c 3 2001:470:C84C:3400:FFFF:FFFF:FFFF:FF00%64
 
 # Gateway vlan24 Responsable 
-echo " Test Vlan 24 "
+echo " " 
+echo "Test Vlan 24 "
 echo " "
 ping -c 3 172.24.254.254
 ping -c 3 2001:470:C84C:4400:FFFF:FFFF:FFFF:FF00%64
 
 # Gateway vlan30 wifi 
-echo " Test Vlan 30 "
+echo " " 
+echo "Test Vlan 30 "
 echo " "
 ping -c 3 172.30.254.254
 ping -c 3 2001:470:C84C:200:FFFF:FFFF:FFFF:FF00%64
 
 # Gateway vlan28 Téléphone
-echo " Test Vlan 28 "
+echo " " 
+echo "Test Vlan 28 "
 echo " "
 ping -c 3 172.28.254.254
 ping -c 3 2001:470:C84C:300:FFFF:FFFF:FFFF:FF00%64
@@ -45,14 +52,16 @@ ping -c 3 2001:470:C84C:300:FFFF:FFFF:FFFF:FF00%64
 
 ##### Test Inter site #####
 # Gateway vlan 26 PC val
-echo " Test Vlan 26 PC Valence "
+echo " "
+echo "Test Vlan 26 PC Valence "
 echo " "
 ping -c 3 172.26.255.254
 ping -c 3 2001:470:c84c:600::1/64
 traceroute 172.26.255.254
 
 # Gateway Vlan29 Téléphone Val 
-echo " Test Vlan 29 Tel Val "
+echo " " 
+echo "Test Vlan 29 Tel Val "
 echo " "
 ping -c 3 172.29.255.254
 ping -c 3 2001:470:c84c:900::1/64

@@ -1,4 +1,4 @@
-#!bash/bin
+#!/bin/bash
 #### TEST inter vlan IPv4/IPv6 ####
 # Gateway vlan18 serveur 
 ping 172.18.254.254

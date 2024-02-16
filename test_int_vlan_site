@@ -1,5 +1,5 @@
 
-#### TEST inter vlan
+#### TEST inter vlan ####
 # Gateway vlan18 serveur 
 traceroute 172.18.254.254
 
@@ -22,7 +22,7 @@ traceroute 172.30.254.254
 traceroute 172.28.254.254
 
 
-##### Test Inter site 
+##### Test Inter site #####
 # Gateway vlan 26 PC val
 traceroute 172.26.255.254
 

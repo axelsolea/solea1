@@ -19,6 +19,11 @@ def test_name(name: str, server: str, log: Logger) -> None:
     ip_addr_str: str = ", ".join(re.findall(pattern_a_record, output))
     log.writeFile("NOTICE", f"found for {name} : {ip_addr_str}")
 
+    #check A record that is not empty
+    if not re.search(pattern_a_record, output):
+        log.writeFile("ERROR", f"No A record found for {name}")
+        return False
+
     for ip in re.findall(pattern_a_record, output):
         result = subprocess.run(["nslookup", "-q=PTR", ip, server], capture_output=True, text=True)
         output: str = result.stdout
@@ -53,7 +58,7 @@ if __name__ == "__main__":
 
     #send query
     for name in data:
-        if name and "#" not in name:
+        if name and not name.startswith("#"):
             if test_name(name, dns_server, log):
                 log.writeFile("INFO", f"{name} OK")
             else:

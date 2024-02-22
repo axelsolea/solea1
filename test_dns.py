@@ -21,7 +21,7 @@ def test_name(name: str, server: str, log: Logger) -> None:
 
     #check A record that is not empty
     if not re.search(pattern_a_record, output):
-        log.writeFile("ERROR", f"No A record found for {name}")
+        log.writeFile("ERROR", f"no record found for {name}")
         return False
 
     for ip in re.findall(pattern_a_record, output):
@@ -40,6 +40,8 @@ def test_name(name: str, server: str, log: Logger) -> None:
 if __name__ == "__main__":
 
     current_dir: str = os.getcwd()
+    nb_name: int = 0
+    nb_success_request: int = 0
 
     with open(f"{current_dir}/list_name.txt", "r") as file:
         data: str = file.read().split("\n")
@@ -55,12 +57,20 @@ if __name__ == "__main__":
     for name in data:
         if name and "#" not in name: # '#' est un début commentaire
             log.writeFile("INFO", f"adding to list {name}")
+            nb_name += 1
 
     #send query
     for name in data:
         if name and not name.startswith("#"):
             if test_name(name, dns_server, log):
                 log.writeFile("INFO", f"{name} OK")
+                nb_success_request += 1
             else:
                 log.writeFile("INFO", f"{name} NOK")
+
+    #check the number of name is the same as the number of succes request 
+    if nb_name == nb_success_request:
+        print("0")
+    else:
+        print("1")
 

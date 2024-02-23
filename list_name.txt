@@ -1,7 +1,6 @@
 mrs09s16-in-f14.1e100.net
 zone1.solea.local
 resolver1.solea.local
-vpn.solea.local
 dhcp.solea.local
 toip.solea.local
 share.solea.local

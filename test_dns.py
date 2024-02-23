@@ -178,7 +178,7 @@ def main() -> None:
     with open(f"{current_dir}/list_name.txt", "r") as file:
         data: str = file.read().split("\n")
 
-    log: Logger = init_log_file("dns_test.log")
+    log: Logger = init_log_file("test_dns.log")
     dns_server: str = sys.argv[1]
 
     for name in data:

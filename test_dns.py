@@ -30,7 +30,7 @@ def test_name(name: str, server: str, log: Logger) -> None:
         list_name: list = re.findall(pattern_ptr_record, output)
         ptr_name_str: str = ", ".join(re.findall(pattern_ptr_record, output))
         log.writeFile("NOTICE", f"Resolving inverse query {ip}")
-        log.writeFile("NOTICE", f"PTR[{ptr_name_str}]")
+        log.writeFile("NOTICE", f"PTR[{ptr_name_str[0:len(ptr_name_str) - 1]}]")
 
         for ptr_name in list_name:
             if ptr_name != name + ".":

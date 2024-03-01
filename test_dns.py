@@ -18,6 +18,14 @@ def init_log_file(file: str) -> Logger:
     log.emptyFile()
     return log
 
+def help() -> None:
+    """
+    Print help 
+    """
+    print(f"Usage:")
+    print(f"- python3 ./test_dns.py #use 127.0.0.53 as dns servrer")
+    print(f"- python3 ./test_dns.py 1.1.1.1 #use 1.1.1.1 as dns server")
+
 def get_a_record_name(name: str, server: str) -> list:
     """
     Get the A record name from a DNS server.
@@ -171,23 +179,32 @@ def test_name(name: str, server: str, log: Logger) -> bool:
     return test_ipv4_name(name, server, log) # and test_ipv6_name(name, server, log)
 
 def main() -> None:
-    current_dir: str = os.getcwd()
-    nb_name: int = 0
-    nb_success_request: int = 0
+    current_dir: str = os.getcwd() #current dir of terminal
+    nb_name: int = 0 # count the number of name
+    nb_success_request: int = 0 # count the number of successfull request
 
+    # get all name in list_name.txt
     with open(f"{current_dir}/list_name.txt", "r") as file:
         data: str = file.read().split("\n")
 
+    # init log file
     log: Logger = init_log_file("test_dns.log")
-    dns_server: str = sys.argv[1]
 
+    # use 127.0.0.53 is case of no dns server is give
+    try:
+        dns_server: str = sys.argv[1]
+    except IndexError as e:
+        dns_server: str = "127.0.0.53"
+    
+    # add info to log file about name to test
     for name in data:
-        if name and "#" not in name:
+        if name and not name.startswith("#") and name != "":
             log.writeFile("INFO", f"adding to testing list {name}")
             nb_name += 1
-    
+
+    # test each name
     for name in data:
-        if name and not name.startswith("#"):
+        if name and not name.startswith("#") and name != "" :
             log.writeFile("INFO", f"Resolving {name}")
             if test_name(name, dns_server, log):
                 log.writeFile("INFO", f"{name} => OK\n\n")
@@ -195,6 +212,7 @@ def main() -> None:
             else:
                 log.writeFile("INFO", f"{name} => NOK\n\n")
 
+    # print 0 if all is OK, I should use sys.exit(0) but nevermind here
     if nb_name == nb_success_request:
         print("0")
     else:

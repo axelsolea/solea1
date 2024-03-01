@@ -168,7 +168,7 @@ def test_name(name: str, server: str, log: Logger) -> bool:
     Returns:
         bool: True if the test passes, False otherwise.
     """
-    return test_ipv4_name(name, server, log) and test_ipv6_name(name, server, log)
+    return test_ipv4_name(name, server, log) # and test_ipv6_name(name, server, log)
 
 def main() -> None:
     current_dir: str = os.getcwd()

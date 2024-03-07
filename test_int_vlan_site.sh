@@ -42,23 +42,9 @@ while (( $i < ${#tab[*]} )); do
 if [ ${tabR[$i]} -eq 0 ];
 then echo " ${tab[$i]} répond correctement au ping. "
 else echo " ${tab[$i]} ne répond pas."
+    traceroute ${tab[$i]}
 fi
 i=$((i+1));
 done
 
-##### Test Inter site #####
-# Gateway vlan 26 PC val
-echo " "
-echo "Test Vlan 26 PC Valence "
-echo " "
-ping -c 3 172.26.255.254
-ping -c 3 2001:470:c84c:600::1/64
-traceroute 172.26.255.254
 
-# Gateway Vlan29 Téléphone Val 
-echo " " 
-echo "Test Vlan 29 Tel Val "
-echo " "
-ping -c 3 172.29.255.254
-ping -c 3 2001:470:c84c:900::1/64
-traceroute 172.29.255.254

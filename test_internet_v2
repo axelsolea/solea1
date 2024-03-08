@@ -54,13 +54,13 @@ if [[ $? == 0 ]];then
 echo "OK ✓"
 fi
 
-echo "Tentative de ping 172.29.254.254 (GW Vlan 29)..."
+echo "Tentative de ping 172.29.254.254 (GW Vlan 29 via tunnel GRE)..."
 ping -c 1 -q 172.21.254.254 | grep "ping statistics" -A 1 >> test_internet_v2.log
 if [[ $? == 0 ]];then
 echo "OK ✓"
 fi
 
-echo "Tentative de ping 172.30.254.254 (GW Vlan 30)..."
+echo "Tentative de ping 172.30.254.254 (GW Vlan 30 via tunnel GRE)..."
 ping -c 1 -q 172.21.254.254 | grep "ping statistics" -A 1 >> test_internet_v2.log
 if [[ $? == 0 ]];then
 echo "OK ✓"

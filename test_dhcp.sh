@@ -16,16 +16,11 @@ TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
 echo "Adresse IP actuelle: $TMP_IP"
 
 # Changing to a temporary IP
-ip a del "$TMP_IP" dev "$INT"
-ip a add 199.199.199.199/32 dev "$INT"
-TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
-echo "Nouvelle IP statique actuelle avant DHCP: $TMP_IP"
-
-# Stop any existing udhcpc
-killall -q udhcpc
+ip a del "$TMP_IP" dev "$INT" > /dev/null
+dhclient -i "$INT" > /dev/null
 
 # Running DHCP client (udhcpc)
-if udhcpc -i "$INT" -s /usr/share/udhcpc/default.script -b -q; then
+if [ $? -eq 0 ]; then
     echo "obtention d'une IP à l'aide du serveur DHCP : OK"
 else
     echo "obtention d'une IP à l'aide du serveur DHCP : NOK"

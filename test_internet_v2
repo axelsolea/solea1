@@ -72,4 +72,5 @@ echo "Afficher les logs? (y/n)"
 read ans
 if [ "$ans" = "y" ];then 
 cat test_internet_v2.log
+fi
  

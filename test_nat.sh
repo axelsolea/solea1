@@ -2,7 +2,7 @@
 # Author: Djetic Alexandre
 # Date: 07/02/2024
 # Modified: 07/02/2024
-# Description: this script test every nat rule
+# Description: this script tests every NAT rule
 
 #debug
 set -u
@@ -12,7 +12,7 @@ SERVER="192.168.141.2"
 LIST_FILE_NAT="list_nat.txt"
 FILE_LOG="test_nat.log"
 
-# this function test 1 ssh nat rule
+# this function tests 1 SSH NAT rule
 function nat_1_ssh {
     # $1 : take 1 line of $LIST_FILE_NAT
     USER=$(echo "$1" | cut -d ':' -f1)

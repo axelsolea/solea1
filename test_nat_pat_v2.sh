@@ -15,4 +15,4 @@ echo "Accès SSH via l'ip publique sur le port 22200"
 sshpass -p Solea05dns ssh admin-solea@192.168.141.2 -p 22200 "hostname"
 
 echo "Accès SSH via l'ip publique sur le port 22252"  
-sshpass -p   ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"

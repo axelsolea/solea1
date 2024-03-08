@@ -1,74 +1,68 @@
 #!/bin/bash
 # Author: CHOLLET Emeline
-# Date: 08/03/2024
-# Modified: $DATE
-# Modified: 29/02/2024
+# Date: 16/02/2024
+# Modified: 08/03/2024
 # Description: Test inter vlan inter site 
+# piste d'amelioration : mettre le nom du vlan dans une variable et afficher la variable 
+#2 bloc : intern vlan, inter site -> site valence faire traceroute 
 
+set -u
 
-#### TEST inter vlan IPv4/IPv6 ####
-# Gateway vlan18 serveur
-echo " "
-echo "Test Vlan 18 "
-echo " "
-ping -c 1 172.18.0.254 
-ping -c 1 2001:470:C84C:100:FFFF:FFFF:FFFF:FF00%64 
+# cette fonction log un chemin prit par un paquet
+function log_chemin {
+  # $1: chemin de router
+  # $2: ip de gw
+  # $3: fichier de log
 
-# Gateway vlan21 RND
-echo " " 
-echo "Test Vlan 21 "
-echo " "
-ping -c 1 172.21.254.254 
-ping -c 1 2001:470:C84C:1400:FFFF:FFFF:FFFF:FF00%64 
+  if [ ! -z "$1" ]; then
+    echo "chemin utilisée pour ${1}" >> "$3"
+    echo "${2} OK, le ping passe" >> "$3"
+  else
+    echo "aucun chemin trouvée pour ${2}" >> "$3"
+  fi
+}
 
-# Gateway vlan22 Direction 
-echo " " 
-echo "Test Vlan 22 "
-echo " "
-ping -c 1 172.22.254.254 
-ping -c 1 2001:470:C84C:2400:FFFF:FFFF:FFFF:FF00%64 
+#env var
+LIST_IP="list_ip.txt"
+FILE_LOG="test_init_vlan_site.log"
+CPT=0
+CPT_FINALE=$(cat "$LIST_IP" | wc -l) #compte nombre de ligne
 
-# Gateway vlan23 Employé
-echo " "
-echo "Test Vlan 23 "
-echo " "
-ping -c 1 172.23.254.254
-ping -c 1 2001:470:C84C:3400:FFFF:FFFF:FFFF:FF00%64
+#### TEST vlan aix IPv4/IPv6####
+echo "---------------- debut vlan solea ----------------" > "$FILE_LOG"
 
-# Gateway vlan24 Responsable 
-echo " " 
-echo "Test Vlan 24 "
-echo " "
-ping -c 1 172.24.254.254
-ping -c 1 2001:470:C84C:4400:FFFF:FFFF:FFFF:FF00%64
+for ip in $(cat "$LIST_IP")
+do
+  ping -c 1 $ip -q
+  
+  if [ $? -eq 0 ]; then
+    CPT=$((CPT+1));
+    echo "=> ${ip} OK, le ping réussit avec succès" >> "$FILE_LOG"
+  else
+    echo "=> ${ip} NOK, le ping vient d'échouer" >> "$FILE_LOG"
+  fi
+done
 
-# Gateway vlan30 wifi 
-echo " " 
-echo "Test Vlan 30 "
-echo " "
-ping -c 1 172.30.254.254
-ping -c 1 2001:470:C84C:200:FFFF:FFFF:FFFF:FF00%64
+echo "---------------- fin test vlan solea ----------------" >> "$FILE_LOG"
 
-# Gateway vlan28 Téléphone
-echo " " 
-echo "Test Vlan 28 "
-echo " "
-ping -c 1 172.28.254.254
-ping -c 1 2001:470:C84C:300:FFFF:FFFF:FFFF:FF00%64
+#### TEST traceroute inter-site ####
+echo "---------------- debut traceroute solea ----------------" >> "$FILE_LOG"
+GW_IP_VALENCE_PC="172.26.255.254"
+GW_IP_VALENCE_TEL="172.29.255.254"
 
-##### Test Inter site #####
-# Gateway vlan 26 PC val
-echo " "
-echo "Test Vlan 26 PC Valence "
-echo " "
-ping -c 1 172.26.255.254
-ping -c 1 2001:470:c84c:600::1/64
-traceroute 172.26.255.254
+# obtention des chemins des paquets
+PATH_VAL_PC_GW=$(traceroute "$GW_IP_VALENCE_PC" | awk 'NR==2 {print $2,$3}')
+PATH_VAL_TEL_GW=$(traceroute "$GW_IP_VALENCE_TEL" | awk 'NR==2 {print $2,$3}')
 
-# Gateway Vlan29 Téléphone Val 
-echo " " 
-echo "Test Vlan 29 Tel Val "
-echo " "
-ping -c 1 172.29.255.254
-ping -c 1 2001:470:c84c:900::1/64
-traceroute 172.29.255.254
+# log des chemins
+log_chemin "$PATH_VAL_PC_GW" "$GW_IP_VALENCE_PC" "$FILE_LOG"
+log_chemin "$PATH_VAL_TEL_GW" "$GW_IP_VALENCE_TEL" "$FILE_LOG"
+
+echo "---------------- fin traceroute solea ----------------" >> "$FILE_LOG"
+
+#check que tout les ping sont passé
+if [ "$CPT" -eq "$CPT_FINALE" ]; then
+  echo "tout les ping ont fonctionnée avec succès" 
+else
+  echo "tout les ping n'ont pas fonctionnée"
+fi

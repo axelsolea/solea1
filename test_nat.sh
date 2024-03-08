@@ -2,7 +2,7 @@
 # Author: Djetic Alexandre
 # Date: 07/02/2024
 # Modified: 07/02/2024
-# Description: this script tests every NAT rule
+# Description: This script tests every NAT rule
 
 #debug
 set -u
@@ -12,7 +12,7 @@ SERVER="192.168.141.2"
 LIST_FILE_NAT="list_nat.txt"
 FILE_LOG="test_nat.log"
 
-# this function tests 1 SSH NAT rule
+# Function to test 1 SSH NAT rule
 function nat_1_ssh {
     # $1 : take 1 line of $LIST_FILE_NAT
     USER=$(echo "$1" | cut -d ':' -f1)
@@ -25,6 +25,8 @@ function nat_1_ssh {
     else
         sshpass -p "$PASS" ssh "$USER"@"$SERVER" -p "$PORT" "hostname; exit" >> "$FILE_LOG"
     fi
+
+    return $?
 }
 
 echo "----------------- test nat -----------------" > "$FILE_LOG"
@@ -32,7 +34,7 @@ echo "----------------- test nat -----------------" > "$FILE_LOG"
 while IFS= read -r ligne; do
     ISCOMMENTARY=$(echo "$ligne" | awk '{print $1}')
 
-    #test if it is a commentary
+    # Check if it is a commentary
     if [[ ! "$ISCOMMENTARY" == "#" ]]; then
         nat_1_ssh "$ligne"
     fi

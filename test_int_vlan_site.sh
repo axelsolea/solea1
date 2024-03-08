@@ -4,7 +4,6 @@
 # Modified: 08/03/2024
 # Description: Test inter vlan inter site 
 # piste d'amelioration : mettre le nom du vlan dans une variable et afficher la variable 
-#2 bloc : intern vlan, inter site -> site valence faire traceroute 
 
 set -u
 
@@ -33,7 +32,7 @@ echo "---------------- debut vlan solea ----------------" > "$FILE_LOG"
 
 for ip in $(cat "$LIST_IP")
 do
-  ping -c 1 $ip -q
+  ping -c 1 $ip -q > /dev/null
   
   if [ $? -eq 0 ]; then
     CPT=$((CPT+1));

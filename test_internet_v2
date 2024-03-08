@@ -65,3 +65,7 @@ ping -c 1 -q 172.21.254.254 | grep "ping statistics" -n1 >> test_internet_v2.log
 if [[ $? == 0 ]];then
 echo "OK ✓"
 fi
+
+echo "Affichage des logs dans 5 secondes..."
+sleep 5
+clear; cat test_internet_v2.log

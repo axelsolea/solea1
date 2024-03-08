@@ -9,8 +9,11 @@ if [ ! $EUID -eq 0 ]; then
 	exit 1
 fi
 
-dhclient -r > dhcp_client.log
-dhclient -i ens160 >> dhcp_client.log
+#env var
+FILE_LOG="dhcp_client.log"
+
+dhclient -r > "$FILE_LOG"
+dhclient -i ens160 >> "$FILE_LOG"
 
 if [ $? -eq 0 ]; then
 	echo "dhcp OK"

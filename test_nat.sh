@@ -14,11 +14,11 @@ FILE_LOG="test_nat.log"
 
 # this function test 1 ssh nat rule
 function nat_1_ssh {
-    # $1 : take 1 ligne of $LIST_FILE_NAT
-    USER=$(echo "$1" | sed "s/:/ /g" | awk '{print $1}')
-    PASS=$(echo "$1" | sed "s/:/ /g" | awk '{print $2}')
-    PORT=$(echo "$1" | sed "s/:/ /g" | awk '{print $3}')
-    DESC=$(echo "$1" | sed "s/:/ /g" | awk '{print $4}')
+    # $1 : take 1 line of $LIST_FILE_NAT
+    USER=$(echo "$1" | cut -d ':' -f1)
+    PASS=$(echo "$1" | cut -d ':' -f2)
+    PORT=$(echo "$1" | cut -d ':' -f3)
+    DESC=$(echo "$1" | cut -d ':' -f4)
 
     if [[ "$PASS" == "None" ]]; then
         sshpass -p "" ssh "$USER"@"$SERVER" -p "$PORT" "hostname; exit" >> "$FILE_LOG"
@@ -31,14 +31,13 @@ function nat_1_ssh {
 
 echo "----------------- test nat -----------------" > "$FILE_LOG"
 
-for ligne in $(cat "$LIST_FILE_NAT")
-do
+while IFS= read -r ligne; do
     ISCOMMENTARY=$(echo "$ligne" | awk '{print $1}')
-    
+
     #test if it is a commentary
     if [[ ! "$ISCOMMENTARY" == "#" ]]; then
         nat_1_ssh "$ligne"
-    fi	
-done
+    fi
+done < "$LIST_FILE_NAT"
 
 echo "----------------- test nat finish -----------------" >> "$FILE_LOG"

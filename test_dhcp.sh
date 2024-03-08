@@ -17,6 +17,7 @@ echo "Adresse IP actuelle: $TMP_IP"
 
 # Changing to a temporary IP
 ip a del "$TMP_IP" dev "$INT" > /dev/null
+dhclient -r "$INT" > /dev/null
 dhclient -i "$INT" > /dev/null
 
 # Running DHCP client (udhcpc)

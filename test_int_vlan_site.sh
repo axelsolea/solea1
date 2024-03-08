@@ -14,10 +14,10 @@ function log_chemin {
   # $3: fichier de log
 
   if [ ! -z "$1" ]; then
-    echo "chemin utilisée pour ${1}" >> "$3"
+    echo "chemin utilisé pour ${2}: ${1}" >> "$3"
     echo "${2} OK, le ping passe" >> "$3"
   else
-    echo "aucun chemin trouvée pour ${2}" >> "$3"
+    echo "aucun chemin trouvé pour ${2}" >> "$3"
   fi
 }
 
@@ -32,10 +32,10 @@ echo "---------------- debut vlan solea ----------------" > "$FILE_LOG"
 
 for ip in $(cat "$LIST_IP")
 do
-  ping -c 1 $ip -q > /dev/null
+  ping -c 2 "$ip" > /dev/null
   
   if [ $? -eq 0 ]; then
-    CPT=$((CPT+1));
+    CPT=$((CPT+1))
     echo "=> ${ip} OK, le ping réussit avec succès" >> "$FILE_LOG"
   else
     echo "=> ${ip} NOK, le ping vient d'échouer" >> "$FILE_LOG"
@@ -59,9 +59,9 @@ log_chemin "$PATH_VAL_TEL_GW" "$GW_IP_VALENCE_TEL" "$FILE_LOG"
 
 echo "---------------- fin traceroute solea ----------------" >> "$FILE_LOG"
 
-#check que tout les ping sont passé
+#check que tout les ping sont passés
 if [ "$CPT" -eq "$CPT_FINALE" ]; then
-  echo "tout les ping ont fonctionnée avec succès" 
+  echo "tout les ping ont fonctionné avec succès" 
 else
-  echo "tout les ping n'ont pas fonctionnée"
+  echo "tout les ping n'ont pas fonctionné"
 fi

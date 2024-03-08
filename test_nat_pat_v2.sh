@@ -4,11 +4,11 @@
 #Last edit : 08/03/2024
 
 PORTS="22202 22253 22252" #22004
-SCRIPT="hostname"
+SCRIPT="echo "Nom de la machine : "; hostname"
 for PORT in ${PORTS} ; do
     echo "Accès SSH via l'ip publique sur le port ${PORT}"  
     sshpass -p Solea05axel ssh axel@192.168.141.2 -p ${PORT} "${SCRIPT}"
-    echo "\n"
+    echo ""
 done
 
 echo "Accès SSH via l'ip publique sur le port 22200"  

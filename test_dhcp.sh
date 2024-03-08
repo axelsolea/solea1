@@ -10,10 +10,7 @@ if [ ! $EUID -eq 0 ]; then
 fi
 
 #env var
-FILE_LOG="dhcp_client.log"
-
-dhclient -r > "$FILE_LOG"
-dhclient -i ens160 >> "$FILE_LOG"
+dhclient -i ens160 > /dev/null
 
 if [ $? -eq 0 ]; then
 	echo "dhcp OK"

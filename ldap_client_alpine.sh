@@ -5,10 +5,10 @@ LDAP_SERVER="172.18.0.252"
 LDAP_BASE="DC=solea,DC=local"
 
 # Install required packages
-apk add openldap openldap-clients nss-pam-ldapd
+apk add openldap openldap-clients nss-pam-ldapd openldap-back-mdb
 
 # Configure nslcd
-sudo cat <<EOF > /etc/nslcd.conf
+cat <<EOF > /etc/nslcd.conf
 uid nslcd
 gid ldap
 uri ldap://${LDAP_SERVER}

@@ -3,6 +3,8 @@
 #Creation date : 08/03/2024
 #Last edit : 08/03/2024
 
+echo "Lancement du script..."
+
 PORTS="22202 22253"
 SCRIPT="echo 'Nom de la machine : '; hostname"
 for PORT in ${PORTS} ; do
@@ -24,3 +26,4 @@ echo "Accès SSH via l'ip publique sur le port 22004"
 echo "ignoré tant que le serveur toip.solea.local a une adresse sur le VLAN 140"
 #echo 'Nom de la machine : '
 #sshpass -p " " ssh admin-solea@192.168.141.2 -p 22004 "hostname"
+echo "Arrêt du script..."

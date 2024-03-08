@@ -2,3 +2,5 @@
 axel:Solea05axel:22202:dns_zone
 admin-solea:Solea05dns:22200:dns_cache
 alex:wm7ze*2b:22252:ldap/smb
+admin-solea:Solea05asterisk:22004:asterisk
+axel:Solea05axel:22253:dhcp

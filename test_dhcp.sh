@@ -9,7 +9,7 @@ if [ ! $EUID -eq 0 ]; then
 	exit 1
 fi
 
-dhclient -r >> dhcp_client.log
+dhclient -r > dhcp_client.log
 dhclient -i ens160 >> dhcp_client.log
 
 if [ $? -eq 0 ]; then

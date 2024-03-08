@@ -25,8 +25,6 @@ function nat_1_ssh {
     else
         sshpass -p "$PASS" ssh "$USER"@"$SERVER" -p "$PORT" "hostname; exit" >> "$FILE_LOG"
     fi
-
-    return $?
 }
 
 echo "----------------- test nat -----------------" > "$FILE_LOG"

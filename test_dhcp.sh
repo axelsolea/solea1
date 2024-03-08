@@ -9,16 +9,18 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+#env var
 INT="$1"
 TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+FILE_LOG="test_dhcp.log"
 
 # Current IP address
 echo "Adresse IP actuelle: $TMP_IP"
 
 # Changing to a temporary IP
-ip a del "$TMP_IP" dev "$INT" > /dev/null
-dhclient -r "$INT" > /dev/null
-dhclient -i "$INT" > /dev/null
+ip a del "$TMP_IP" dev "$INT" > "$FILE_LOG"
+dhclient -v -r "$INT" > "$FILE_LOG"
+dhclient -v -i "$INT" > "$FILE_LOG"
 
 # Running DHCP client (udhcpc)
 if [ $? -eq 0 ]; then

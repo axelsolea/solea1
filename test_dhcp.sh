@@ -1,34 +1,48 @@
 #!/bin/bash
-# Author: Djetic Alexandre
+# Auteur: Djetic Alexandre
 # Date: 16/02/2023
-# Modified: 16/02/2023
-# Description: This script tests the DHCP server
+# Modifié: 16/02/2023
+# Description: Ce script teste le serveur DHCP
 
 if [ "$EUID" -ne 0 ]; then
-    echo "Require sudo/root access"
+    echo "Requiert un accès en tant que sudo/root"
     exit 1
 fi
 
-#env var
+function get_current_ip {
+    TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+
+    if [ ! -z "$TMP_IP" ]; then
+        echo "Adresse IP actuelle: $TMP_IP"
+    else
+        echo "Adresse IP actuelle: aucune"
+    fi
+}
+
+# Variable d'environnement
 INT="$1"
 TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
 FILE_LOG="test_dhcp.log"
 
-# Current IP address
-echo "Adresse IP actuelle: $TMP_IP"
+# Adresse IP actuelle
+get_current_ip
 
-# Changing to a temporary IP
-ip a del "$TMP_IP" dev "$INT" > /dev/null
+# Suppression de l'adresse IP actuelle
+echo "Suppression de l'adresse IP actuelle: $TMP_IP"
 dhclient -r "$INT" > /dev/null
+get_current_ip
+
+# Changement vers une IP temporaire
 dhclient -i "$INT" > /dev/null
 
-# Running DHCP client (udhcpc)
+# Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then
-    echo "obtention d'une IP à l'aide du serveur DHCP : OK"
+    echo "Obtention d'une IP à l'aide du serveur DHCP : OK"
+    get_current_ip
 else
-    echo "obtention d'une IP à l'aide du serveur DHCP : NOK"
+    echo "Obtention d'une IP à l'aide du serveur DHCP : NOK"
+    get_current_ip
 fi
 
-# Determining the new IP
-TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
-echo "Nouvelle IP dynamique actuelle après DHCP: $TMP_IP"
+# Détermination de la nouvelle IP
+get_current_ip

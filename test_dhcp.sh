@@ -38,11 +38,8 @@ dhclient -i "$INT" > /dev/null
 # Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then
     echo "Obtention d'une IP à l'aide du serveur DHCP : OK"
-    get_current_ip
+    get_current_ip # Détermination de la nouvelle IP
 else
     echo "Obtention d'une IP à l'aide du serveur DHCP : NOK"
-    get_current_ip
+    get_current_ip # Détermination de la nouvelle IP
 fi
-
-# Détermination de la nouvelle IP
-get_current_ip

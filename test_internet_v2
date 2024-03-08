@@ -66,6 +66,10 @@ if [[ $? == 0 ]];then
 echo "OK ✓"
 fi
 
-echo "Affichage des logs dans 5 secondes..."
-sleep 5
-clear; cat test_internet_v2.log
+echo "Fin d'execution du script $(date)" >> test_internet_v2.log
+
+echo "Afficher les logs? (y/n)"
+read ans
+if [ "$ans" = "y" ];then 
+cat test_internet_v2.log
+ 

@@ -1,4 +1,4 @@
-!/bin/env bash
+#/bin/env bash
 #Author : Axel 
 #Date : 16/02/2024
 #Last edit : 16/02/2024

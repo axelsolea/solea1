@@ -1,9 +1,10 @@
 import subprocess
+import re
 
 class Dnsclient:
     """
     A simple DNS client class for retrieving DNS records.
-
+    
     Attributes:
         _server (str): The DNS server to query.
         _all_names (set): A set containing all names and IPs tested.
@@ -18,7 +19,7 @@ class Dnsclient:
         """
         self._server: str = server
         self._all_names: set = set()
-
+    
     def get_A_record(self, name: str) -> str|None:
         """
         Retrieve the A record for the specified domain name.
@@ -35,10 +36,10 @@ class Dnsclient:
         self._all_names.add(name)
         try:
             result = subprocess.run(["dig", "-t", "A", name, f"@{self._server}", "+short"], capture_output=True, text=True, check=True)
-            return result.stdout.strip() #supprime les ajout du terminal type \t, ...
+            return result.stdout.strip()
         except subprocess.CalledProcessError as e:
             return f"=> exception prise lors de la résolution de {name}(A)"
-
+    
     def get_AAAA_record(self, name: str) -> str|None:
         """
         Retrieve the AAAA record for the specified domain name.
@@ -58,7 +59,7 @@ class Dnsclient:
             return result.stdout.strip()
         except subprocess.CalledProcessError as e:
             return f"=> exception prise lors de la résolution de {name}(AAAA)"
-
+    
     def get_PTR_record(self, ip: str) -> str|None:
         """
         Retrieve the PTR record for the specified IP address.
@@ -97,6 +98,7 @@ class Dnsclient:
         Returns:
             None
         """
-        print("All names tested: ")
+        print("All names tested:")
         for name in self._all_names:
             print(f"- {name}")
+

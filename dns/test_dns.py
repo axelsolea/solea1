@@ -60,14 +60,14 @@ def test_one_name(serie: pd.core.series.Series, dnsclient: Dnsclient, ip_version
         return False
     
     if ip_version == 4:
-        cli_a_record: str = list(dnsclient.get_A_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
+        cli_a_record: list = list(dnsclient.get_A_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
         cli_ptr_record: str = dnsclient.get_PTR_record(serie["adresse IP"])
         
         #test que les enregistrement sont non vide
         if cli_ptr_record and cli_a_record:
             return cli_ptr_record == f"{serie['nom inverse']}." and serie["adresse IP"] in cli_a_record
     else:
-        cli_aaaa_record: str = list(dnsclient.get_AAAA_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
+        cli_aaaa_record: list = list(dnsclient.get_AAAA_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
         cli_ptr_record: str = dnsclient.get_PTR_record(serie["adresse IPv6"])
         
         #test que les enregistrement sont non vide

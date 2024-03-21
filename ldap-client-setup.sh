@@ -8,7 +8,7 @@
 #export DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
-sudo apt update
+sudo apt update && sudo apt upgrade -y
 sudo apt -y install neovim vim nano curl libnss-ldap libpam-ldap ldap-utils
 
 # Configure /etc/nsswitch.conf

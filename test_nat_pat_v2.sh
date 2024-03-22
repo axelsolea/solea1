@@ -14,10 +14,11 @@ function test_accès_ssh_avec_ldap {
     PASS="$2"
     PORTS="22200 22202 22253 22004"
     SCRIPT="echo 'Nom de la machine : '; hostname"
+    KEY="/home/solea/.ssh/ssh_solea.pub"
     
     for PORT in ${PORTS}; do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-    sshpass -p "$PASS" ssh $USER@192.168.141.2 -p ${PORT} "${SCRIPT}"
+    ssh -i "$KEY" $USER@192.168.141.2 -p ${PORT} "${SCRIPT}"
     echo ""
 done
 }

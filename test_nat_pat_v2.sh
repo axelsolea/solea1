@@ -5,22 +5,35 @@
 
 echo "Lancement du script..."
 
-PORTS="22202 22253 22200 22004"
-SCRIPT="echo 'Nom de la machine : '; hostname"
-
-echo "accès avec compte LDAP: axel"
-for PORT in ${PORTS}; do
+#test que tout les acces fonctionnes
+function test_accès_ssh_avec_ldap {
+    # $1: user
+    # $2: pass
+    USER="$1"
+    PASS="$2"
+    PORTS="22200 22202 22253 22252"
+    SCRIPT="echo 'Nom de la machine : '; hostname"
+    
+    for PORT in ${PORTS}; do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-    sshpass -p "Solea05axel" ssh axel@192.168.141.2 -p ${PORT} "${SCRIPT}"
+    sshpass -p "$PASS" ssh $USER@192.168.141.2 -p ${PORT} "${SCRIPT}"
     echo ""
 done
+}
 
-echo "accès avec compte LDAP: alexandre"
-for PORT in ${PORTS}; do
-    echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-    sshpass -p "Solea05alexandre" ssh alexandre@192.168.141.2 -p ${PORT} "${SCRIPT}"
-    echo ""
-done
+
+echo "--------------------------------- accès avec compte LDAP: axel --------------------------------"
+test_accès_ssh_avec_ldap "axel" "Solea05axel"
+echo "----------------------------------------------------------------------------------------------------"
+
+echo "--------------------------------- accès avec compte LDAP: alexandre --------------------------------"
+test_accès_ssh_avec_ldap "alexandre" "Solea05alexandre"
+echo "----------------------------------------------------------------------------------------------------"
+
+
+echo "--------------------------------- accès avec compte LDAP: thomas --------------------------------"
+test_accès_ssh_avec_ldap "thomas" "Solea05thomas"
+echo "----------------------------------------------------------------------------------------------------"
 
 echo "Accès SSH via l'ip publique sur le port 22252"  
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  

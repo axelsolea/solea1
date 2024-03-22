@@ -8,12 +8,14 @@ echo "Lancement du script..."
 PORTS="22202 22253 22200 22004"
 SCRIPT="echo 'Nom de la machine : '; hostname"
 
+echo "accès avec compte LDAP: axel"
 for PORT in ${PORTS}; do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
     sshpass -p "Solea05axel" ssh axel@192.168.141.2 -p ${PORT} "${SCRIPT}"
     echo ""
 done
 
+echo "accès avec compte LDAP: alexandre"
 for PORT in ${PORTS}; do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
     sshpass -p "Solea05alexandre" ssh alexandre@192.168.141.2 -p ${PORT} "${SCRIPT}"

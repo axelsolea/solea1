@@ -1,7 +1,7 @@
 #!/bin/env bash
 #Author : Axel CHALVIN
 #Creation date : 08/03/2024
-#Last edit : 08/03/2024
+#Last edit : 22/03/2024
 
 echo "Lancement du script..."
 

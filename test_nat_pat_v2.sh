@@ -24,7 +24,8 @@ done
 
 function clear_terminal {
     # $1 : user
-    read "prochain utilisateur...$1"
+    echo "prochain utilisateur...$1"
+    read 
     clear
 }
 

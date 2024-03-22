@@ -14,6 +14,12 @@ for PORT in ${PORTS}; do
     echo ""
 done
 
+for PORT in ${PORTS}; do
+    echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
+    sshpass -p "Solea05alexandre" ssh alexandre@192.168.141.2 -p ${PORT} "${SCRIPT}"
+    echo ""
+done
+
 echo "Accès SSH via l'ip publique sur le port 22252"  
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
 echo 'Nom de la machine : '

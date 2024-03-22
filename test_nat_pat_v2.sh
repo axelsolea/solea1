@@ -13,4 +13,10 @@ for PORT in ${PORTS} ; do
     echo ""
 done
 
+echo "Accès SSH via l'ip publique sur le port 22252"  
+echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
+echo 'Nom de la machine : '
+sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+echo ""
+
 echo "Arrêt du script..."

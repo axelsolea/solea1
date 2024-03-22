@@ -9,6 +9,7 @@ echo "Lancement du script..."
 function test_accès_ssh_avec_ldap {
     # $1: user
     # $2: pass
+    
     USER="$1"
     PASS="$2"
     PORTS="22200 22202 22253 22004"

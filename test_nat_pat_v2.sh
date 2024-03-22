@@ -5,7 +5,7 @@
 
 echo "Lancement du script..."
 
-PORTS="22202 22253 22004 22200"
+PORTS="22202 22253 22004 22200 22252"
 SCRIPT="echo 'Nom de la machine : '; hostname"
 for PORT in ${PORTS} ; do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
@@ -18,5 +18,24 @@ echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"
 echo 'Nom de la machine : '
 sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
 echo ""
+
+echo "Accès SSH via l'ip publique sur le port 22252"  
+echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
+echo 'Nom de la machine : '
+sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+echo ""
+
+echo "Accès SSH via l'ip publique sur le port 22252"  
+echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
+echo 'Nom de la machine : '
+sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+echo ""
+
+echo "Accès SSH via l'ip publique sur le port 22252"  
+echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
+echo 'Nom de la machine : '
+sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+echo ""
+
 
 echo "Arrêt du script..."

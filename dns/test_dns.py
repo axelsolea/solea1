@@ -60,14 +60,14 @@ def test_one_name(serie: pd.core.series.Series, dnsclient: Dnsclient, ip_version
         return False
     
     if ip_version == 4:
-        cli_a_record: list = list(dnsclient.get_A_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
+        cli_a_record: str = list(dnsclient.get_A_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
         cli_ptr_record: str = dnsclient.get_PTR_record(serie["adresse IP"])
         
         #test que les enregistrement sont non vide
         if cli_ptr_record and cli_a_record:
             return cli_ptr_record == f"{serie['nom inverse']}." and serie["adresse IP"] in cli_a_record
     else:
-        cli_aaaa_record: list = list(dnsclient.get_AAAA_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
+        cli_aaaa_record: str = list(dnsclient.get_AAAA_record(serie["nom"]).split("\n")) # il peut avoir plusieurs résultat dont plusieurs IP, d'ou le split pour avoir un tableau
         cli_ptr_record: str = dnsclient.get_PTR_record(serie["adresse IPv6"])
         
         #test que les enregistrement sont non vide
@@ -152,12 +152,11 @@ def parser():
         argparse.Namespace: An object containing parsed arguments.
     """
     parser = argparse.ArgumentParser(description = "ce script test un serveur dns en réalisant une/des requète(s) dns et leur(s) requète(s) inverse")
-    parser.add_argument('-m', '--mode', help = "Définit le mode de lancement du test.")
+    parser.add_argument('-m', '--mode', help = "Définit le mode de lancement du test.", default="prod")
     parser.add_argument('-s', '--server', help = "Définit l'adresse IP du serveur DNS à tester.")
     parser.add_argument('-f', '--file', help = "Définit le fichier CSV source contenant les noms à tester.")
     parser.add_argument('-4', '--v4', help = "Réalise des résolutions de noms IPv4.",  action = 'store_true')
     parser.add_argument('-6', '--v6', help = "Réalise des résolutions de noms IPv6.", action = 'store_true')
-    parser.add_argument('-l', '--launch', help = "Définit le mode de lancement du test. par défaut: prod", default="prod")
     return parser.parse_args()
 
 
@@ -173,16 +172,28 @@ def main() -> None:
         sys.exit(1)
 
     # Import du fichier source
-    if args.file:
-        data: pd.DataFrame = extract_data(args.file)
+    if not args.file:
+        print("donné un fichier de nom en .csv")
+        sys.exit(1)
+    
+    #test aucune résolution a faire
+    if not args.v4 and not args.v6:
+        print("aucune résolution à faire...")
+        sys.exit(1)
+
+
+    #obtention des noms à tester
+    data: pd.DataFrame = extract_data(args.file)        
     
     # Résolution des noms en IPv4
-    dnsclient: Dnsclient = Dnsclient(args.server)
-    cpt_v4, cpt_tmp_v4, failed_request_v4 = test_name(data, dnsclient, 4)
-            
+    if args.v4:
+        dnsclient: Dnsclient = Dnsclient(args.server)
+        cpt_v4, cpt_tmp_v4, failed_request_v4 = test_name(data, dnsclient, 4)
+
     # Résolution des noms en IPv6
-    dnsclient: Dnsclient = Dnsclient(args.server)
-    cpt_v6, cpt_tmp_v6, failed_request_v6 = test_name(data, dnsclient, 6)
+    if args.v6:
+        dnsclient: Dnsclient = Dnsclient(args.server)
+        cpt_v6, cpt_tmp_v6, failed_request_v6 = test_name(data, dnsclient, 6)
     
     # vérification résolution de tout les noms en ipv4
     if args.v4 and check_resolution(args.v4, cpt_v4, cpt_tmp_v4, failed_request_v4):

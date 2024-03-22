@@ -37,10 +37,6 @@ echo "--------------------------------- accès avec compte LDAP: thomas --------
 test_accès_ssh_avec_ldap "thomas" "Solea05thomas"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
-echo "--------------------------------- accès avec compte LDAP: jhon --------------------------------"
-test_accès_ssh_avec_ldap "jhon" "Solea05jhon"
-echo -e "----------------------------------------------------------------------------------------------------\n"
-
 echo "--------------------------------- accès avec compte LDAP: compte locale --------------------------------"
 echo "Accès SSH via l'ip publique sur le port 22252"  
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  

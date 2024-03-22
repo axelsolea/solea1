@@ -26,7 +26,7 @@ def show_dataframe(df: pd.DataFrame) -> None:
         print(f"{row['nom']}, {row['adresse IP']}, {row['adresse IPv6']}, {row['nom inverse']}")
 
 
-def got_nan_serie(serie: pd.core.series.Series) -> bool:
+def got_nan_serie(serie) -> bool:
     """
     Check if the given series contains any NaN values.
 
@@ -43,7 +43,7 @@ def got_nan_serie(serie: pd.core.series.Series) -> bool:
     return False
 
 
-def test_one_name(serie: pd.core.series.Series, dnsclient: Dnsclient, ip_version: int) -> bool:
+def test_one_name(serie, dnsclient: Dnsclient, ip_version: int) -> bool:
     """
     Test DNS resolution for a single name against a given DNS client and IP version.
 
@@ -143,48 +143,46 @@ def extract_data(file: str) -> pd.DataFrame:
 
     return data
 
+def export_data_csv(data: pd.DataFrame, failed_request: deque, ip_version: int, file_export: str) -> None:
+    resolution_name: list = []
+    resolution_name_ok: list = [] #OK ou NOK
+    resolution_ptr: list = []
+    resolution_ptr_ok: list = [] #OK ou NOK
 
-def parser():
+    for index, row in data.iterrows():
+        if row["nom"] in failed_request:
+
+        else:
+        #itérer sur les data, si dans
+
+        if row["nom_inverse"] in failed_request:
+
+        else:
+        #itérer sur les data, si dans
+
+    
+    #export to csv
+    resultat_resolution_name: df.DataFrame = df.DataFrame({"nom": resolution_name, "test": resolution_name_ok})
+    resultat_resolution_ptr: df.DataFrame = df.DataFrame({"nom inverse": resolution_name, "test": resolution_name_ok})
+    resultat_resolution_name.to_csv("", sep=",", index=False, encoding="utf-8")
+    resultat_resolution_ptr.to_csv("", sep=",", index=False, encoding="utf-8")
+
+
+def resolution_mode_debug(data: pd.DataFrame, args, file_export: str = "") -> None:
     """
-    Parse command line arguments.
+    Résout les noms de domaine en adresses IPv4 et/ou IPv6 selon les options fournies.
+
+    Args:
+        data (pd.DataFrame): Le DataFrame contenant les données à tester.
+        args (any): Les arguments passés au programme.
 
     Returns:
-        argparse.Namespace: An object containing parsed arguments.
+        None
+
+    Cette fonction effectue la résolution des noms de domaine en adresses IPv4 et/ou IPv6
+    en utilisant un client DNS spécifié dans les arguments. Elle vérifie ensuite si toutes
+    les résolutions demandées ont été effectuées avec succès et affiche un message approprié.
     """
-    parser = argparse.ArgumentParser(description = "ce script test un serveur dns en réalisant une/des requète(s) dns et leur(s) requète(s) inverse")
-    parser.add_argument('-m', '--mode', help = "Définit le mode de lancement du test.", default="prod")
-    parser.add_argument('-s', '--server', help = "Définit l'adresse IP du serveur DNS à tester.")
-    parser.add_argument('-f', '--file', help = "Définit le fichier CSV source contenant les noms à tester.")
-    parser.add_argument('-4', '--v4', help = "Réalise des résolutions de noms IPv4.",  action = 'store_true')
-    parser.add_argument('-6', '--v6', help = "Réalise des résolutions de noms IPv6.", action = 'store_true')
-    return parser.parse_args()
-
-
-def main() -> None:
-    """
-    Main function to run the script.
-    """
-    args = parser() #parser, donne les arguments possibles de la commande
-    
-    # check que server dns donnée
-    if not args.server:
-        print("donnée un serveur dns")
-        sys.exit(1)
-
-    # Import du fichier source
-    if not args.file:
-        print("donné un fichier de nom en .csv")
-        sys.exit(1)
-    
-    #test aucune résolution a faire
-    if not args.v4 and not args.v6:
-        print("aucune résolution à faire...")
-        sys.exit(1)
-
-
-    #obtention des noms à tester
-    data: pd.DataFrame = extract_data(args.file)        
-    
     # Résolution des noms en IPv4
     if args.v4:
         dnsclient: Dnsclient = Dnsclient(args.server)
@@ -209,6 +207,95 @@ def main() -> None:
         print(f"tout les résolutions en ipv6 n'ont pas été résolue ! ")
         print(f"voici le/les enregistrement(s) ipv6 non validée: {', '.join(failed_request_v6)}")
 
+def resolution_mode_prod(data: pd.DataFrame, args, file_export: str = "") -> None:
+    """
+    Résout les noms de domaine en adresses IPv4 et/ou IPv6 selon les options fournies.
+
+    Args:
+        data (pd.DataFrame): Le DataFrame contenant les données à tester.
+        args (any): Les arguments passés au programme.
+
+    Returns:
+        None
+
+    Cette fonction effectue la résolution des noms de domaine en adresses IPv4 et/ou IPv6
+    en utilisant un client DNS spécifié dans les arguments. Elle vérifie ensuite si toutes
+    les résolutions demandées ont été effectuées avec succès et affiche un message approprié.
+
+    pass
+    """
+    # Résolution des noms en IPv4
+    if args.v4:
+        dnsclient: Dnsclient = Dnsclient(args.server)
+        cpt_v4, cpt_tmp_v4, failed_request_v4 = test_name(data, dnsclient, 4)
+
+    # Résolution des noms en IPv6
+    if args.v6:
+        dnsclient: Dnsclient = Dnsclient(args.server)
+        cpt_v6, cpt_tmp_v6, failed_request_v6 = test_name(data, dnsclient, 6)
+
+    # vérification résolution de tout les noms en ipv4
+    if args.v4 and check_resolution(args.v4, cpt_v4, cpt_tmp_v4, failed_request_v4):
+        print("toutes les résolutions en ipv4 ont été résolue ! ")
+        export_data_csv(data, failed_request_v4, 4)
+    elif args.v4:
+        print(f"tout les résolutions en ipv4 n'ont pas été résolue ! ")
+        export_data_csv(data, failed_request_v4, 4)
+    
+    # vérification résolution de tout les noms en ipv6
+    if args.v6 and check_resolution(args.v6, cpt_v6, cpt_tmp_v6, failed_request_v6):
+        print("toutes les résolutions en ipv6 ont été résolue ! ")
+        export_data_csv(data, failed_request_v6, 6)
+    elif args.v6:
+        print(f"tout les résolutions en ipv6 n'ont pas été résolue ! ")
+        export_data_csv(data, failed_request_v6, 6)
+
+
+
+def parser():
+    """
+    Parse command line arguments.
+
+    Returns:
+        argparse.Namespace: An object containing parsed arguments.
+    """
+    parser = argparse.ArgumentParser(description = "ce script test un serveur dns en réalisant une/des requète(s) dns et leur(s) requète(s) inverse")
+    parser.add_argument('-m', '--mode', help = "Définit le mode de lancement du test.", default="prod")
+    parser.add_argument('-s', '--server', help = "Définit l'adresse IP du serveur DNS à tester.")
+    parser.add_argument('-f', '--file', help = "Définit le fichier CSV source contenant les noms à tester.")
+    parser.add_argument('-4', '--v4', help = "Réalise des résolutions de noms IPv4.",  action = 'store_true')
+    parser.add_argument('-6', '--v6', help = "Réalise des résolutions de noms IPv6.", action = 'store_true')
+    parser.add_argument('-e', '--export', help = "décide si on veut exporter au format csv les résulats")
+    return parser.parse_args()
+
+
+def main() -> None:
+    """
+    Main function to run the script.
+    """
+    args = parser() #parser, donne les arguments possibles de la commande
+    
+    # check que server dns donnée
+    if not args.server:
+        print("donnée un serveur dns")
+        sys.exit(1)
+
+    # Import du fichier source
+    if not args.file:
+        print("donné un fichier de nom en .csv")
+        sys.exit(1)
+    
+    #test aucune résolution a faire
+    if not args.v4 and not args.v6:
+        print("aucune résolution à faire...")
+        sys.exit(1)
+
+    #mode de lancement prod/debug
+    if args.mode == "prod":
+        data: pd.DataFrame = extract_data(args.file) #obtention des noms à tester
+    else:
+        data: pd.DataFrame = extract_data(args.file) #obtention des noms à tester
+        resolution_mode_debug(data, args)
 
 if __name__ == "__main__":
     main()

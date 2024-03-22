@@ -22,21 +22,29 @@ function test_accès_ssh_avec_ldap {
 done
 }
 
+function clear_terminal {
+    # $1 : user
+    read "prochain utilisateur...$1"
+    clear
+}
 
 echo "--------------------------------- accès avec compte LDAP: axel --------------------------------"
 test_accès_ssh_avec_ldap "axel" "Solea05axel"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 echo "--------------------------------- accès avec compte LDAP: alexandre --------------------------------"
+clear_terminal "alexandre"
 test_accès_ssh_avec_ldap "alexandre" "Solea05alexandre"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 
 echo "--------------------------------- accès avec compte LDAP: thomas --------------------------------"
+clear_terminal "thomas"
 test_accès_ssh_avec_ldap "thomas" "Solea05thomas"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 echo "--------------------------------- accès avec compte LDAP: compte locale --------------------------------"
+clear_terminal "admin-solea"
 echo "Accès SSH via l'ip publique sur le port 22252"  
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
 echo 'Nom de la machine : '

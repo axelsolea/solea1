@@ -11,7 +11,7 @@ function test_accès_ssh_avec_ldap {
     # $2: pass
     USER="$1"
     PASS="$2"
-    PORTS="22200 22202 22253 22252"
+    PORTS="22200 22202 22253 22004"
     SCRIPT="echo 'Nom de la machine : '; hostname"
     
     for PORT in ${PORTS}; do

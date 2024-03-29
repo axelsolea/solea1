@@ -1,4 +1,6 @@
 from .wrongverboselevel import WrongVerboseLevel
+#from .csvparser import CsvParser
+import csv
 
 class DnsResultHandler:
     """
@@ -121,16 +123,79 @@ class DnsResultHandler:
             print(f"  - Failed IP: {failed_ptr}")
 
         print("-" * 3)
+    
+    def parse_data(self) -> dict:
+        """Parse data from self._data["full_success"] and self._data["full_failed_name"].
 
-    def export(self, file: str) -> None:
+        Returns a tuple containing two dictionaries:
+        - The first dictionary contains parsed data with keys 'nom', 'adresses IP', 'nom inverse', and 'status'.
+        - The second dictionary contains parsed data with keys 'nom', 'adresses IP', 'nom inverse', and 'status'.
+
+        Returns:
+            tuple[dict, dict]: A tuple containing two dictionaries with parsed data.
+        """
+        datas = {
+            "nom": [], 
+            "adresses IP": [],
+            "nom inverse": [],
+            "status": []
+        }
+        
+        # Extracting data from self._data["full_success"] and self._data["full_failed_name"]
+        for data in self._data["full_success"]:
+            datas["nom"].append(data[0])
+            datas["adresses IP"].append(data[1])
+            datas["nom inverse"].append(data[2])
+            datas["status"].append(data[3])
+
+        for data in self._data["full_failed_name"]:
+            datas["nom"].append(data[0])
+            datas["adresses IP"].append(data[1])
+            datas["nom inverse"].append(data[2])
+            datas["status"].append(data[3])
+
+        return datas
+
+    def export(self, file: str, title: str) -> None:
         """Export the data to a CSV file.
-
+        
         This function exports the data stored in the object to a CSV file.
         The exported data includes version, status, success rate, full success,
         full failed name, success name record, failed name record, success PTR record,
         and failed PTR record.
 
+        Args:
+            file (str): The file path where the CSV file should be saved.
+            title (str): The title to include in the CSV file.
+
         Returns:
             None
         """
-        ...
+        headers = {
+            "title": title, 
+            "version": self._data["version"],
+            "status": self._data["status"],
+            "success_rate": self._data["success_rate"]
+        }
+
+        datas = self.parse_data()
+
+        # Writing to CSV file
+        with open(file, 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            
+            # Write headers
+            writer.writerow(["Attribute", "Value"])
+            for key, value in headers.items():
+                writer.writerow([key, value])
+
+            # Empty line as separator
+            writer.writerow([])
+
+            # Write data headers
+            writer.writerow(list(datas.keys()))
+
+            # Write data rows
+            rows = zip(*datas.values())
+            writer.writerows(rows)
+

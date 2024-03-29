@@ -114,7 +114,7 @@ class ResolutionName:
         Returns:
             bool: True if resolution successful, False otherwise.
         """
-        cli_ptr_record: str = self._dnsclient.get_PTR_record(ip)
+        cli_ptr_record: str|None = self._dnsclient.get_PTR_record(ip)
         
         if cli_ptr_record == "":
             self._failed_ptr_request.append(f"{ip} -> expected ptr name: {name}, got: ''")

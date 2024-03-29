@@ -156,6 +156,7 @@ class DnsResultHandler:
 
         return datas
 
+    
     def export(self, file: str, title: str) -> None:
         """Export the data to a CSV file.
         
@@ -179,6 +180,9 @@ class DnsResultHandler:
         }
 
         datas = self.parse_data()
+        
+        if file == "resultat_resolution_csv":
+            file: str = f"{file}_{self._data['version']}.csv"
 
         # Writing to CSV file
         with open(file, 'w', newline='') as csvfile:
@@ -189,13 +193,9 @@ class DnsResultHandler:
             for key, value in headers.items():
                 writer.writerow([key, value])
 
-            # Empty line as separator
-            writer.writerow([])
+            writer.writerow([]) # Separator
 
             # Write data headers
-            writer.writerow(list(datas.keys()))
-
-            # Write data rows
+            writer.writerow(list(datas.keys())) # Data header
             rows = zip(*datas.values())
-            writer.writerows(rows)
-
+            writer.writerows(rows) # Data rows

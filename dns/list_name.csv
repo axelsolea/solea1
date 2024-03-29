@@ -1,0 +1,8 @@
+﻿nom,adresse IP,adresse IPv6,nom inverse
+nextcloud.alexgghnetwork.de,173.212.193.41,2a02:c207:2150:8726::1,vmi1508726.contaboserver.net
+zone1.solea.local,172.18.0.202,2001:470:c84c:100::202,zone1.solea.local
+resolver1.solea.local,172.18.0.200,2001:470:c84c:100::200,resolver1.solea.local
+dhcp.solea.local,172.18.0.253,2001:470:c84c:100::253,dhcp.solea.local
+gw.solea.local,172.18.0.254,2001:470:c84c:100::254,gw.solea.local
+toip.solea.local,172.18.0.4,2001:470:c84c:100::4,toip.solea.local
+share.solea.local,172.18.0.252,2001:470:c84c:100::252,share.solea.local

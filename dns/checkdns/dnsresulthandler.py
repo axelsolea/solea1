@@ -199,3 +199,5 @@ class DnsResultHandler:
             writer.writerow(list(datas.keys())) # Data header
             rows = zip(*datas.values())
             writer.writerows(rows) # Data rows
+
+        print(f"export des résultats vers {file}")

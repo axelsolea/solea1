@@ -1,4 +1,4 @@
-from csvparser import CsvParser
+from checkdns.csvparser import CsvParser
 from checkdns.resolutionname import ResolutionName
 from checkdns.dnsresulthandler import DnsResultHandler
 import pandas as pd

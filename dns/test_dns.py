@@ -1,6 +1,6 @@
-from checkdns.csvparser import CsvParser
 from checkdns.resolutionname import ResolutionName
 from checkdns.dnsresulthandler import DnsResultHandler
+from checkdns.csvparser import CsvParser
 import pandas as pd
 import sys
 import argparse
@@ -8,7 +8,7 @@ import argparse
 ####################################################################
 # Author: Djetic Alexandre
 # Date: 15/03/2024
-# description: ce script test un server dns en fesant des requètes  
+# description: ce script test un server dns en fesant des requètes
 #              sur chaque enregistrement du/des fichier de zone
 ####################################################################
 
@@ -20,12 +20,12 @@ def parser():
         argparse.Namespace: An object containing parsed arguments.
     """
     parser = argparse.ArgumentParser(description="ce script test un serveur dns en réalisant une/des requète(s) dns et leur(s) requète(s) inverse")
-    parser.add_argument('-v', '--verbose', help="Définit si il affiche dans la console les informations", const=1, nargs='?', default=0)
+    parser.add_argument('-v', '--verbose', help="Définit si il affiche dans la console les informations", const = 1, nargs = '?', default = 0)
     parser.add_argument('-s', '--server', help="Définit l'adresse IP du serveur DNS à tester.")
     parser.add_argument('-f', '--file', help="Définit le fichier CSV source contenant les noms à tester.")
-    parser.add_argument('-4', '--v4', help="Réalise des résolutions de noms IPv4.", action='store_true')
-    parser.add_argument('-6', '--v6', help="Réalise des résolutions de noms IPv6.", action='store_true')
-    parser.add_argument('-e', '--export', help="décide si on veut exporter au format csv les résulats")
+    parser.add_argument('-4', '--v4', help="Réalise des résolutions de noms IPv4.", action = 'store_true')
+    parser.add_argument('-6', '--v6', help="Réalise des résolutions de noms IPv6.", action = 'store_true')
+    parser.add_argument('-e', '--export', help="décide si on veut exporter au format csv les résulats", const = 'resultat_resolution_csv', nargs = '?', default = 'resultat_resolution_csv')
     return parser.parse_args()
 
 
@@ -49,7 +49,7 @@ def main() -> None:
     if not args.v4 and not args.v6:
         print("aucune résolution à faire...")
         sys.exit(1)
-    
+
     # obtention des nom à tester
     column_names = ['nom', 'adresse IP', 'adresse IPv6', 'nom inverse']
     csvparser: CsvParser = CsvParser(args.file, column_names)
@@ -61,7 +61,14 @@ def main() -> None:
         resolution.run()
         resolution_result: dict = resolution.export_result()
         handlerresult: DnsResultHandler = DnsResultHandler(resolution_result, "résolution IPv4", int(args.verbose))
-        handlerresult.verbose("solea.local")
+
+        if args.verbose:
+            handlerresult.verbose("solea.local")
+
+        if args.export:
+            export_file = args.export if isinstance(args.export, str) else 'resultat_resolution_v4.csv'
+            handlerresult.export(export_file, "résultat de résolution: solea.local(ipv4)")
+
         print("\n")
 
     # résolutions
@@ -70,10 +77,18 @@ def main() -> None:
         resolution.run()
         resolution_result: dict = resolution.export_result()
         handlerresult: DnsResultHandler = DnsResultHandler(resolution_result, "résolution IPv6", int(args.verbose))
-        handlerresult.verbose("solea.local")
+
+        if args.verbose:
+            handlerresult.verbose("solea.local")
+
+        if args.export:
+            export_file = args.export if isinstance(args.export, str) else 'resultat_resolution_v6.csv'
+            handlerresult.export(export_file, "résultat de résolution: solea.local(ipv6)")
+
         print("\n")
-    
+
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

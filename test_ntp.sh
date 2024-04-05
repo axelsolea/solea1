@@ -20,7 +20,6 @@ FICHIER_SERVEUR="$1"
 for serveur in $(cat "$FICHIER_SERVEUR")
 do
   resultat_timectl=$(ssh axel@$serveur "timedatectl")
-  echo $resultat_timectl
   etat_actif=$(echo "$resultat_timectl" | grep "NTP" | awk '{print $3}')
   date_actuelle=$(echo "$resultat_timectl" | grep "Local time" | awk '{print $4}')
   heure=$(echo "$resultat_timectl" | grep "Local time" | awk '{print $5}')

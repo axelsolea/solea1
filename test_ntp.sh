@@ -17,7 +17,7 @@ VERT="\033[0;32m"
 # Variables d'environnement
 FICHIER_SERVEUR="$1"
 
-echo -e "---------- ${ROUGE}test NTP${SANS_COULEUR} ----------"
+echo -e "---------- ${ROUGE}test NTP${SANS_COULEUR} ----------\n"
 
 for serveur in $(cat "$FICHIER_SERVEUR")
 do

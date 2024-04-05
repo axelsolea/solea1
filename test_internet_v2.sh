@@ -10,9 +10,9 @@ function test_ping {
   return_value=$(echo $value | awk 'NR==2 {print $6}')
   
   if [[ "$return_value" == "100%" ]];then
-    echo "test de connexion $1: OK ✓"
+    echo -e"test de connexion $1: \nOK ✓"
   else
-    echo "test de connexion $1: NOK ✘" 
+    echo -e "test de connexion $1: \nNOK ✘" 
   fi
 }
 

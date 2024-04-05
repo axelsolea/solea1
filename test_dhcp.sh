@@ -42,8 +42,8 @@ ip addr flush dev "$INT" > /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
-dhclient -4 -d -v -i "$INT" > /dev/null 2>> /dev/null
-dhclient -6 -d -v -i "$INT" > /dev/null 2>> /dev/null
+dhclient -4 -v -i "$INT" > /dev/null 2>> /dev/null
+dhclient -6 -v -i "$INT" > /dev/null 2>> /dev/null
 
 # Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then

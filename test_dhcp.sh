@@ -17,14 +17,14 @@ function get_current_ip {
     TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
 
     if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-        echo "Adresse IP actuelle (V4): $TMP_IP_V4"
-        if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-            echo "Adresse IP actuelle (V6): $TMP_IP_V6_FILTERED"
-        else
-            echo "Adresse IP actuelle (V6): Aucune"
-        fi
+      echo "Adresse IP actuelle (V4): $TMP_IP_V4"
+      if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
+          echo "Adresse IP actuelle (V6): $TMP_IP_V6_FILTERED"
+      else
+          echo "Adresse IP actuelle (V6): Aucune"
+      fi
     else
-        echo "Adresse IP actuelle: aucune"
+      echo "Adresse IP actuelle: aucune"
     fi
 }
 
@@ -42,7 +42,7 @@ ip addr flush dev "$INT" > /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
-dhclient -i "$INT" > /dev/null 2>> /dev/null
+dhclient -4 -6 -i "$INT" > /dev/null 2>> /dev/null
 
 # Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then

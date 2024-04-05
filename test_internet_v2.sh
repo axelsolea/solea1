@@ -1,18 +1,21 @@
 #!/bin/bash
 #Author : Axel CHALVIN
 #Creation date : 08/03/2024
-#Last edit : 08/03/2024
+#Last edit : 05/04/2024
 
 function test_ping {
   # $1 : name or IP
   value=$(ping -c 1 -q "$1" | grep "ping statistics" -A 1) 
   echo "$value" >> test_internet_v2.log
-  return_value=$(echo $value | awk 'NR==2 {print $6}')
+  return_value=$(echo "$value" | awk 'NR==2 {print $6}')
   
+  echo "$return_value"
+
+  echo "nom: $1"
   if [[ "$return_value" == "100%" ]];then
-    echo -e"test de connexion $1: \nOK ✓"
+    echo -e"connexion: \nOK ✓"
   else
-    echo -e "test de connexion $1: \nNOK ✘" 
+    echo -e "connexion: \nNOK ✘" 
   fi
 }
 

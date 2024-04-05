@@ -23,9 +23,8 @@ function get_current_ip {
 
 # Variable d'environnement
 INT="$1"
-TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
 TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk 'NR==1 {print $2}')
-FILE_LOG="test_dhcp.log"
+echo "$TMP_IP_V6"
 
 # Adresse IP actuelle
 get_current_ip

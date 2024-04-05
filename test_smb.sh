@@ -81,7 +81,7 @@ fi
 
 
 echo -e "\n5) Lecture du fichier: $SHARE_DIR/admin1.txt"
-CONTENT=$(cat "$SHARE_DIR/admin1.txt")
+CONTENT=$(cat "${SHARE_DIR}/admin1.txt")
 
 echo "Contenu de $SHARE_DIR/admin1.txt:"
 echo "$CONTENT"
@@ -108,7 +108,7 @@ echo "Utilisateur inexistant du partage:"
 echo "Nom: jhon"
 echo "Mot de passe: smith"
 
-mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" >> /dev/null 2> /dev/null
+mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" 2> /dev/null
 
 if [ $? -eq 0 ]; then
   echo "La connexion au serveur ne doit pas fonctionner ici... échec "

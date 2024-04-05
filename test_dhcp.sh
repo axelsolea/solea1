@@ -31,6 +31,12 @@ get_current_ip
 echo "Suppression de l'adresse IP actuelle:"
 dhclient -r "$INT" > /dev/null 2>> /dev/null
 ip addr flush dev "$INT" > /dev/null
+
+# Suppression de fe80
+TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
+ip a del "$TMP_IP_V6" dec "$INT" >/dev/null
+
+# Vérification que tout les addresses sont supprimé
 get_current_ip
 
 # Changement vers une IP temporaire

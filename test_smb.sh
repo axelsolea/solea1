@@ -61,7 +61,7 @@ fi
 
 
 echo -e "\n3) Liaison du dossier de partage au partage du serveur: $SHARE_DIR"
-sudo mount -t cifs "//$IP/$SHARE" "$SHARE_DIR" -o username="$USER_SHARE",password="$PASS" >> /dev/null
+mount -t cifs "//$IP/$SHARE" "$SHARE_DIR" -o username="$USER_SHARE",password="$PASS" >> /dev/null
 
 if [ $? -eq 0 ]; then
   echo "Liaison en cours... succès"
@@ -94,7 +94,7 @@ fi
 
 
 echo -e "\n6) Suppression du lien du dossier de partage et du serveur"
-sudo umount $SHARE_DIR >> /dev/null
+umount $SHARE_DIR >> /dev/null
 
 if [ $? -eq 0 ]; then 
   echo "Suppression du lien... succès"
@@ -108,10 +108,10 @@ echo "Utilisateur inexistant du partage:"
 echo "Nom: jhon"
 echo "Mot de passe: smith"
 
-sudo mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith"
+mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" 
 
-if [ $? -eq 1 ]; then
-  echo "La connexion au serveur ne doit pas fonctionner ici... succès"
+if [ $? -eq 0 ]; then
+  echo "La connexion au serveur ne doit pas fonctionner ici... échec "
 else 
-  echo "La connexion au serveur ne doit pas fonctionner ici... échec"
+  echo "La connexion au serveur ne doit pas fonctionner ici... Succès"
 fi

@@ -1,8 +1,15 @@
 #!/bin/bash
 # Auteur: Djetic Alexandre
 # Date: 16/02/2023
-# Modifié: 16/02/2023
+# Modifié: 05/04/2023
 # Description: Ce script teste le serveur DHCP
+
+############################################################################################################################
+# Ce script test une obtentions d'adresses IPv4 et v6 en réalisant une requète au serveur DHCP.
+# - Dans un premiers, il affiche les adresses actuelles
+# - Dans un second, nous suppremons les adresses IP actuelle et les affiches pour s'assurer qu'aucune adresses IP ne reste
+# - Enfin, nous réalisont une nouvelle demande d'adresses IP et l'affichons 
+############################################################################################################################
 
 # couleur
 RED="\e[31m"
@@ -15,22 +22,22 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 function get_current_ip {
-    TMP_IP_V4=$(ip -4 addr show "$INT" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-    TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
+  TMP_IP_V4=$(ip -4 addr show "$INT" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+  TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
 
-    # Exclure les adresses IPv6 de lien local (fe80::)
-    TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
+  # Exclure les adresses IPv6 de lien local (fe80::)
+  TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
 
-    if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-      echo "Adresse IP actuelle (V4): ${GREEN}$TMP_IP_V4${NOCOLOR}"
-      if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-          echo "Adresse IP actuelle (V6): ${GREEN}$TMP_IP_V6_FILTERED${NOCOLOR}"
-      else
-          echo "Adresse IP actuelle (V6): Aucune"
-      fi
+  if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
+    echo "Adresse IP actuelle (V4): ${GREEN}$TMP_IP_V4${NOCOLOR}"
+    if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
+      echo "Adresse IP actuelle (V6): ${GREEN}$TMP_IP_V6_FILTERED${NOCOLOR}"
     else
-      echo "Adresse IP actuelle: aucune"
+      echo "Adresse IP actuelle (V6): Aucune"
     fi
+  else
+    echo "Adresse IP actuelle: aucune"
+  fi
 }
 
 

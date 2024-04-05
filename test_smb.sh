@@ -76,6 +76,8 @@ fi
 
 
 echo -e "\n4) Création d'un fichier admin1.txt dans le dossier partagé"
+echo "contenue du fichier $SHARE_DIR/admin1.txt prévue:"
+echo -e "Texte de admin1\n"
 echo "Texte de admin1" > "$SHARE_DIR/admin1.txt"
 
 if [ $? -eq 0 ]; then 
@@ -113,7 +115,8 @@ fi
 
 
 echo -e "\n7) Tentative de connexion au partage avec un identifiant incorrect"
-echo "Utilisateur inexistant du partage:"
+
+echo -e "\nUtilisateur inexistant du partage:"
 echo "Nom: jhon"
 echo "Mot de passe: smith"
 

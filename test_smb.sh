@@ -49,9 +49,9 @@ echo -e "\n1) Création du dossier de partage: $SHARE_DIR"
 mkdir -p "$SHARE_DIR"
 
 if [ $? -eq 0 ]; then
-  echo "Création du dossier... ${GREEN}succès${NOCOLOR}"
+  echo -e "Création du dossier... ${GREEN}succès${NOCOLOR}"
 else
-  echo "Création du dossier... ${RED}échec${NOCOLOR}"
+  echo -e "Création du dossier... ${RED}échec${NOCOLOR}"
 fi
 
 
@@ -59,9 +59,9 @@ echo -e "\n2) Connexion avec le serveur de partage de fichiers et de dossiers: $
 ping -c 1 $NAME >> /dev/null
 
 if [ $? -eq 0 ]; then
-  echo "Connexion en cours... ${GREEN}succès${NOCOLOR}"
+  echo -e "Connexion en cours... ${GREEN}succès${NOCOLOR}"
 else 
-  echo "Connexion en cours... ${RED}échec${NOCOLOR}"
+  echo -e "Connexion en cours... ${RED}échec${NOCOLOR}"
 fi 
 
 
@@ -69,9 +69,9 @@ echo -e "\n3) Liaison du dossier de partage au partage du serveur: $SHARE_DIR"
 mount -t cifs "//$IP/$SHARE" "$SHARE_DIR" -o username="$USER_SHARE",password="$PASS" >> /dev/null
 
 if [ $? -eq 0 ]; then
-  echo "Liaison en cours... ${GREEN}succès${NOCOLOR}"
+  echo -e "Liaison en cours... ${GREEN}succès${NOCOLOR}"
 else
-  echo "Liaison en cours... ${RED}échec${NOCOLOR}"
+  echo -e "Liaison en cours... ${RED}échec${NOCOLOR}"
 fi
 
 
@@ -79,9 +79,9 @@ echo -e "\n4) Création d'un fichier admin1.txt dans le dossier partagé"
 echo "Texte de admin1" > "$SHARE_DIR/admin1.txt"
 
 if [ $? -eq 0 ]; then 
-  echo "Création du fichier $SHARE_DIR/admin1.txt... ${GREEN}succès${NOCOLOR}"
+  echo -e "Création du fichier $SHARE_DIR/admin1.txt... ${GREEN}succès${NOCOLOR}"
 else 
-  echo "Création du fichier $SHARE_DIR/admin1.txt... ${RED}échec${NOCOLOR}"
+  echo -e "Création du fichier $SHARE_DIR/admin1.txt... ${RED}échec${NOCOLOR}"
 fi 
 
 
@@ -96,9 +96,9 @@ if [ -z "$CONTENT" ]; then
 fi 
 
 if [ "$CONTENT" == "Texte de admin1" ]; then 
-  echo "Le contenu du fichier est correcte... ${GREEN}succès${NOCOLOR}"
+  echo -e "Le contenu du fichier est correcte... ${GREEN}succès${NOCOLOR}"
 else 
-  echo "Le contenu du fichier n'est pas correcte... ${RED}échec${NOCOLOR}"
+  echo -e "Le contenu du fichier n'est pas correcte... ${RED}échec${NOCOLOR}"
 fi 
 
 
@@ -106,9 +106,9 @@ echo -e "\n6) Suppression du lien du dossier de partage et du serveur"
 umount $SHARE_DIR >> /dev/null
 
 if [ $? -eq 0 ]; then 
-  echo "Suppression du lien... ${GREEN}succès${NOCOLOR}"
+  echo -e "Suppression du lien... ${GREEN}succès${NOCOLOR}"
 else 
-  echo "Suppression du lien... ${RED}échec${NOCOLOR}"
+  echo -e "Suppression du lien... ${RED}échec${NOCOLOR}"
 fi
 
 
@@ -120,7 +120,7 @@ echo "Mot de passe: smith"
 mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" 2> /dev/null
 
 if [ $? -eq 0 ]; then
-  echo "La connexion au serveur ne doit pas fonctionner ici... ${RED}échec${NOCOLOR}"
+  echo -e "La connexion au serveur ne doit pas fonctionner ici... ${RED}échec${NOCOLOR}"
 else 
-  echo "La connexion au serveur ne doit pas fonctionner ici... ${GREEN}succès${NOCOLOR}"
+  echo -e "La connexion au serveur ne doit pas fonctionner ici... ${GREEN}succès${NOCOLOR}"
 fi

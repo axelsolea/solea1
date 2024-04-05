@@ -18,7 +18,7 @@ function test_ping {
   
   echo "$return_value"
 
-  echo "nom: ${RED}$1${NOCOLOR}"
+  echo -e "nom: ${RED}${1}${NOCOLOR}"
   if [[ "$return_value" == "0%" ]];then
     echo -e "connexion: \n${GREEN}OK ✓{NOCOLOR}"
   else

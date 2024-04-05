@@ -14,7 +14,7 @@ function test_ping {
   echo "$return_value"
 
   echo "nom: $1"
-  if [[ "$return_value" == "100%" ]];then
+  if [[ "$return_value" == "0%" ]];then
     echo -e"connexion: \nOK ✓"
   else
     echo -e "connexion: \nNOK ✘" 

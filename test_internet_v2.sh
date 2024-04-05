@@ -5,7 +5,7 @@
 
 function test_ping {
   # $1 : name or IP
-  value=$(ping -c 2 -q "$1" | grep "ping statistics" -A 1) 
+  value=$(ping -c 2 "$1" | grep "ping statistics" -A 1) 
   echo "$value" >> test_internet_v2.log
   return_value=$(echo "$value" | awk 'NR==2 {print $6}')
   
@@ -42,4 +42,3 @@ read ans
 if [ "$ans" = "y" ];then 
   cat test_internet_v2.log
 fi
- 

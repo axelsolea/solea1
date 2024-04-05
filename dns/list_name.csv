@@ -1,5 +1,7 @@
 ﻿nom,adresse IP,adresse IPv6,nom inverse
-www.univ-smb.fr,145.239.14.239,2a02:c207:2150:8726::1,www.univ-smb.fr
+h.gtld-servers.net,192.54.112.30,2001:502:8cc::30,h.gtld-servers.net
+j.gtld-servers.net,192.48.79.30,2001:502:7094::30,j.gtld-servers.net
+k.gtld-servers.net,192.52.178.30,2001:530:d2d::30,k.gtld-servers.net
 zone1.solea.local,172.18.0.202,2001:470:c84c:100::202,zone1.solea.local
 resolver1.solea.local,172.18.0.200,2001:470:c84c:100::200,resolver1.solea.local
 dhcp.solea.local,172.18.0.253,2001:470:c84c:100::253,dhcp.solea.local

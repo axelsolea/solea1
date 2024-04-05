@@ -4,6 +4,11 @@
 # Modifié: 16/02/2023
 # Description: Ce script teste le serveur DHCP
 
+# couleur
+RED="\e[31m"
+NOCOLOR="\e[0m"
+GREEN="\033[0;32m"
+
 if [ "$EUID" -ne 0 ]; then
     echo "Requiert un accès en tant que sudo/root"
     exit 1
@@ -17,9 +22,9 @@ function get_current_ip {
     TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
 
     if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-      echo "Adresse IP actuelle (V4): $TMP_IP_V4"
+      echo "Adresse IP actuelle (V4): ${GREEN}$TMP_IP_V4${NOCOLOR}"
       if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-          echo "Adresse IP actuelle (V6): $TMP_IP_V6_FILTERED"
+          echo "Adresse IP actuelle (V6): ${GREEN}$TMP_IP_V6_FILTERED${NOCOLOR}"
       else
           echo "Adresse IP actuelle (V6): Aucune"
       fi

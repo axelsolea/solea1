@@ -10,10 +10,12 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 function get_current_ip {
-    TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+    TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+    TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk '{print $2}')
 
     if [ ! -z "$TMP_IP" ]; then
-        echo "Adresse IP actuelle: $TMP_IP"
+        echo "Adresse IP actuelle(V4): $TMP_IP_V4"
+        echo "Adresse IP actuelle(V6): $TMP_IP_V6"
     else
         echo "Adresse IP actuelle: aucune"
     fi
@@ -21,14 +23,18 @@ function get_current_ip {
 
 # Variable d'environnement
 INT="$1"
-TMP_IP=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk '{print $2}')
 FILE_LOG="test_dhcp.log"
 
 # Adresse IP actuelle
 get_current_ip
 
 # Suppression de l'adresse IP actuelle
-echo "Suppression de l'adresse IP actuelle: $TMP_IP"
+echo "Suppression de l'adresse IP actuelle:"
+echo "$TMP_IP_V4"
+echo "$TMP_IP_V6"
+
 dhclient -r "$INT" > /dev/null
 get_current_ip
 

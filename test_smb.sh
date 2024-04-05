@@ -81,7 +81,7 @@ fi
 
 
 echo -e "\n5) Lecture du fichier: $SHARE_DIR/admin1.txt"
-CONTENT=$(< "$SHARE_DIR/admin1.txt")
+CONTENT=$(cat "$SHARE_DIR/admin1.txt")
 
 echo "Contenu de $SHARE_DIR/admin1.txt:"
 echo "$CONTENT"

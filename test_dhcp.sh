@@ -10,8 +10,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 function get_current_ip {
-    TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
-    TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk 'NR==1 {print $2}')
+    TMP_IP_V4=$(ip -4 addr show "$INT" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+    TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
 
     if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6" ]; then
         echo "Adresse IP actuelle (V4): $TMP_IP_V4"
@@ -30,11 +30,11 @@ get_current_ip
 # Suppression de l'adresse IP actuelle
 echo "Suppression de l'adresse IP actuelle:"
 dhclient -r "$INT" > /dev/null 2>> /dev/null
-ip a flush dev "$INT" > /dev/null 2>> /dev/null
+ip addr flush dev "$INT" > /dev/null 2>> /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
-dhclient -i "$INT" > /dev/null
+dhclient -v "$INT" > /dev/null 2>> /dev/null
 
 # Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then

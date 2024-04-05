@@ -17,7 +17,7 @@ GREEN="\033[0;32m"
 # env var
 FILE_SERVER="$1"
 
-for server in $(< "FILE_SERVER")
+for server in $(< "$FILE_SERVER")
 do
   timectl_return=$(ssh axel@${server} "timedatectl")
   active_state=$(${timectl_return} | grep "NTP" | awk '{print $3}')

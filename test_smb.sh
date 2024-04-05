@@ -15,6 +15,11 @@
 # - Vérification de la connexion au partage avec un identifiant inconnu
 #########################################################################
 
+if [ $EUID -ne 0 ]; then
+  echo "un accès root/sudo est requie pour l'execution"
+  exit 1 
+fi
+
 # Variables d'environnement
 IP="172.18.0.252"
 NAME="share.solea.local"
@@ -105,7 +110,7 @@ echo "Mot de passe: smith"
 
 sudo mount -t cifs "//$IP/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" 2> /dev/null
 
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
   echo "La connexion au serveur ne doit pas fonctionner ici... succès"
 else 
   echo "La connexion au serveur ne doit pas fonctionner ici... échec"

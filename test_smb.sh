@@ -87,9 +87,9 @@ echo "Contenu de $SHARE_DIR/admin1.txt:"
 echo "$CONTENT"
 
 if [ "$CONTENT" == "Texte de admin1" ]; then 
-  echo "Le contenu du fichier est un succès"
+  echo "Le contenu du fichier est correcte... succès"
 else 
-  echo "Le contenu du fichier est un échec"
+  echo "Le contenu du fichier n'est pas correcte... echec"
 fi 
 
 

@@ -61,7 +61,7 @@ fi
 
 
 echo -e "\n3) Liaison du dossier de partage au partage du serveur: $SHARE_DIR"
-sudo mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="$USER_SHARE",password="$PASS" >> /dev/null
+sudo mount -t cifs "//$IP/$SHARE" "$SHARE_DIR" -o username="$USER_SHARE",password="$PASS" >> /dev/null
 
 if [ $? -eq 0 ]; then
   echo "Liaison en cours... succès"

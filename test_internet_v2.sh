@@ -8,11 +8,11 @@ function test_ping {
   value=$(ping -c 1 -q "$1" | grep "ping statistics" -A 1) 
   echo "$value" >> test_internet_v2.log
   return_value=$(echo $value | awk 'NR==2 {print $6}')
-
+  
   if [[ "$return_value" == "100%" ]];then
-    echo "OK ✓"
+    echo "test de connexion $1: OK ✓"
   else
-    echo "NOK ✘" 
+    echo "test de connexion $1: NOK ✘" 
   fi
 }
 
@@ -39,3 +39,4 @@ read ans
 if [ "$ans" = "y" ];then 
   cat test_internet_v2.log
 fi
+ 

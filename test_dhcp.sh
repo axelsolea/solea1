@@ -13,16 +13,18 @@ function get_current_ip {
     TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
     TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk 'NR==1 {print $2}')
 
-    if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6" ]; then
-        echo "Adresse IP actuelle (V4): $TMP_IP_V4"
-        echo "Adresse IP actuelle (V6): $TMP_IP_V6"
+    if [ ! -z "$TMP_IP" ]; then
+      echo "Adresse IP actuelle(V4): $TMP_IP_V4"
+      echo "Adresse IP actuelle(V6): $TMP_IP_V6"
     else
-        echo "Adresse IP actuelle: aucune"
+      echo "Adresse IP actuelle: aucune"
     fi
 }
 
 # Variable d'environnement
 INT="$1"
+TMP_IP_V4=$(ip a show "$INT" | grep "inet[^6]" | awk '{print $2}')
+TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk 'NR==1 {print $2}')
 FILE_LOG="test_dhcp.log"
 
 # Adresse IP actuelle
@@ -37,13 +39,13 @@ dhclient -r "$INT" > /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
-dhclient -i "$INT" > /dev/null
+#dhclient -i "$INT" > /dev/null
 
 # Exécution du client DHCP (udhcpc)
-if [ $? -eq 0 ]; then
-    echo "Obtention d'une adresse IPv4 et IPv6 à l'aide du serveur DHCP : OK"
-    get_current_ip # Détermination de la nouvelle IP
-else
-    echo "Obtention d'une adresse IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
-    get_current_ip # Détermination de la nouvelle IP
-fi
+#if [ $? -eq 0 ]; then
+#  echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : OK"
+#    get_current_ip # Détermination de la nouvelle IP
+#else
+#    echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
+#    get_current_ip # Détermination de la nouvelle IP
+#fi

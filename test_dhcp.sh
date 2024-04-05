@@ -23,18 +23,14 @@ function get_current_ip {
 
 # Variable d'environnement
 INT="$1"
-TMP_IP_V6=$(ip a show "$INT" | grep "inet[^4]" | awk 'NR==1 {print $2}')
-echo "$TMP_IP_V6"
 
 # Adresse IP actuelle
 get_current_ip
 
 # Suppression de l'adresse IP actuelle
 echo "Suppression de l'adresse IP actuelle:"
-get_current_ip
-
-dhclient -r "$INT" > /dev/null
-ip a del "$TMP_IP_V6" dev "$1" > /dev/null
+dhclient -r "$INT" > /dev/null 2>> /dev/null
+ip a flush dev "$INT" > /dev/null 2>> /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
@@ -42,9 +38,9 @@ dhclient -i "$INT" > /dev/null
 
 # Exécution du client DHCP (udhcpc)
 if [ $? -eq 0 ]; then
-  echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : OK"
+    echo "Obtention d'une adresse IPv4 et IPv6 à l'aide du serveur DHCP : OK"
     get_current_ip # Détermination de la nouvelle IP
 else
-    echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
+    echo "Obtention d'une adresse IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
     get_current_ip # Détermination de la nouvelle IP
 fi

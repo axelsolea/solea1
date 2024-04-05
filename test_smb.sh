@@ -5,7 +5,7 @@
 
 function test_ping {
   # $1 : name or IP
-  #
+
   # couleur
   RED="\e[31m"
   NOCOLOR="\e[0m"
@@ -16,8 +16,6 @@ function test_ping {
   echo "$value" >> test_internet_v2.log
   return_value=$(echo "$value" | awk 'NR==2 {print $6}')
   
-  echo "$return_value"
-
   echo -e "nom: ${RED}${1}${NOCOLOR}"
   if [[ "$return_value" == "0%" ]];then
     echo -e "connexion: \n${GREEN}OK ✓{NOCOLOR}"

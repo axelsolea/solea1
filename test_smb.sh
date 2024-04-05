@@ -79,18 +79,19 @@ else
   echo "Création du fichier $SHARE_DIR/admin1.txt... échec"
 fi 
 
-
+ 
 echo -e "\n5) Lecture du fichier: $SHARE_DIR/admin1.txt"
-CONTENT=$(cat "${SHARE_DIR}/admin1.txt")
+CONTENT=$(cat "$SHARE_DIR/admin1.txt")
 
 echo "Contenu de $SHARE_DIR/admin1.txt:"
 echo "$CONTENT"
 
-if [ "$CONTENT" == "Texte de admin1" ]; then 
-  echo "Le contenu du fichier est correcte... succès"
+if [ "$CONTENT" = "Texte de admin1" ]; then 
+  echo "Le contenu du fichier est correct... succès"
 else 
-  echo "Le contenu du fichier n'est pas correcte... echec"
+  echo "Le contenu du fichier n'est pas correct... échec"
 fi 
+
 
 
 echo -e "\n6) Suppression du lien du dossier de partage et du serveur"

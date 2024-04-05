@@ -3,8 +3,6 @@
 #Creation date : 08/03/2024
 #Last edit : 05/04/2024
 
-set -x
-
 function test_ping {
   # $1 : name or IP
   value=$(ping -c 1 "$1" | grep "ping statistics" -A 1) 

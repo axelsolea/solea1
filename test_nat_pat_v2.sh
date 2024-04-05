@@ -49,11 +49,11 @@ echo "Accès SSH via l'ip publique sur le port 22252"
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
 echo 'Nom de la machine : '
 sshpass -p " " ssh admin-solea@192.168.141.2 -p 22252 "hostname"
+echo -e "----------------------------------------------------------------------------------------------------\n"
 
 clear_terminal "echec"
 echo "--------------------------------- accès avec compte LDAP: echec --------------------------------"
 test_accès_ssh_avec_ldap "echec" "echec"
-echo -e "----------------------------------------------------------------------------------------------------\n"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 echo "Arrêt du script..."

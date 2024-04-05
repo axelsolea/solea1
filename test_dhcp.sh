@@ -29,9 +29,9 @@ function get_current_ip {
   TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
 
   if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-    echo "Adresse IP actuelle (V4): ${GREEN}$TMP_IP_V4${NOCOLOR}"
+    echo -e "Adresse IP actuelle (V4): ${GREEN}$TMP_IP_V4${NOCOLOR}"
     if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
-      echo "Adresse IP actuelle (V6): ${GREEN}$TMP_IP_V6_FILTERED${NOCOLOR}"
+      echo -e "Adresse IP actuelle (V6): ${GREEN}$TMP_IP_V6_FILTERED${NOCOLOR}"
     else
       echo "Adresse IP actuelle (V6): Aucune"
     fi

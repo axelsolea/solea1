@@ -32,20 +32,20 @@ get_current_ip
 
 # Suppression de l'adresse IP actuelle
 echo "Suppression de l'adresse IP actuelle:"
-echo "$TMP_IP_V4"
-echo "$TMP_IP_V6"
+get_current_ip
 
 dhclient -r "$INT" > /dev/null
+ip a del "$TMP_IP_V6" dev "$1" > /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire
-#dhclient -i "$INT" > /dev/null
+dhclient -i "$INT" > /dev/null
 
 # Exécution du client DHCP (udhcpc)
-#if [ $? -eq 0 ]; then
-#  echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : OK"
-#    get_current_ip # Détermination de la nouvelle IP
-#else
-#    echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
-#    get_current_ip # Détermination de la nouvelle IP
-#fi
+if [ $? -eq 0 ]; then
+  echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : OK"
+    get_current_ip # Détermination de la nouvelle IP
+else
+    echo "Obtention d'une adresses IPv4 et IPv6 à l'aide du serveur DHCP : NOK"
+    get_current_ip # Détermination de la nouvelle IP
+fi

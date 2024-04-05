@@ -71,7 +71,7 @@ fi
 
 
 echo -e "\n4) Création d'un fichier admin1.txt dans le dossier partagé"
-echo "Texte de admin1" > "$SHARE_DIR/admin1.txt" >> /dev/null
+echo "Texte de admin1" > "$SHARE_DIR/admin1.txt"
 
 if [ $? -eq 0 ]; then 
   echo "Création du fichier $SHARE_DIR/admin1.txt... succès"
@@ -79,19 +79,22 @@ else
   echo "Création du fichier $SHARE_DIR/admin1.txt... échec"
 fi 
 
- 
+
 echo -e "\n5) Lecture du fichier: $SHARE_DIR/admin1.txt"
-CONTENT=$(cat "$SHARE_DIR/admin1.txt")
+CONTENT=$(cat "${SHARE_DIR}/admin1.txt")
 
 echo "Contenu de $SHARE_DIR/admin1.txt:"
 echo "$CONTENT"
 
-if [ "$CONTENT" = "Texte de admin1" ]; then 
-  echo "Le contenu du fichier est correct... succès"
-else 
-  echo "Le contenu du fichier n'est pas correct... échec"
+if [ -z "$CONTENT" ]; then 
+  echo "Le contenue de $SHARE_DIR/admin1.txt est vide..."
 fi 
 
+if [ "$CONTENT" == "Texte de admin1" ]; then 
+  echo "Le contenu du fichier est correcte... succès"
+else 
+  echo "Le contenu du fichier n'est pas correcte... echec"
+fi 
 
 
 echo -e "\n6) Suppression du lien du dossier de partage et du serveur"

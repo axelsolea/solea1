@@ -18,9 +18,9 @@ function test_ping {
   
   echo -e "Nom : ${ROUGE}${1}${AUCUNE_COULEUR}"
   if [[ "$valeur_retour" == "0%" ]];then
-    echo -e "Connexion : \n${VERT}OK ✓${AUCUNE_COULEUR}"
+    echo -e "- Connexion : ${VERT}OK ✓${AUCUNE_COULEUR}"
   else
-    echo -e "Connexion : \n${ROUGE}NOK ✘${AUCUNE_COULEUR}" 
+    echo -e "- Connexion : ${ROUGE}NOK ✘${AUCUNE_COULEUR}" 
   fi
 }
 

@@ -36,7 +36,7 @@ PASS="123"
 # Test
 echo -e "${RED}Test du partage de solea${NOCOLOR}"
 
-echo "---- Informations sur le test, paramètres ----"
+echo -e "\n---- Informations sur le test, paramètres ----"
 echo "Adresse IP du serveur de partage: $IP"
 echo "Nom du serveur de partage: $NAME "
 echo "Sélection du partage: $SHARE"

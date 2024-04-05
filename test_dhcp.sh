@@ -34,7 +34,7 @@ ip addr flush dev "$INT" > /dev/null
 
 # Suppression de fe80
 TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
-ip a del "$TMP_IP_V6" dec "$INT" >/dev/null
+ip a del "$TMP_IP_V6" dev "$INT" >/dev/null
 
 # Vérification que tout les addresses sont supprimé
 get_current_ip

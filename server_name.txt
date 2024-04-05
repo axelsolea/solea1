@@ -1,4 +1,3 @@
-share.solea.local
 toip.solea.local
 zone1.solea.local
 resolver1.solea.local

@@ -13,13 +13,21 @@ function get_current_ip {
     TMP_IP_V4=$(ip -4 addr show "$INT" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
     TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
 
-    if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6" ]; then
+    # Exclure les adresses IPv6 de lien local (fe80::)
+    TMP_IP_V6_FILTERED=$(echo "$TMP_IP_V6" | grep -v '^fe80')
+
+    if [ ! -z "$TMP_IP_V4" ] || [ ! -z "$TMP_IP_V6_FILTERED" ]; then
         echo "Adresse IP actuelle (V4): $TMP_IP_V4"
-        echo "Adresse IP actuelle (V6): $TMP_IP_V6"
+        if [ ! -z "$TMP_IP_V6_FILTERED" ]; then
+            echo "Adresse IP actuelle (V6): $TMP_IP_V6_FILTERED"
+        else
+            echo "Adresse IP actuelle (V6): Aucune"
+        fi
     else
         echo "Adresse IP actuelle: aucune"
     fi
 }
+
 
 # Variable d'environnement
 INT="ens160"
@@ -31,12 +39,6 @@ get_current_ip
 echo "Suppression de l'adresse IP actuelle:"
 dhclient -r "$INT" > /dev/null 2>> /dev/null
 ip addr flush dev "$INT" > /dev/null
-
-# Suppression de fe80
-TMP_IP_V6=$(ip -6 addr show "$INT" | grep -oP '(?<=inet6\s)[\da-fA-F:]+')
-ip a del "$TMP_IP_V6" dev "$INT" >/dev/null
-
-# Vérification que tout les addresses sont supprimé
 get_current_ip
 
 # Changement vers une IP temporaire

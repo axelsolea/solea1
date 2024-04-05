@@ -20,6 +20,10 @@ if [ $EUID -ne 0 ]; then
   exit 1 
 fi
 
+# couleur
+RED="\e[31m"
+NOCOLOR="\e[0m"
+
 # Variables d'environnement
 IP="172.18.0.252"
 NAME="share.solea.local"
@@ -29,7 +33,7 @@ USER_SHARE="admin1"
 PASS="123"
 
 # Test
-echo "Test du partage de solea"
+echo -e "${RED}Test du partage de solea${NOCOLOR}"
 
 echo "---- Informations sur le test, paramètres ----"
 echo "Adresse IP du serveur de partage: $IP"

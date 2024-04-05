@@ -120,7 +120,7 @@ echo "Mot de passe: smith"
 mount -t cifs "//$NAME/$SHARE" "$SHARE_DIR" -o username="jhon",password="smith" 2> /dev/null
 
 if [ $? -eq 0 ]; then
-  echo -e "La connexion au serveur ne doit pas fonctionner ici... ${RED}échec${NOCOLOR}"
+  echo -e "\nLa connexion au serveur ne doit pas fonctionner ici... ${RED}échec${NOCOLOR}"
 else 
-  echo -e "La connexion au serveur ne doit pas fonctionner ici... ${GREEN}succès${NOCOLOR}"
+  echo -e "\nLa connexion au serveur ne doit pas fonctionner ici... ${GREEN}succès${NOCOLOR}"
 fi

@@ -22,7 +22,7 @@ function get_current_ip {
 }
 
 # Variable d'environnement
-INT="$1"
+INT="ens160"
 
 # Adresse IP actuelle
 get_current_ip
@@ -30,7 +30,7 @@ get_current_ip
 # Suppression de l'adresse IP actuelle
 echo "Suppression de l'adresse IP actuelle:"
 dhclient -r "$INT" > /dev/null 2>> /dev/null
-ip addr flush dev "$INT" > /dev/null 2>> /dev/null
+ip addr flush dev "$INT" > /dev/null
 get_current_ip
 
 # Changement vers une IP temporaire

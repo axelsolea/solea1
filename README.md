@@ -51,5 +51,5 @@ chmod +x *.sh
 
 - lancement du script avec un chemin absolut:
 ```bash
-/chemin/du/fichier.bash
+/chemin/du/fichier.sh
 ```

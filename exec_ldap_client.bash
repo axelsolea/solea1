@@ -4,6 +4,11 @@
 # Modified: 02/02/2024
 # Description: this script setup a LDAP client on debian base distro
 
+#############################################################
+# Ce script permet de lancer le script de mise en place
+# du client LDAP en utilisant une console à distance(ssh)
+#############################################################
+
 if [ $# -ne 2 ]; then
   echo "Usage: $0 <user> <machineip>"
   exit 1

@@ -16,7 +16,7 @@ apt install python3 python-pip
 dnf install python3 python-pip
 ```
 
-### bash
+### Installation de bash
 
 - ubuntu/debian:
 ```bash

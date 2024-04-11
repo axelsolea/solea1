@@ -5,7 +5,7 @@
 # Description: Ce script vérifie que tous les serveurs sont synchronisés via NTP
 
 ##############################################################################################
-# Ce script se connecte en ssh à chaque serveur et vérifie s'il est synchronisé
+# Ce script se connecte en ssh à chaque serveur et vérifie s'il est synchronisé temporellement
 # Il obtient le statut, la date et l'heure du serveur
 ##############################################################################################
 

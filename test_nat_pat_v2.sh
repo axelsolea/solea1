@@ -20,10 +20,11 @@ function test_accès_ssh_avec_ldap {
     PORTS="22200 22202 22253 22004"
     SCRIPT="echo 'Nom de la machine : '; hostname"
     
-    for PORT in ${PORTS}; do
-    echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-    ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}"
-done
+    for PORT in ${PORTS}; 
+    do
+        echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
+        ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}"
+    done
 }
 
 function clear_terminal {
@@ -48,7 +49,7 @@ test_accès_ssh_avec_ldap "thomas" "Solea05thomas"
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 clear_terminal "admin-solea"
-echo "--------------------------------- accès avec compte LDAP: compte locale --------------------------------"
+echo "--------------------------------- accès avec compte LDAP: compte local --------------------------------"
 echo "Accès SSH via l'ip publique sur le port 22252"  
 echo "Accès SSH via l'ip publique (192.168.141.2) sur le port 22252"  
 echo 'Nom de la machine : '
@@ -57,7 +58,23 @@ echo -e "-----------------------------------------------------------------------
 
 clear_terminal "echec"
 echo "--------------------------------- accès avec compte LDAP: echec --------------------------------"
-test_accès_ssh_avec_ldap "echec" "echec"
+USER_SSH="echec"
+PASS="echec"
+PORTS="22200 22202 22253 22004"
+SCRIPT="echo 'Nom de la machine : '; hostname"
+
+for PORT in ${PORTS}; 
+do
+    echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
+    ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}" 2>> /dev/null
+
+    if [ $? -eq 0]; then
+        echo "failed: $PORT"
+    else
+        echo "success: $PORT"
+    fi
+done
+
 echo -e "----------------------------------------------------------------------------------------------------\n"
 
 echo "Arrêt du script..."

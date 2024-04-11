@@ -53,3 +53,14 @@ chmod +x *.sh
 ```bash
 /chemin/du/fichier.sh
 ```
+
+
+- lancement du script avec un chemin relatif(accès root):
+```bash
+sudo ./test_internet_v2.sh
+```
+
+- lancement du script avec un chemin absolut(accès root):
+```bash
+sudo /chemin/du/fichier.sh
+```

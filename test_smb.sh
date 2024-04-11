@@ -77,7 +77,7 @@ fi
 
 
 echo -e "\n4) Création d'un fichier admin1.txt dans le dossier partagé"
-echo "contenue du fichier $SHARE_DIR/admin1.txt prévue:"
+echo "contenu du fichier $SHARE_DIR/admin1.txt prévue:"
 echo -e "Texte de admin1\n"
 echo "Texte de admin1" > "$SHARE_DIR/admin1.txt"
 

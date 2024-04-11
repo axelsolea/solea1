@@ -4,6 +4,11 @@
 #Last edit : 16/02/2024
 #Desc : Raw dns testing
 
+####################################################################
+# ce script test une résolution de nom de chaque serveur du site
+# de l'entreprise SOLEA
+####################################################################
+
 echo "Script started"
 
 echo "Resolving resolver1"

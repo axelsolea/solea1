@@ -1,66 +1,62 @@
 # solea1
 
 ## Description
-ce github contient tout les scripts pour le porjet étudiant solea1.
+Ce dépôt GitHub contient tous les scripts pour le projet étudiant solea1.
 
-## Dépendance
+## Dépendances
 
-### Installation de python:
-- ubuntu/debian:
-```bash
-apt install python3 python-pip
-```
+### Installation de Python :
+- Pour Ubuntu/Debian :
+  ```bash
+  apt install python3 python-pip
+  ```
+- Pour AlmaLinux/RedHat :
+  ```bash
+  dnf install python3 python-pip
+  ```
 
-- almalinux/redhat:
-```bash
-dnf install python3 python-pip
-```
+### Installation de Bash :
+- Pour Ubuntu/Debian :
+  ```bash
+  apt install bash
+  ```
+- Pour AlmaLinux/RedHat :
+  ```bash
+  dnf install bash
+  ```
 
-### Installation de bash
+⚠️ Certains scripts nécessitent un accès root ou des privilèges ⚠️
 
-- ubuntu/debian:
-```bash
-apt install bash
-```
+## Lancement des scripts
 
-- almalinux/redhat:
-```bash
-dnf install bash
-```
-
-⚠️ certain script demande un accès root ou privilégié ⚠️
-
-## Lancement de script
-
-### Script python
-- example d'usage
-```bash
-python3 test_dns.py -s 1.1.1.1 -f list_name.csv -4 -6 -v -e
-```
+### Script Python
+- Exemple d'utilisation :
+  ```bash
+  python3 test_dns.py -s 1.1.1.1 -f list_name.csv -4 -6 -v -e
+  ```
 
 ### Script bash
-- donner les permissions d'exécution
-```bash
-chmod +x *.sh
-```
+- Donner les permissions d'exécution :
+  ```bash
+  chmod +x *.sh
+  ```
 
-- lancement du script avec un chemin relatif:
-```bash
-./test_internet_v2.sh
-```
+- Lancement du script avec un chemin relatif :
+  ```bash
+  ./test_internet_v2.sh
+  ```
 
-- lancement du script avec un chemin absolut:
-```bash
-/chemin/du/fichier.sh
-```
+- Lancement du script avec un chemin absolu :
+  ```bash
+  /chemin/du/fichier.sh
+  ```
+  
+- Lancement du script avec un chemin relatif (accès root) :
+  ```bash
+  sudo ./test_internet_v2.sh
+  ```
 
-
-- lancement du script avec un chemin relatif(accès root):
-```bash
-sudo ./test_internet_v2.sh
-```
-
-- lancement du script avec un chemin absolut(accès root):
-```bash
-sudo /chemin/du/fichier.sh
-```
+- Lancement du script avec un chemin absolu (accès root) :
+  ```bash
+  sudo /chemin/du/fichier.sh
+  ```

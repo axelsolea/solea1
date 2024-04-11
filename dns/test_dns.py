@@ -9,7 +9,8 @@ import argparse
 # Author: Djetic Alexandre
 # Date: 15/03/2024
 # description: ce script test un server dns en fesant des requètes
-#              sur chaque enregistrement du/des fichier de zone
+#              de nom et inverse sur chaque enregistrement 
+#              du/des fichier de zone
 ####################################################################
 
 def parser():

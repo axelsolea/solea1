@@ -5,15 +5,16 @@
 # Description: Permet de se connecter au serveur samba, créer un dossier, un fichier et de nettoyer
 
 #########################################################################
-# Ce script réalise un test complet d'un partage de fichier samba:
+# Ce script réalise un test complet d'un partage de fichier Samba :
 # - Création du dossier de partage
-# - Connexion avec le serveur
-# - Liaison du dossier de partage et le serveur
+# - Connexion au serveur
+# - Liaison du dossier de partage avec le serveur
 # - Création d'un fichier texte
 # - Lecture du fichier créé précédemment
-# - Suppression du lien du dossier de partage et le serveur
+# - Suppression du lien entre le dossier de partage et le serveur
 # - Vérification de la connexion au partage avec un identifiant inconnu
 #########################################################################
+
 
 if [ $EUID -ne 0 ]; then
   echo "un accès root/sudo est requie pour l'execution"

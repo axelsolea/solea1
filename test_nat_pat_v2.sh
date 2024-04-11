@@ -4,8 +4,8 @@
 #Last edit : 22/03/2024
 
 #######################################################################################################
-# ce script se connecte à la console pour chaque serveur du site d'AIX avec différent utilisateur LDAP
-# sur chaque serveur et la lance la commade affichans le nom du serveur donnée
+# Ce script se connecte à la console de chaque serveur du site d'AIX avec différents utilisateurs LDAP.
+# Il lance la commande affichant le nom du serveur donné sur chaque serveur.
 #######################################################################################################
 
 echo "Lancement du script..."

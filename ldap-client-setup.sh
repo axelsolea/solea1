@@ -4,6 +4,12 @@
 # Modified: 02/02/2024
 # Description: this script setup a LDAP client on debian base distro
 
+###########################################################################
+# Ce script permet de mettre une machine de base debian en tant que 
+# client du serveur LDAP. Il instale les dépendances et change le mode
+# d'authentification des machines clientes.
+###########################################################################
+
 #non interactif
 #export DEBIAN_FRONTEND=noninteractive
 

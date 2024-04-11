@@ -5,10 +5,10 @@
 # Description: Ce script teste le serveur DHCP
 
 ############################################################################################################################
-# Ce script test une obtentions d'adresses IPv4 et v6 en réalisant une requète au serveur DHCP.
-# - Dans un premiers, il affiche les adresses actuelles
-# - Dans un second, nous suppremons les adresses IP actuelle et les affiches pour s'assurer qu'aucune adresses IP ne reste
-# - Enfin, nous réalisont une nouvelle demande d'adresses IP et l'affichons 
+# Ce script teste l'obtention d'adresses IPv4 et IPv6 en réalisant une requête au serveur DHCP.
+# - Dans un premier temps, il affiche les adresses actuelles.
+# - Dans un second temps, il supprime les adresses IP actuelles et les affiche pour s'assurer qu'aucune adresse IP ne reste.
+# - Enfin, il réalise une nouvelle demande d'adresses IP et les affiche.
 ############################################################################################################################
 
 # couleur

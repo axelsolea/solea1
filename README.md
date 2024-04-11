@@ -35,7 +35,7 @@ dnf install bash
 ### Script python
 - example d'usage
 ```bash
-python3 test_dns.py -s 1.1.1.1 -f list_name.csv -4 -6 -v
+python3 test_dns.py -s 1.1.1.1 -f list_name.csv -4 -6 -v -e
 ```
 
 ### Script bash

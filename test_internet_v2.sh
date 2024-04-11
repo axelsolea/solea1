@@ -4,10 +4,11 @@
 # Dernière modification : 05/04/2024
 
 ##########################################################################
-# Ce script permet de tester la connectivité de chaque équipement réseaux
-# de l'entrerise SOLEA avec utilisant la commande ping et vérifie
-# en regardant que la perte de packet ne soit pas différent de 0%
+# Ce script permet de tester la connectivité de chaque équipement réseau
+# de l'entreprise SOLEA en utilisant la commande ping, et vérifie
+# qu'il n'y a pas de perte de paquets différente de 0%.
 ##########################################################################
+
 
 function test_ping {
   # $1 : nom ou IP

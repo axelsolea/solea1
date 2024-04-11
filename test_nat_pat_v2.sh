@@ -3,6 +3,11 @@
 #Creation date : 08/03/2024
 #Last edit : 22/03/2024
 
+#######################################################################################################
+# ce script se connecte à la console pour chaque serveur du site d'AIX avec différent utilisateur LDAP
+# sur chaque serveur et la lance la commade affichans le nom du serveur donnée
+#######################################################################################################
+
 echo "Lancement du script..."
 
 #test que tout les acces fonctionnes

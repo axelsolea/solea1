@@ -7,8 +7,8 @@ ip=192.168.141.252
 #ip=172.18.0.4
 
 ###################################################################
-# Ce script test que le mécanisme de fail2ban fonctionne bien avec
-# plusieurs de tentaive de connexion jusqu'a etre "bannie"
+# Ce script teste que le mécanisme de fail2ban fonctionne bien en
+# effectuant plusieurs tentatives de connexion jusqu'à être "banni".
 ###################################################################
 
 echo "Lancement du script..."

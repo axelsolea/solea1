@@ -147,8 +147,11 @@ class ResolutionName:
         if self.test_ptr_record(ip, expect_ptr_name):
             cpt += 1
         
-        self._cpt += 1
-        return cpt == 2
+        if cpt == 2:
+            self._cpt += 1
+            return True
+        else:
+            return False
 
     def run(self) -> None:
         """

@@ -15,7 +15,7 @@ function test_accès_ssh_avec_ldap {
     # $1: user
     # $2: pass
 
-    # couleur
+    # couleurs
     RED="\e[31m"
     NOCOLOR="\e[0m"
     GREEN="\033[0;32m"
@@ -27,10 +27,11 @@ function test_accès_ssh_avec_ldap {
     
     for PORT in ${PORTS}; 
     do
-        echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-        echo -e "$(ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}")"
+        echo -e "${RED}Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}${NOCOLOR}"  
+        echo -e "${GREEN}$(ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}")${NOCOLOR}"
     done
 }
+
 
 function clear_terminal {
     # $1 : user

@@ -175,7 +175,7 @@ class DnsResultHandler:
         headers = {
             "title": title, 
             "version": self._data["version"],
-            "status": self._data["status"],
+            "status": 'Success' if self._data['status'] else 'Failure',
             "success_rate": self._data["success_rate"]
         }
 

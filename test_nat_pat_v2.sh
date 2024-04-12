@@ -14,6 +14,11 @@ echo "Lancement du script..."
 function test_accès_ssh_avec_ldap {
     # $1: user
     # $2: pass
+
+    # couleur
+    RED="\e[31m"
+    NOCOLOR="\e[0m"
+    GREEN="\033[0;32m"
     
     USER="$1"
     PASS="$2"
@@ -23,7 +28,7 @@ function test_accès_ssh_avec_ldap {
     for PORT in ${PORTS}; 
     do
         echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-        ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}"
+        echo "${RED}$(ssh -p "${PORT}" $USER@192.168.141.2 '{SCRIPT}')${NOCOLOR}"
     done
 }
 
@@ -63,15 +68,20 @@ PASS="echec"
 PORTS="22200 22202 22253 22004"
 SCRIPT="echo 'Nom de la machine : '; hostname"
 
+ # couleur
+RED="\e[31m"
+NOCOLOR="\e[0m"
+GREEN="\033[0;32m"
+
 for PORT in ${PORTS}; 
 do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
     ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}" 2>> /dev/null
 
-    if [ $? -ne 0 ]; then
-        echo "failed: $PORT"
+    if [ $? -ne 1 ]; then
+        echo "failed: ${RED}$PORT${NOCOLOR}"
     else
-        echo "success: $PORT"
+        echo "success: ${GREEN}$PORT${NOCOLOR}"
     fi
 done
 echo -e "----------------------------------------------------------------------------------------------------\n"

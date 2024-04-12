@@ -68,7 +68,7 @@ do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
     ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}" 2>> /dev/null
 
-    if [ $? -eq 0]; then
+    if [ $? -eq 0 ]; then
         echo "failed: $PORT"
     else
         echo "success: $PORT"

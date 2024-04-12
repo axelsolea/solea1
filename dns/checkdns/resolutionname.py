@@ -63,7 +63,7 @@ class ResolutionName:
         if ipv not in [4, 6]:
             return WrongIpVersion("Donner une IP de version valide: 4 ou 6")
     
-        def test_name_record(self, name: str, ip: str) -> bool:
+    def test_name_record(self, name: str, ip: str) -> bool:
         """
         Test DNS resolution for name records (A or AAAA).
 

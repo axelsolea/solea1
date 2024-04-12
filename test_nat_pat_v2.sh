@@ -28,7 +28,7 @@ function test_accès_ssh_avec_ldap {
     for PORT in ${PORTS}; 
     do
         echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-        echo -e "${RED}$(ssh -p "${PORT}" $USER@192.168.141.2 '{SCRIPT}')${NOCOLOR}"
+        echo -e "${RED}$(ssh -p "${PORT}" $USER@192.168.141.2 ${SCRIPT})${NOCOLOR}"
     done
 }
 

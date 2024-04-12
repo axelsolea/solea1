@@ -28,7 +28,7 @@ function test_accès_ssh_avec_ldap {
     for PORT in ${PORTS}; 
     do
         echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-        echo "${RED}$(ssh -p "${PORT}" $USER@192.168.141.2 '{SCRIPT}')${NOCOLOR}"
+        echo -e "${RED}$(ssh -p "${PORT}" $USER@192.168.141.2 '{SCRIPT}')${NOCOLOR}"
     done
 }
 
@@ -79,9 +79,9 @@ do
     ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}" 2>> /dev/null
 
     if [ $? -ne 1 ]; then
-        echo "failed: ${RED}$PORT${NOCOLOR}"
+        echo -e "failed: ${RED}$PORT${NOCOLOR}"
     else
-        echo "success: ${GREEN}$PORT${NOCOLOR}"
+        echo -e "success: ${GREEN}$PORT${NOCOLOR}"
     fi
 done
 echo -e "----------------------------------------------------------------------------------------------------\n"

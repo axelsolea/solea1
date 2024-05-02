@@ -2,6 +2,7 @@ from colorama import Fore, Style
 from ping import Ping
 from mountshare import MountShare
 
+
 class TestShare:
 
     def __init__(self, server: str, user: str, passwd: str, mount_point: str) -> None:

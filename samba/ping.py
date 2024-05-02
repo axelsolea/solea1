@@ -1,6 +1,5 @@
-import subprocess
 import re
-
+import subprocess
 
 class Ping:
     """
@@ -30,16 +29,27 @@ class Ping:
             tuple[int,int]: A tuple containing the success rate (in percentage) and the return code.
         """
         result = subprocess.run(['ping', self._ip, '-c', str(count)], capture_output=True, text=True)
-        
+
         # Extracting the success percentage and returning data
         filter = re.search(r"(\d+)% packet loss", result.stdout)
         if filter:
-            return int(filter.group(1)), result.returncode
+            success_rate = int(filter.group(1))
         else:
-            return 100, result.returncode
+            # If the packet loss percentage cannot be found, set success rate to -1 to indicate failure
+            success_rate = -1
 
+        return success_rate, result.returncode
 
 if __name__ == "__main__":
-    ping: Ping = Ping("1.1.1.1")
-    ping.send_ping()
+    ping1 = Ping("1.1.1.1")
+    success_rate, return_code = ping1.send_ping()
+    print("ping vers 1.1.1.1:")
+    print("status:", success_rate)
+    print("code de retour:", return_code)
+
+    ping2 = Ping("172.0.18.253")
+    success_rate, return_code = ping2.send_ping()
+    print("ping vers 172.0.18.253:")
+    print("status:", success_rate)
+    print("code de retour:", return_code)
 

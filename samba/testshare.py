@@ -8,7 +8,64 @@ import logging.config
 import json
 import numpy as np
 
+
 class TestShare:
+    """
+    Class for testing a share functionality.
+
+    Attributes:
+        server (str): The server IP or hostname.
+        user (str): The username for authentication.
+        passwd (str): The password for authentication.
+        mount_point (str): The mount point for the share.
+        _total (int): Total number of test steps.
+        _cpt (int): Counter for successful test steps.
+        _data (dict): Dictionary to store test data.
+        _success_rate (float): Success rate of the test.
+        _ping (Ping): Instance of Ping class for checking server accessibility.
+        _mountshare (MountShare): Instance of MountShare class for mounting shares.
+        _logger: Logger instance for logging events.
+
+    Methods:
+        __init__(self, server: str, user: str, passwd: str, mount_point: str) -> None:
+            Initializes TestShare instance with provided server, user, password, and mount point.
+
+        __repr__(self) -> str:
+            Returns a string representation of TestShare instance.
+
+        is_accessible(self) -> bool:
+            Checks if the server is accessible.
+
+        create_dir(self, name: str) -> bool:
+            Creates a directory with the given name.
+
+        delete_dir(self, name: str) -> bool:
+            Deletes the directory with the given name.
+
+        create_file(self, name: str, content="") -> bool:
+            Creates a file with the given name and optional content.
+
+        read_file(self, name: str, expect: str = "") -> bool:
+            Reads the contents of the file with the given name and compares it with the expected content.
+
+        mount(self, share_name: str) -> bool:
+            Mounts the share with the given name.
+
+        umount(self) -> bool:
+            Unmounts the share.
+
+        run(self) -> None:
+            Runs the test steps including server connectivity check, directory creation, file creation,
+            file reading, share mounting, unmounting, and directory deletion. Calculates the success rate.
+
+        export(self) -> dict:
+            Exports the test results as a dictionary.
+
+    Usage:
+        testshare = TestShare("1.1.1.1", "user", "password", "/mnt/share")
+        testshare.run()
+        results = testshare.export()
+    """
 
     def __init__(self, server: str, user: str, passwd: str, mount_point: str) -> None:
         self._server: str = server
@@ -17,7 +74,7 @@ class TestShare:
         self._mount_point: str = mount_point
         self._total: int = 5
         self._cpt: int = 0
-        self._data: dict = {}
+        self._data: list = []
         self._success_rate: float = 0.0
         self._ping: Ping = Ping(server)
         self._mountshare: MountShare = MountShare(server, mount_point)
@@ -34,87 +91,129 @@ class TestShare:
 
     def __repr__(self) -> str:
         return f"{Fore.RED}Information du test:{Style.RESET_ALL}\n{'-' * 25 }\n{Fore.RED}server{Style.RESET_ALL}: {self._server}\n{Fore.RED}utilisateur{Style.RESET_ALL}: {self._user}\n{Fore.RED}mot de passe{Style.RESET_ALL}: {self._passwd}\n{Fore.RED}point de montage: {Style.RESET_ALL}: {self._mount_point}\n{'-' * 25}"
-    
+
     def is_accessible(self) -> bool:
+        """
+        Checks if the server is accessible.
+        """
         failed_rate, rcode = self._ping.send_ping()
         return failed_rate == 0 and rcode == 0
 
     def create_dir(self, name: str) -> bool:
+        """
+        Creates a directory with the given name.
+        """
         return IoFile.create_dir(name)
 
     def delete_dir(self, name: str) -> bool:
+        """
+        Deletes the directory with the given name.
+        """
         return IoFile.delete_dir(name)
 
     def create_file(self, name: str, content="") -> bool:
+        """
+        Creates a file with the given name and optional content.
+        """
         return IoFile.create_file(name, content)
 
     def read_file(self, name: str, expect: str = "") -> bool:
+        """
+        Reads the contents of the file with the given name and compares it with the expected content.
+        """
         return IoFile.read_file(name) == expect
-    
+
     def mount(self, share_name: str) -> bool:
+        """
+        Mounts the share with the given name.
+        """
         output, rcode = self._mountshare.mount(share_name, self._user, self._passwd)
         return rcode == 0
 
     def umount(self) -> bool:
+        """
+        Unmounts the share.
+        """
         output, rcode = self._mountshare.umount()
         return rcode == 0
-
-    def reset_test_data(self) -> None:
-        self._data: dict = {}
     
+
     def run(self) -> None:
+        """
+        Runs the test steps including server connectivity check, directory creation, file creation,
+        file reading, share mounting, unmounting, and directory deletion. Calculates the success rate.
+        """
+
         # Connectivité vers le serveur
         if self.is_accessible():
             self._cpt += 1
-            self._logger.info("connection to serveur smb...")
+            self._data.append({"desc": "test de connection au serveur smb", "status": "OK"})
+            self._logger.info("Connection to SMB server established.")
         else:
-            self._logger.error("impossible to ping the server smb...")
+            self._data.append({"desc": "test de connection au serveur smb", "status": "NOK"})
+            self._logger.error("Failed to ping the SMB server.")
 
         # création du dossier de partage
         if self.create_dir(self._mount_point):
             self._cpt += 1
-            self._logger.info("share directory is created...")
+            self._data.append({"desc": "création du fichier de partage", "status": "OK"})
+            self._logger.info("Share directory created successfully.")
         else:
-            self._logger.error("share directory can't be created...")
+            self._data.append({"desc": "création du fichier de partage", "status": "NOK"})
+            self._logger.error("Failed to create share directory.")
 
         # point de montage de la machine
         if self.mount("solea_document"):
             self._cpt += 1
-            self._logger.info(f"mount the directory {self._mount_point} to the share file... OK")
+            self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "OK"})
+            self._logger.info(f"Mounted directory {self._mount_point} to the share file.")
         else:
-            self._logger.info(f"mount the directory {self._mount_point} to the share file... NOK")
+            self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "NOK"})
+            self._logger.error(f"Failed to mount directory {self._mount_point} to the share file.")
 
-        # Création d'une fichier utilisateur sur le partage
+        # Création d'un fichier utilisateur sur le partage
         if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
-            self._logger.info(f"création d'un fichier text {self._user}.txt ... OK")
+            self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "OK"})
+            self._logger.info(f"Created text file {self._user}.txt.")
         else:
-            self._logger.info(f"création d'un fichier text {self._user}.txt ... NOK")
+            self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "NOK"})
+            self._logger.error(f"Failed to create text file {self._user}.txt.")
 
         # Lecture du fichier utilisateur sur le partage
         if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
-            self._logger.info(f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'... OK")
+            self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
+            self._logger.info(f"Read text file {self._user}.txt with content: 'contenue de {self._user}'.")
         else:
-            self._logger.info(f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'... NOK")
+            self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
+            self._logger.error(f"Failed to read text file {self._user}.txt.")
 
         # Suppression du point de montage
         if self.umount():
             self._cpt += 1
-            self._logger.info("unmount the directory from the share file... OK")
+            self._data.append({"desc": "unmount the directory from the share file", "status": "OK"})
+            self._logger.info("Unmounted directory from the share file.")
         else:
-            self._logger.error("unmount the directory from the share file... NOK")
+            self._data.append({"desc": "unmount the directory from the share file", "status": "NOK"})
+            self._logger.error("Failed to unmount directory from the share file.")
 
         # Suppression du dossier de partage
         if self.delete_dir(self._mount_point):
             self._cpt += 1
-            self._logger.info("delete the share directory... OK")
+            self._data.append({"desc": "delete the share directory", "status": "OK"})
+            self._logger.info("Deleted the share directory.")
         else:
-            self._logger.error("delete the share directory... NOK")
+            self._data.append({"desc": "delete the share directory", "status": "NOK"})
+            self._logger.error("Failed to delete the share directory.")
 
+        # Calculate success rate
         self.success_rate: int = np.round(self._cpt / self._total, 3)
 
     def export(self) -> dict:
+        """
+        Exports the test results as a dictionary.
+        """
         return {
             "user": self._user,
             "password": self._passwd,
@@ -127,7 +226,8 @@ class TestShare:
 
 
 if __name__ == "__main__":
-    testshare: TestShare = TestShare("1.1.1.1", "alexandre", "Solea05alexandre", "/tmp")
+    testshare: TestShare = TestShare("172.18.0.251", "alexandre", "Solea05alexandre", "/tmp/share")
+    testshare.run()
     print(testshare)
-    testshare.is_accessible()
+    print(testshare.export())
 

@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+      "json": {
+          "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
+          "format": "%(asctime)s %(levelname)s %(name)s %(message)s"
+      }
+  },
+  "handlers": {
+      "file": {
+          "class": "logging.FileHandler",
+          "filename": "app.log",
+          "formatter": "json"
+      }
+  },
+  "loggers": {
+      "": {
+          "handlers": ["file"],
+          "level": "DEBUG"
+      }
+  }
+}
+

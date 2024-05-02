@@ -9,6 +9,7 @@ class IoFile:
     - Creating a file with specified content.
     - Reading the contents of a file.
     - Creating a directory if a specified configuration file exists.
+    - Deleting a directory.
 
     Attributes:
         None
@@ -26,6 +27,9 @@ class IoFile:
         create_dir(name: str) -> bool:
             Creates a directory with the specified name if a configuration
             file named 'logging_config.json' exists.
+
+        delete_dir(name: str) -> bool:
+            Deletes the specified directory.
 
     Usage:
         # Example usage of IoFile class methods
@@ -46,6 +50,11 @@ class IoFile:
             print("Directory created successfully.")
         else:
             print("Failed to create directory.")
+
+        if IoFile.delete_dir('example_dir'):
+            print("Directory deleted successfully.")
+        else:
+            print("Failed to delete directory.")
     """
     @staticmethod
     def check_exist(name: str) -> bool:
@@ -120,6 +129,22 @@ class IoFile:
             else:
                 return False
 
+    @staticmethod
+    def delete_dir(name: str) -> bool:
+        """
+        Deletes the specified directory.
+
+        Args:
+            name (str): The name of the directory to delete.
+
+        Returns:
+            bool: True if the directory is deleted successfully, False otherwise.
+        """
+        if os.path.exists(name):
+            os.rmdir(name)
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     print("test")

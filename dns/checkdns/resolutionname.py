@@ -117,11 +117,11 @@ class ResolutionName:
         """
         cli_ptr_record: str|None = self._dnsclient.get_PTR_record(ip)
         
-        if cli_ptr_record == "":
+        if cli_ptr_record == []:
             self._failed_ptr_request.append((ip, name, None))
             return False
 
-        if f"{name}." == cli_ptr_record:
+        if f"{name}." == list(cli_ptr_record.split("\n")):
             self._failed_ptr_request.append((ip, name, cli_ptr_record))
             return True
         else:

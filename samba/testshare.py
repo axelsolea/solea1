@@ -86,9 +86,6 @@ class TestShare:
         with open('logging_config.json', 'r') as f:
             config: dict = json.load(f)
 
-        logging.config.dictConfig(config)
-        self._logger = logging.getLogger(__name__)
-
     def __repr__(self) -> str:
         return f"{Fore.RED}Information du test:{Style.RESET_ALL}\n{'-' * 25 }\n{Fore.RED}server{Style.RESET_ALL}: {self._server}\n{Fore.RED}utilisateur{Style.RESET_ALL}: {self._user}\n{Fore.RED}mot de passe{Style.RESET_ALL}: {self._passwd}\n{Fore.RED}point de montage: {Style.RESET_ALL}: {self._mount_point}\n{'-' * 25}"
 
@@ -148,64 +145,50 @@ class TestShare:
         if self.is_accessible():
             self._cpt += 1
             self._data.append({"desc": "test de connection au serveur smb", "status": "OK"})
-            self._logger.info("Connection to SMB server established.")
         else:
             self._data.append({"desc": "test de connection au serveur smb", "status": "NOK"})
-            self._logger.error("Failed to ping the SMB server.")
 
         # création du dossier de partage
         if self.create_dir(self._mount_point):
             self._cpt += 1
             self._data.append({"desc": "création du fichier de partage", "status": "OK"})
-            self._logger.info("Share directory created successfully.")
         else:
             self._data.append({"desc": "création du fichier de partage", "status": "NOK"})
-            self._logger.error("Failed to create share directory.")
 
         # point de montage de la machine
         if self.mount("solea_document"):
             self._cpt += 1
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "OK"})
-            self._logger.info(f"Mounted directory {self._mount_point} to the share file.")
         else:
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "NOK"})
-            self._logger.error(f"Failed to mount directory {self._mount_point} to the share file.")
 
         # Création d'un fichier utilisateur sur le partage
         if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "OK"})
-            self._logger.info(f"Created text file {self._user}.txt.")
         else:
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "NOK"})
-            self._logger.error(f"Failed to create text file {self._user}.txt.")
 
         # Lecture du fichier utilisateur sur le partage
         if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
-            self._logger.info(f"Read text file {self._user}.txt with content: 'contenue de {self._user}'.")
         else:
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
-            self._logger.error(f"Failed to read text file {self._user}.txt.")
 
         # Suppression du point de montage
         if self.umount():
             self._cpt += 1
             self._data.append({"desc": "unmount the directory from the share file", "status": "OK"})
-            self._logger.info("Unmounted directory from the share file.")
         else:
             self._data.append({"desc": "unmount the directory from the share file", "status": "NOK"})
-            self._logger.error("Failed to unmount directory from the share file.")
 
         # Suppression du dossier de partage
         if self.delete_dir(self._mount_point):
             self._cpt += 1
             self._data.append({"desc": "delete the share directory", "status": "OK"})
-            self._logger.info("Deleted the share directory.")
         else:
             self._data.append({"desc": "delete the share directory", "status": "NOK"})
-            self._logger.error("Failed to delete the share directory.")
 
         # Calculate success rate
         self.success_rate: int = np.round(self._cpt / self._total, 3)

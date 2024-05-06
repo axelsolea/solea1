@@ -156,14 +156,14 @@ class TestShare:
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "NOK"})
 
         # Création d'un fichier utilisateur sur le partage
-        if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
+        if self.create_file(f"{self._mount_point}/{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "OK"})
         else:
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "NOK"})
 
         # Lecture du fichier utilisateur sur le partage
-        if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
+        if self.read_file(f"{self._mount_point}/{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
         else:

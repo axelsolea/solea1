@@ -164,7 +164,7 @@ if __name__ == "__main__":
     ####################################################
     ### point de montage avec utilisateur inéxistant ###
     ####################################################
-    if mountshare.mount("document_solea", "azerty", "azerty"):
+    if mountshare.mount("document_solea", "jhon", "Solea05jhon"):
         print(f"point de montage monter avec succès !")
     else:
         print(f"point de montage monter failed !")

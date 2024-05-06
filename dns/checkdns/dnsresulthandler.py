@@ -76,7 +76,7 @@ class DnsResultHandler:
 
         print("\nFailed Resolutions:")
         for failed in self._data['full_failed_name']:
-            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
+            print(f"  - {Fore.RED}{failed[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESET_ALL}, status: {Fore.RED}{failed[3]}{Style.RESET_ALL}")
         print("-" * 3)
 
 
@@ -101,7 +101,7 @@ class DnsResultHandler:
 
         print("\nFailed Resolutions:")
         for failed in self._data['full_failed_name']:
-            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
+            print(f"  - {Fore.RED}{failed[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESET_ALL}, status: {Fore.RED}{failed[3]}{Style.RESET_ALL}")
         print("-" * 3)
         
         print(f"\ndétail des resolutions: ")
@@ -117,11 +117,11 @@ class DnsResultHandler:
 
         print("\nSuccessful PTR Resolutions:")
         for success_ptr in self._data['success_ptr_record']:
-            print(f"  - {Fore.RED}{success_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESET_ALL}")
+            print(f"  - {Fore.RED}{success_ptr[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_ptr[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_ptr[2]}{Style.RESET_ALL}")
 
         print("\nFailed PTR Resolutions:")
         for failed_ptr in self._data['failed_ptr_record']:
-            print(f"  - {Fore.RED}{failed_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESET_ALL}")
+            print(f"  - {Fore.RED}{failed_ptr[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_ptr[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_ptr[2]}{Style.RESET_ALL}")
 
         print("-" * 3)
     

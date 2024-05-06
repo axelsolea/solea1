@@ -121,7 +121,7 @@ class ResolutionName:
             self._failed_ptr_request.append((ip, name, None))
             return False
 
-        if f"{name}." == list(cli_ptr_record.split("\n")):
+        if f"{name}." in list(cli_ptr_record.split("\n")):
             self._failed_ptr_request.append((ip, name, cli_ptr_record))
             return True
         else:

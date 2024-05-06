@@ -16,9 +16,11 @@ class ParseResult:
             print(f"{Fore.RED}statut{Style.RESET_ALL}: {Fore.GREEN}{dico.get('status', 'NA')}{Style.RESET_ALL}")
             print(f"{Fore.RED}pourcentage de réussite{Style.RESET_ALL}: {Fore.GREEN}{dico.get('success_rate', 'NA')} %{Style.RESET_ALL}")
 
+            j: int = 1
             for step in dico.get("result_step", []):
-                print(f"{Fore.RED}étape {step['step_num']}{Style.RESET_ALL}: {Fore.GREEN}{step['desc']}{Style.RESET_ALL}")
+                print(f"{Fore.RED}étape {j}{Style.RESET_ALL}: {Fore.GREEN}{step['desc']}{Style.RESET_ALL}")
                 print(f"- {Fore.RED}status{Style.RESET_ALL}: {Fore.GREEN}{step['status']}{Style.RESET_ALL}")
+                j += 1
 
             print("-" * 50)
     
@@ -35,9 +37,11 @@ class ParseResult:
         export_xlsx.add_blank_line()
         
         # résulat détailler
+        j: int = 1
         export_xlsx.add_column(["numéro de test", "description", "status"])
         for step in data.get("result_step", []):
-            export_xlsx.add_column([step.get("step_num", 'NA'), step.get("desc", 'NA'), step.get("status", 'NA')])
+            export_xlsx.add_column([j, step.get("desc", 'NA'), step.get("status", 'NA')])
+             j += 1
 
         export_xlsx.close()
 
@@ -124,4 +128,3 @@ if __name__ == "__main__":
     parseresult: ParseResult = ParseResult(example_data)
     parseresult.show()
     parseresult.export("resulat", "Résulat du test de partage de fichier")
-

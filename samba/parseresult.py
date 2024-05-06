@@ -41,7 +41,7 @@ class ParseResult:
         export_xlsx.add_column(["numéro de test", "description", "status"])
         for step in data.get("result_step", []):
             export_xlsx.add_column([j, step.get("desc", 'NA'), step.get("status", 'NA')])
-             j += 1
+            j += 1
 
         export_xlsx.close()
 

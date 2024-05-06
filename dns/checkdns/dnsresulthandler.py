@@ -59,24 +59,24 @@ class DnsResultHandler:
         """
         Display the results of DNS resolution tests.
         """
-        print(f"\ninformations générale de Résolution: ")
+        print(f"\n{Fore.RED}informations générale de Résolution{Style.RESET_ALL}: ")
         print("-" * 3)
-        print(f"Résolution DNS: {zone}")
-        print(f"Version: {self._data['version']}")
-        print(f"Status: {'Success' if self._data['status'] else 'Failure'}")
-        print(f"Success Rate: {self._data['success_rate']:0.2f}%")
-        print("-" * 3, end='')
+        print(f"Résolution DNS: {Fore.RED}{zone}{Style.RESET_ALL}")
+        print(f"Version: {Fore.RED}{self._data['version']}{Style.RESET_ALL}")
+        print(f"Status: {Fore.RED}{'Success' if self._data['status'] else 'Failure'}{Style.RESET_ALL}")
+        print(f"Success Rate: {Fore.RED}{self._data['success_rate']:0.2f}%{Style.RESET_ALL}")
+        print("-" * 3)
 
         print(f"\ninformations sur les Résolutions: ")
         print("-" * 3, end='')
 
         print("\nSuccessful Resolutions:")
         for success in self._data['full_success']:
-            print(f"  - Name: {success[0]}, IP: {success[1]}, Expected PTR: {success[2]}, status: {success[3]}")
+            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
 
         print("\nFailed Resolutions:")
-        for success in self._data['full_failed_name']:
-            print(f"  - Name: {success[0]}, IP: {success[1]}, Expected PTR: {success[2]}, status: {success[3]}")
+        for failed in self._data['full_failed_name']:
+            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
         print("-" * 3)
 
 

@@ -164,12 +164,15 @@ if __name__ == "__main__":
     ####################################################
     ### point de montage avec utilisateur inéxistant ###
     ####################################################
-    if mountshare.mount("document_solea", "jhon", "Solea05jhon"):
+    stdout, rcode = mountshare.mount("document_solea", "jhon", "Solea05jhon")
+    stdout, rcode_umount = mountshare.umount()
+    
+    if rcode == 0:
         print(f"point de montage monter avec succès !")
     else:
         print(f"point de montage monter failed !")
-
-    if mountshare.umount():
+    
+    if rcode_umount == 0:
         print("démontage du point de montage '/tmp/share' avec succès ! ")
     else:
         print("démontage du point de montage '/tmp/share' failed !")

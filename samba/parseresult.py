@@ -34,7 +34,7 @@ class ParseResult:
         worksheet.set_column(f'A:E', 60)
 
         # Définir le format pour le titre en rouge
-        title_format = workbook.add_format({'bold': True, 'font_color': 'red'})
+        title_format = workbook.add_format({'bold': True, 'font_color': 'red', 'bg_color': '#D3D3D3'})
         gray_background_format = workbook.add_format({'bg_color': '#D3D3D3'})
 
         # Écrire le titre en rouge

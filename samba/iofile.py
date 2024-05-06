@@ -68,8 +68,7 @@ class IoFile:
         Returns:
             bool: True if the file exists and is readable, False otherwise.
         """
-        filepath = os.path.join(os.getcwd(), name)
-        if not os.access(filepath, os.R_OK):
+        if not os.access(name, os.R_OK):
             return False
 
         return os.path.isfile(filepath)
@@ -86,11 +85,10 @@ class IoFile:
         Returns:
             bool: True if the file is created successfully, False otherwise.
         """
-        filepath = os.path.join(os.getcwd(), name)
-        if not IoFile.check_exist(filepath):
+        if not IoFile.check_exist(name):
             return False
 
-        with open(filepath, 'w') as f:
+        with open(name, 'w') as f:
             f.write(content)
             return True
 
@@ -105,11 +103,10 @@ class IoFile:
         Returns:
             str: The contents of the file.
         """
-        filepath = os.path.join(os.getcwd(), name)
-        if not IoFile.check_exist(filepath):
+        if not IoFile.check_exist(name):
             return ""
 
-        with open(filepath, 'r') as f:
+        with open(name, 'r') as f:
             return f.read()
 
     @staticmethod
@@ -124,12 +121,11 @@ class IoFile:
         Returns:
             bool: True if the directory is created successfully, False otherwise.
         """
-        if not IoFile.check_exist('logging_config.json'):
+        if not IoFile.check_exist(name):
             return False
 
-        filepath = os.path.join(os.getcwd(), name)
-        if not os.path.exists(filepath):
-            os.makedirs(filepath)
+        if not os.path.exists(name):
+            os.makedirs(name)
             return True
         else:
             return False
@@ -145,9 +141,8 @@ class IoFile:
         Returns:
             bool: True if the directory is deleted successfully, False otherwise.
         """
-        filepath = os.path.join(os.getcwd(), name)
-        if os.path.exists(filepath):
-            os.rmdir(filepath)
+        if os.path.exists(name):
+            os.rmdir(name)
             return True
         else:
             return False

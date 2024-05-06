@@ -9,15 +9,16 @@ class IoFile:
     - Checking the existence of a file or directory.
     - Creating a file with specified content.
     - Reading the contents of a file.
-    - Creating a directory if a specified configuration file exists.
+    - Creating a directory if it does not already exist.
     - Deleting a directory.
+    - Deleting a file.
 
     Attributes:
         None
 
     Methods:
         check_exist(name: str) -> bool:
-            Checks if the specified file exists and is readable.
+            Checks if the specified file or directory exists.
 
         create_file(name: str, content: str = "") -> bool:
             Creates a file with the specified name and optional content.
@@ -26,18 +27,20 @@ class IoFile:
             Reads the contents of the specified file.
 
         create_dir(name: str) -> bool:
-            Creates a directory with the specified name if a configuration
-            file named 'logging_config.json' exists.
+            Creates a directory with the specified name if it does not already exist.
 
         delete_dir(name: str) -> bool:
             Deletes the specified directory.
 
+        delete_file(name: str) -> bool:
+            Deletes the specified file.
+
     Usage:
         # Example usage of IoFile class methods
         if IoFile.check_exist('example.txt'):
-            print("File exists and is readable.")
+            print("File or directory exists.")
         else:
-            print("File does not exist or is not readable.")
+            print("File or directory does not exist.")
 
         if IoFile.create_file('example.txt', 'Hello, world!'):
             print("File created successfully.")
@@ -56,25 +59,28 @@ class IoFile:
             print("Directory deleted successfully.")
         else:
             print("Failed to delete directory.")
+
+        if IoFile.delete_file('example.txt'):
+            print("File deleted successfully.")
+        else:
+            print("Failed to delete file.")
     """
+
     @staticmethod
     def check_exist(name: str) -> bool:
         """
-        Check if the specified file exists and is readable.
+        Check if the specified file or directory exists.
 
         Args:
-            name (str): The name of the file to check.
+            name (str): The name of the file or directory to check.
 
         Returns:
-            bool: True if the file exists and is readable, False otherwise.
+            bool: True if the file or directory exists, False otherwise.
         """
-        if not os.access(name, os.R_OK):
-            return False
-
-        return os.path.isfile(name)
+        return os.path.exists(name)
 
     @staticmethod
-    def create_file(name: str, content="") -> bool:
+    def create_file(name: str, content: str = "") -> bool:
         """
         Create a file with the specified name and optional content.
 
@@ -86,11 +92,11 @@ class IoFile:
             bool: True if the file is created successfully, False otherwise.
         """
         if not IoFile.check_exist(name):
-            return False
-
-        with open(name, 'w') as f:
-            f.write(content)
+            with open(name, 'w') as f:
+                f.write(content)
             return True
+        else:
+            return False
 
     @staticmethod
     def read_file(name: str) -> str:
@@ -103,27 +109,23 @@ class IoFile:
         Returns:
             str: The contents of the file.
         """
-        if not IoFile.check_exist(name):
+        if IoFile.check_exist(name):
+            with open(name, 'r') as f:
+                return f.read()
+        else:
             return ""
-
-        with open(name, 'r') as f:
-            return f.read()
 
     @staticmethod
     def create_dir(name: str) -> bool:
         """
-        Create a directory with the specified name if a configuration
-        file named 'logging_config.json' exists.
+        Create a directory with the specified name if it does not already exist.
 
         Args:
             name (str): The name of the directory to create.
 
         Returns:
-            bool: True if the directory is created successfully, False otherwise.
+            bool: True if the directory is created successfully or already exists, False otherwise.
         """
-        if not IoFile.check_exist(name):
-            return False
-
         if not os.path.exists(name):
             os.makedirs(name)
             return True
@@ -147,70 +149,59 @@ class IoFile:
         else:
             return False
 
+    @staticmethod
+    def delete_file(name: str) -> bool:
+        """
+        Deletes the specified file.
+
+        Args:
+            name (str): The name of the file to delete.
+
+        Returns:
+            bool: True if the file is deleted successfully, False otherwise.
+        """
+        try:
+            os.remove(name)
+            return True
+        except FileNotFoundError:
+            return False
+
+
 if __name__ == "__main__":
     # Test IoFile class methods
-    example_file = "example.txt"
-    example_dir = "example_dir"
+    example_file = "/tmp/share/test.txt"
+    example_dir = "/tmp/share"
 
-    # Checking file existence
-    if IoFile.check_exist(example_file):
-        print("File exists and is readable.")
+    # Creating a directory
+    if IoFile.create_dir(example_dir):
+        print(f"Directory {example_dir} created successfully.")
     else:
-        print("File does not exist or is not readable.")
+        print(f"Failed to create directory: {example_dir}")
 
     # Creating a file
     if IoFile.create_file(example_file, 'Hello, world!'):
-        print("File created successfully.")
+        print(f"File {example_file} created successfully.")
     else:
-        print("Failed to create file.")
+        print(f"Failed to create file: {example_file}")
+
+    # Checking file existence
+    if IoFile.check_exist(example_file):
+        print(f"File {example_file} exists and is readable.")
+    else:
+        print(f"File {example_file} does not exist or is not readable.")
 
     # Reading file content
     content = IoFile.read_file(example_file)
     print("File content:", content)
 
-    # Creating a directory
-    if IoFile.create_dir(example_dir):
-        print("Directory created successfully.")
+    # Deleting the file
+    if IoFile.delete_file(example_file):
+        print(f"File {example_file} deleted successfully.")
     else:
-        print("Failed to create directory.")
+        print(f"Failed to delete file: {example_file}")
 
-    # Deleting a directory
+    # Deleting the directory
     if IoFile.delete_dir(example_dir):
-        print("Directory deleted successfully.")
+        print(f"Directory {example_dir} deleted successfully.")
     else:
-        print("Failed to delete directory.")
-
-
-if __name__ == "__main__":
-    # Test IoFile class methods
-    example_file = "example.txt"
-    example_dir = "example_dir"
-
-    # Checking file existence
-    if IoFile.check_exist(example_file):
-        print("File exists and is readable.")
-    else:
-        print("File does not exist or is not readable.")
-
-    # Creating a file
-    if IoFile.create_file(example_file, 'Hello, world!'):
-        print("File created successfully.")
-    else:
-        print("Failed to create file.")
-
-    # Reading file content
-    content = IoFile.read_file(example_file)
-    print("File content:", content)
-
-    # Creating a directory
-    if IoFile.create_dir(example_dir):
-        print("Directory created successfully.")
-    else:
-        print("Failed to create directory.")
-
-    # Deleting a directory
-    if IoFile.delete_dir(example_dir):
-        print("Directory deleted successfully.")
-    else:
-        print("Failed to delete directory.")
-
+        print(f"Failed to delete directory: {example_dir}")

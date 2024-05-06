@@ -259,7 +259,7 @@ class DnsResultHandler:
         worksheet.write(row + 1 , 1, 'nom attendue', gray_background_format)
         worksheet.write(row + 1, 2, 'nom obtenue', gray_background_format)
 
-        row += 1
+        row += 2
         for i in range(len(self._data['failed_ptr_record'])):
             worksheet.write(row + i, 0, self._data['failed_ptr_record'][i][0])
             worksheet.write(row + i, 1, self._data['failed_ptr_record'][i][1])

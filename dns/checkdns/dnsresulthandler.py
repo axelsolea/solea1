@@ -231,7 +231,7 @@ class DnsResultHandler:
         worksheet.write(row, 0, "Résulat de résolution de nom ayant échoué : ", sub_title_format)
         worksheet.write(row + 1, 0, 'nom', gray_background_format)
         worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)
-        worksheet.write(row + 1, 2, 'address IP obtenue', gray_background_format)
+        worksheet.write(row + 1, 2, 'adresse IP obtenue', gray_background_format)
 
         row += 2 # Aller à la prochaine ligne pour le prochain ensemble de donné
         for i in range(len(self._data['failed_name_record'])):

@@ -23,34 +23,15 @@ class ParseResult:
                 j += 1
 
             print("-" * 50)
-    
-    def user_export_framework(self, file: str):
-        export_xlsx: ExportResultXlsx = ExportResultXlsx(file)
-
-        # header
-        export_xlsx.set_main_title("Résultat du test de partage de fichier: ")
-        export_xlsx.add_column(["serveur", data.get("server", 'NA')], apply=[0])
-        export_xlsx.add_column(["point de montage", data.get("mountpoint", 'NA')], apply=[0])
-        export_xlsx.add_column(["utilisateur", data.get("user", 'NA')], apply=[0])
-        export_xlsx.add_column(["statut", data.get("status", 'NA')], apply=[0])
-        export_xlsx.add_column(["pourcentage de réussite", f"{data.get('success_rate', 'NA')} %"], apply=[0])
-        export_xlsx.add_blank_line()
-        
-        # résulat détailler
-        j: int = 1
-        export_xlsx.add_column(["numéro de test", "description", "status"])
-        for step in data.get("result_step", []):
-            export_xlsx.add_column([j, step.get("desc", 'NA'), step.get("status", 'NA')])
-            j += 1
-
-        export_xlsx.close()
-
 
     def user_export(self, file: str, data: dict, title: str) -> None:
 
         # Créer un classeur Excel et ajouter une feuille de travail
         workbook = xlsxwriter.Workbook(file)
-        worksheet = workbook.add_worksheet()    
+        worksheet = workbook.add_worksheet()
+
+        # taille d'une cellule
+        worksheet.set_column(f'A:E', 60)
 
         # Définir le format pour le titre en rouge
         title_format = workbook.add_format({'bold': True, 'font_color': 'red'})

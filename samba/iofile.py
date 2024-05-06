@@ -71,7 +71,7 @@ class IoFile:
         if not os.access(name, os.R_OK):
             return False
 
-        return os.path.isfile(filepath)
+        return os.path.isfile(name)
 
     @staticmethod
     def create_file(name: str, content="") -> bool:

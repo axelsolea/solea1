@@ -8,4 +8,4 @@ ldap.solea.local,172.18.0.252,2001:470:c84c:100::252,ldap.solea.local
 gw.solea.local,172.18.0.254,2001:470:c84c:100::254,gw.solea.local
 toip.solea.local,172.18.0.4,2001:470:c84c:100::4,toip.solea.local
 smtp.solea.local,172.18.0.3,2001:470:c84c:100::3,smtp.solea.local
-imap.solea.local,172.18.0.3,2001:470:c84c:100::3,imap.solea.local
+imap.solea.local,172.18.0.3,2001:470:c84c:100::3,smtp.solea.local

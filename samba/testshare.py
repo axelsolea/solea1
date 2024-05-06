@@ -72,7 +72,7 @@ class TestShare:
         self._user: str = user
         self._passwd: str = passwd
         self._mount_point: str = mount_point
-        self._total: int = 5
+        self._total: int = 7
         self._cpt: int = 0
         self._data: list = []
         self._success_rate: float = 0.0

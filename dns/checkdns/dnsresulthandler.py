@@ -204,20 +204,18 @@ class DnsResultHandler:
 
         # Écrire des détailles de chaque test
         row += 5  # Aller à la prochaine ligne pour le prochain ensemble de donné
-        worksheet.write(row, 0, 'nom', gray_background_format)
-        worksheet.write(row, 1, 'adresses IP', gray_background_format)
-        worksheet.write(row, 2, 'nom inverse', gray_background_format)
-        worksheet.write(row, 3, 'status', gray_background_format)
+        worksheet.write(row, 0, 'nom donné au serveur asterisk', gray_background_format)
+        worksheet.write(row, 1, 'adresses IP donné au serveur asterisk', gray_background_format)
+        worksheet.write(row, 2, 'status', gray_background_format)
         
         row += 1 # Aller à la prochaine ligne pour le prochain ensemble de donné
         for i in range(len(datas["nom"])):
             worksheet.write(row + i, 0, datas['nom'][i])
             worksheet.write(row + i, 1, datas['adresses IP'][i])
-            worksheet.write(row + i, 2, datas['nom inverse'][i])
             worksheet.write(row + i, 3, datas['status'][i])
 
         # name record detail
-        row += len(datas["nom"]) + 1
+        row += len(datas["nom"])
         worksheet.write(row, 0, "Résulat de résolution de nom ayant fonctionné : ", sub_title_format)
         worksheet.write(row + 1, 0, 'nom', gray_background_format)
         worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)

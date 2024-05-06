@@ -1,6 +1,7 @@
 import argparse
 from extractname import ExtractName
 from testshare import TestShare
+from parseresult import ParseResult
 import pandas as pd
 
 def parse_arguments():

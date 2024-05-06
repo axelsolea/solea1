@@ -78,7 +78,8 @@ class ParseResult:
         
     def export(self, prefix: str, title: str) -> None:
         for dico in self._data:
-            self.user_export(f"{prefix}_{dico['user']}.xlsx", dico, title)    
+            self.user_export(f"{prefix}_{dico['user']}.xlsx", dico, title)
+            print(f"export du résultat de {dico['user']} vers {prefix}_{dico['user']}.xlsx")
 
 
 if __name__ == "__main__":

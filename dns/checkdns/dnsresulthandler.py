@@ -212,10 +212,10 @@ class DnsResultHandler:
         for i in range(len(datas["nom"])):
             worksheet.write(row + i, 0, datas['nom'][i])
             worksheet.write(row + i, 1, datas['adresses IP'][i])
-            worksheet.write(row + i, 3, datas['status'][i])
+            worksheet.write(row + i, 2, datas['status'][i])
 
         # name record detail
-        row += len(datas["nom"])
+        row += len(datas["nom"]) + 1
         worksheet.write(row, 0, "Résulat de résolution de nom ayant fonctionné : ", sub_title_format)
         worksheet.write(row + 1, 0, 'nom', gray_background_format)
         worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)

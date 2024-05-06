@@ -38,7 +38,7 @@ def main():
         test_data.append(testshare.export())
 
     # parse the result
-    parseresult: ParseResult = ParseResult(example_data)
+    parseresult: ParseResult = ParseResult(test_data)
     parseresult.show()
     parseresult.export("resulat", "Résulat du test de partage de fichier")
 

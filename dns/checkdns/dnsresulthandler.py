@@ -204,8 +204,8 @@ class DnsResultHandler:
 
         # Écrire des détailles de chaque test
         row += 5  # Aller à la prochaine ligne pour le prochain ensemble de donné
-        worksheet.write(row, 0, 'nom donné au serveur asterisk', gray_background_format)
-        worksheet.write(row, 1, 'adresses IP donné au serveur asterisk', gray_background_format)
+        worksheet.write(row, 0, 'nom', gray_background_format)
+        worksheet.write(row, 1, 'adresses', gray_background_format)
         worksheet.write(row, 2, 'status', gray_background_format)
         
         row += 1 # Aller à la prochaine ligne pour le prochain ensemble de donné

@@ -79,13 +79,6 @@ class TestShare:
         self._ping: Ping = Ping(server)
         self._mountshare: MountShare = MountShare(server, mount_point)
 
-        if not IoFile.check_exist('logging_config.json'):
-            print("logging_config.json cannot exist or not readable")
-            sys.exit(1)
-
-        with open('logging_config.json', 'r') as f:
-            config: dict = json.load(f)
-
     def __repr__(self) -> str:
         return f"{Fore.RED}Information du test:{Style.RESET_ALL}\n{'-' * 25 }\n{Fore.RED}server{Style.RESET_ALL}: {self._server}\n{Fore.RED}utilisateur{Style.RESET_ALL}: {self._user}\n{Fore.RED}mot de passe{Style.RESET_ALL}: {self._passwd}\n{Fore.RED}point de montage: {Style.RESET_ALL}: {self._mount_point}\n{'-' * 25}"
 
@@ -177,6 +170,8 @@ class TestShare:
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
 
         # Suppression du point de montage
+        stdout, rcode_umount = mountshare.umount()
+        
         if self.umount():
             self._cpt += 1
             self._data.append({"desc": "unmount the directory from the share file", "status": "OK"})

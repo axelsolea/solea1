@@ -1,6 +1,7 @@
 from .wrongverboselevel import WrongVerboseLevel
-#from .csvparser import CsvParser
-import csv
+from colorama import Fore, Style
+import numpy as np
+import xlsxwriter
 
 class DnsResultHandler:
     """
@@ -83,12 +84,12 @@ class DnsResultHandler:
         """
         Display the results of DNS resolution tests.
         """
-        print(f"\ninformations générale de Résolution: ")
+        print(f"\n{Fore.RED}informations générale de Résolution{Style.RESET_ALL}: ")
         print("-" * 3)
-        print(f"Résolution DNS: {zone}")
-        print(f"Version: {self._data['version']}")
-        print(f"Status: {'Success' if self._data['status'] else 'Failure'}")
-        print(f"Success Rate: {self._data['success_rate']:0.2f}%")
+        print(f"Résolution DNS: {Fore.RED}{zone}{Style.RESET_ALL}")
+        print(f"Version: {Fore.RED}{self._data['version']}{Style.RESET_ALL}")
+        print(f"Status: {Fore.RED}{'Success' if self._data['status'] else 'Failure'}{Style.RESET_ALL}")
+        print(f"Success Rate: {Fore.RED}{self._data['success_rate']:0.2f}%{Style.RESET_ALL}")
         print("-" * 3)
 
         print(f"\ninformations sur les Résolutions: ")
@@ -96,31 +97,31 @@ class DnsResultHandler:
 
         print("\nSuccessful Resolutions:")
         for success in self._data['full_success']:
-            print(f"  - Name: {success[0]}, IP: {success[1]}, Expected PTR: {success[2]}, status: {success[3]}")
+            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
 
         print("\nFailed Resolutions:")
-        for success in self._data['full_failed_name']:
-            print(f"  - Name: {success[0]}, IP: {success[1]}, Expected PTR: {success[2]}, status: {success[3]}")
+        for failed in self._data['full_failed_name']:
+            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{success[2]}{Style.RESET_ALL}, status: {Fore.RED}{success[3]}{Style.RESET_ALL}")
         print("-" * 3)
         
         print(f"\ndétail des resolutions: ")
         print("-" * 3, end='')
 
         print("\nsuccess Name Resolutions:")
-        for failed_name in self._data['success_name_record']:
-            print(f"  - Failed Name: {failed_name}")
+        for success_name in self._data['success_name_record']:
+            print(f"  - {Fore.RED}{success_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESET_ALL}")
 
         print("\nFailed Name Resolutions:")
         for failed_name in self._data['failed_name_record']:
-            print(f"  - Failed Name: {failed_name}")
+            print(f"  - {Fore.RED}{failed_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESET_ALL}")
 
         print("\nSuccessful PTR Resolutions:")
         for success_ptr in self._data['success_ptr_record']:
-            print(f"  - IP: {success_ptr}")
+            print(f"  - {Fore.RED}{success_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESET_ALL}")
 
         print("\nFailed PTR Resolutions:")
         for failed_ptr in self._data['failed_ptr_record']:
-            print(f"  - Failed IP: {failed_ptr}")
+            print(f"  - {Fore.RED}{failed_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESET_ALL}")
 
         print("-" * 3)
     
@@ -157,7 +158,7 @@ class DnsResultHandler:
         return datas
 
     
-    def export(self, file: str, title: str) -> None:
+    def export(self, prefix: str, title: str) -> None:
         """Export the data to a CSV file.
         
         This function exports the data stored in the object to a CSV file.
@@ -172,32 +173,102 @@ class DnsResultHandler:
         Returns:
             None
         """
-        headers = {
-            "title": title, 
-            "version": self._data["version"],
-            "status": 'Success' if self._data['status'] else 'Failure',
-            "success_rate": self._data["success_rate"]
-        }
+        # Créer un classeur Excel et ajouter une feuille de travail
+        workbook = xlsxwriter.Workbook(f"{prefix}_{self._data.get('version', 'NA')}.xlsx")
+        worksheet = workbook.add_worksheet()
 
-        datas = self.parse_data()
+        # espace minimum par cellule
+        worksheet.set_column(f'A:E', 60)
+
+        # Définir le format pour le titre en rouge
+        title_format = workbook.add_format({'bg_color': '#D3D3D3', 'bold': True, 'font_color': 'red', 'font_size': 16})
+        sub_title_format = workbook.add_format({'bold': True, 'font_color': 'red', 'font_size': 14})
+        gray_background_format = workbook.add_format({'bg_color': '#D3D3D3', 'font_color': 'red'})
+
+        # Écrire le titre en rouge
+        worksheet.write('A1', title, title_format)
+
+        # Écrire du header
+        row: int = 2
+        worksheet.write(row, 0, 'version', gray_background_format)
+        worksheet.write(row, 1, self._data.get("version", 'NA'))
+
+        worksheet.write(row + 1, 0, 'statut', gray_background_format)
+        worksheet.write(row + 1, 1, 'Success' if self._data.get('status', False) else 'Failure')
+
+        worksheet.write(row + 2, 0, 'pourcentage de réussite', gray_background_format)
+        worksheet.write(row + 2, 1, f"{np.round(self._data.get('success_rate', 'NA'), 2)} %")
         
-        if file == "resultat_resolution_csv":
-            file: str = f"{file}_{self._data['version']}.csv"
+        # obention des données au bon format
+        datas = self.parse_data()
 
-        # Writing to CSV file
-        with open(file, 'w', newline='') as csvfile:
-            writer = csv.writer(csvfile)
-            
-            # Write headers
-            writer.writerow(["Attribute", "Value"])
-            for key, value in headers.items():
-                writer.writerow([key, value])
+        # Écrire des détailles de chaque test
+        row += 5  # Aller à la prochaine ligne pour le prochain ensemble de donné
+        worksheet.write(row, 0, 'nom', gray_background_format)
+        worksheet.write(row, 1, 'adresses IP', gray_background_format)
+        worksheet.write(row, 2, 'nom inverse', gray_background_format)
+        worksheet.write(row, 3, 'status', gray_background_format)
+        
+        row += 1 # Aller à la prochaine ligne pour le prochain ensemble de donné
+        for i in range(len(datas["nom"])):
+            worksheet.write(row + i, 0, datas['nom'][i])
+            worksheet.write(row + i, 1, datas['adresses IP'][i])
+            worksheet.write(row + i, 2, datas['nom inverse'][i])
+            worksheet.write(row + i, 3, datas['status'][i])
 
-            writer.writerow([]) # Separator
+        # name record detail
+        row += len(datas["nom"]) + 1
+        worksheet.write(row, 0, "Résulat de résolution de nom ayant fonctionné : ", sub_title_format)
+        worksheet.write(row + 1, 0, 'nom', gray_background_format)
+        worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)
+        worksheet.write(row + 1, 2, 'address IP obtenue', gray_background_format)
+        
+        row += 3 # Aller à la prochaine ligne pour le prochain ensemble de donné
+        for i in range(len(self._data['success_name_record'])):
+            worksheet.write(row + i, 0, self._data['success_name_record'][i][0])
+            worksheet.write(row + i, 1, self._data['success_name_record'][i][1])
+            worksheet.write(row + i, 2, ",".join(self._data['success_name_record'][i][2]))
+        
+        row += len(self._data['success_name_record']) + 1
+        worksheet.write(row, 0, "Résulat de résolution de nom ayant échoué : ", sub_title_format)
+        worksheet.write(row + 1, 0, 'nom', gray_background_format)
+        worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)
+        worksheet.write(row + 1, 2, 'address IP obtenue', gray_background_format)
 
-            # Write data headers
-            writer.writerow(list(datas.keys())) # Data header
-            rows = zip(*datas.values())
-            writer.writerows(rows) # Data rows
+        row += 3 # Aller à la prochaine ligne pour le prochain ensemble de donné
+        for i in range(len(self._data['failed_name_record'])):
+            worksheet.write(row + i, 0, self._data['failed_name_record'][i][0])
+            worksheet.write(row + i, 1, self._data['failed_name_record'][i][1])
+            worksheet.write(row + i, 2, ",".join(self._data['failed_name_record'][i][2]))
+        
+        row += len(self._data['failed_name_record']) + 1
+        
+        worksheet.write(row, 0, "Résulat de résolution inverse ayant fonctionnée : ", sub_title_format)
 
-        print(f"export des résultats vers {file}")
+        worksheet.write(row + 1, 0, 'adresses IP', gray_background_format)
+        worksheet.write(row + 1, 1, 'nom attendue', gray_background_format)
+        worksheet.write(row + 1, 2, 'nom obtenue', gray_background_format)
+        
+        row += 3
+        for i in range(len(self._data['success_ptr_record'])):
+            worksheet.write(row + i, 0, self._data['success_ptr_record'][i][0])
+            worksheet.write(row + i, 1, self._data['success_ptr_record'][i][1])
+            worksheet.write(row + i, 2, self._data['success_ptr_record'][i][2])
+        
+        row += len(self._data['success_ptr_record']) + 1
+        worksheet.write(row, 0, "Résulat de résolution inverse ayant échoué : ", sub_title_format)
+        worksheet.write(row + 1, 0, 'adresses IP', gray_background_format)
+        worksheet.write(row + 1 , 1, 'nom attendue', gray_background_format)
+        worksheet.write(row + 1, 2, 'nom obtenue', gray_background_format)
+
+        row += 1
+        for i in range(len(self._data['failed_ptr_record'])):
+            worksheet.write(row + i, 0, self._data['failed_ptr_record'][i][0])
+            worksheet.write(row + i, 1, self._data['failed_ptr_record'][i][1])
+            worksheet.write(row + i, 2, self._data['failed_ptr_record'][i][2])
+    
+
+        # Fermer le classeur Excel
+        workbook.close()
+        print(f"export des résultats vers {prefix}_{self._data.get('version', 'NA')}.xlsx")
+

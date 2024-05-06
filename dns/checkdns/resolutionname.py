@@ -78,28 +78,28 @@ class ResolutionName:
             cli_a_record: list = list(self._dnsclient.get_A_record(name).split("\n"))
 
             if len(cli_a_record) == 0:
-                self._failed_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {clr.Fore.GREEN}{ip}{clr.Style.RESET_ALL}, got: ''")
+                self._failed_name_request.append((name, ip, None))
                 return False
 
             if ip in cli_a_record:
-                self._success_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {clr.Fore.GREEN}{ip}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{','.join(cli_a_record)}{clr.Style.RESET_ALL}")
+                self._success_name_request.append((name, ip, cli_a_record))
                 return True
             else:
-                self._failed_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {clr.Fore.GREEN}{ip}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{','.join(cli_a_record)}{clr.Style.RESET_ALL}")
+                self._failed_name_request.append((name, ip, cli_a_record))
                 return False
 
         elif self._ipv == 6:
             cli_aaaa_record: list = list(self._dnsclient.get_AAAA_record(name).split("\n"))
 
             if len(cli_aaaa_record) == 0:
-                self._failed_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {ip}, got: ''")
+                self._failed_name_request.append((name, ip, None))
                 return False
 
             if ip in cli_aaaa_record:
-                self._success_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {clr.Fore.GREEN}{ip}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{','.join(cli_aaaa_record)}{clr.Style.RESET_ALL}")
+                self._success_name_request.append((name, ip, cli_aaaa_record))
                 return True
             else:
-                self._failed_name_request.append(f"{clr.Fore.RED}{name}{clr.Style.RESET_ALL} -> expected ip: {clr.Fore.GREEN}{ip}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{','.join(cli_aaaa_record)}{clr.Style.RESET_ALL}")
+                self._failed_name_request.append((name, ip, cli_aaaa_record))
                 return False
         else:
             return False
@@ -118,14 +118,14 @@ class ResolutionName:
         cli_ptr_record: str|None = self._dnsclient.get_PTR_record(ip)
         
         if cli_ptr_record == "":
-            self._failed_ptr_request.append(f"{clr.Fore.RED}{ip}{clr.Style.RESET_ALL} -> expected ptr name: {clr.Fore.GREEN}{name}, got: ''")
+            self._failed_ptr_request.append((ip, name, None))
             return False
 
         if f"{name}." == cli_ptr_record:
-            self._success_ptr_request.append(f"{clr.Fore.RED}{ip}{clr.Style.RESET_ALL} -> expected ptr name: {clr.Fore.GREEN}{name}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{cli_ptr_record}{clr.Style.RESET_ALL}")
+            self._failed_ptr_request.append((ip, name, cli_ptr_record))
             return True
         else:
-            self._failed_ptr_request.append(f"{clr.Fore.RED}{ip}{clr.Style.RESET_ALL} -> expected ptr name: {clr.Fore.GREEN}{name}{clr.Style.RESET_ALL}, got: {clr.Fore.BLUE}{cli_ptr_record}{clr.Style.RESET_ALL}")
+            self._failed_ptr_request.append((ip, name, cli_ptr_record))
             return False
 
     def test_name(self, name: str, ip: str, expect_ptr_name: str) -> bool:

@@ -75,8 +75,8 @@ class FileManager:
             with open(file_path, 'w') as f:
                 f.write(content)
             return True
-        else:
-            return False
+
+        return True
 
     def read_file(self, name):
         """
@@ -116,8 +116,8 @@ class FileManager:
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
             return True
-        else:
-            return False
+
+        return True
     
     def delete_dir(self, name: str = "") -> bool:
         """

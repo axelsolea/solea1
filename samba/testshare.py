@@ -190,7 +190,7 @@ class TestShare:
             self._data.append({"desc": "delete the share directory", "status": "NOK"})
 
         # Calculate success rate
-        self.success_rate: int = np.round(self._cpt / self._total, 3)
+        self._success_rate: int = np.round(self._cpt / self._total, 3)
 
     def export(self) -> dict:
         """

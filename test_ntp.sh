@@ -37,7 +37,7 @@ do
   echo -e "Nom du serveur: ${ROUGE}$serveur${SANS_COULEUR}"
   echo -e "Timezone: ${ROUGE}$timezone${SANS_COULEUR}"
   echo -e "Statut: ${VERT}$etat_actif${SANS_COULEUR}"
-  echo "Date: $date_actuelle"
+  echo -e "Date: $date_actuelle"
   echo -e "Heure: ${VERT}$heure${SANS_COULEUR}"
   echo -e "---------------------------------------------\n"
 done

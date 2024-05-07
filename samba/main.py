@@ -41,7 +41,7 @@ def main():
     # parse the result
     parseresult: ParseResult = ParseResult(test_data)
     parseresult.show()
-    parseresult.export("resulat", "Résulat du test de partage de fichier")
+    parseresult.export("resultat", "Résulat du test de partage de fichier")
 
 
 if __name__ == "__main__":

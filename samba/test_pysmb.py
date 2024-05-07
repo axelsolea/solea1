@@ -10,10 +10,10 @@ def mount_smb_share(server_name, share_name, username, password, local_mount_poi
     conn.close()
 
 if __name__ == "__main__":
-    server_name = 'server_hostname_or_ip'
-    share_name = 'share_name'
-    username = 'username'
-    password = 'password'
-    local_mount_point = '/path/to/local/mount/point'
+    server_name = '172.18.0.251'
+    share_name = 'solea_document'
+    username = 'alexandre'
+    password = 'Solea05alexandre'
+    local_mount_point = '/tmp/share'
 
     mount_smb_share(server_name, share_name, username, password, local_mount_point)

@@ -24,6 +24,7 @@ for serveur in $(cat "$FICHIER_SERVEUR")
 do
   #obtient les informations
   resultat_timectl=$(ssh axel@$serveur "timedatectl")
+  timezone=$(echo "$resultat_timectl" | grep "Time zone" | awk '{print $3}')
   etat_actif=$(echo "$resultat_timectl" | grep "NTP" | awk '{print $3}')
   date_actuelle=$(echo "$resultat_timectl" | grep "Local time" | awk '{print $4}')
   heure=$(echo "$resultat_timectl" | grep "Local time" | awk '{print $5}')
@@ -31,6 +32,7 @@ do
   # Affichage des informations
   echo "---------------------------------------------"
   echo -e "Nom du serveur: ${ROUGE}$serveur${SANS_COULEUR}"
+  echo -e "Timezone: ${ROUGE}$timezone${SANS_COULEUR}"
   echo -e "Statut: ${VERT}$etat_actif${SANS_COULEUR}"
   echo "Date: $date_actuelle"
   echo -e "Heure: ${VERT}$heure${SANS_COULEUR}"

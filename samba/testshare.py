@@ -176,8 +176,6 @@ class TestShare:
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
 
         # Suppression du point de montage
-        stdout, rcode_umount = self._mountshare.umount()
-        
         if self.umount():
             self._cpt += 1
             self._data.append({"desc": "unmount the directory from the share file", "status": "OK"})

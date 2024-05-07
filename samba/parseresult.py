@@ -63,12 +63,13 @@ class ParseResult:
         worksheet.write(row, 1, "description", gray_background_format)
         worksheet.write(row, 2, "status", gray_background_format)
 
+        j: int = 1
         row += 1
-
         for step in data.get("result_step", []):
-            worksheet.write(row, 0, str(step.get("step_num", 'NA')))
+            worksheet.write(row, 0, j))
             worksheet.write(row, 1, step.get("desc", 'NA'))
             worksheet.write(row, 2, step.get("status", 'NA'))
+            j += 1
             row += 1
 
         row += 1  # Ajouter une ligne vide entre les enregistrements

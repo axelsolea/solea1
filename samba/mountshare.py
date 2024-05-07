@@ -151,7 +151,7 @@ if __name__ == "__main__":
     ##################################################
     ### point de montage avec utilisateur éxistant ###
     ##################################################
-    stdout, rcode = mountshare.mount("document_solea", "alexandre", "Solea05alexandre")
+    stdout, rcode, stderr = mountshare.mount("document_solea", "alexandre", "Solea05alexandre")
     stdout, rcode_umount, stderr_umount = mountshare.umount()
 
     print(f"\nstderr: {stderr}\n")
@@ -170,7 +170,7 @@ if __name__ == "__main__":
     ####################################################
     ### point de montage avec utilisateur inéxistant ###
     ####################################################
-    stdout, rcode = mountshare.mount("document_solea", "jhon", "Solea05jhon")
+    stdout, rcode, stderr = mountshare.mount("document_solea", "jhon", "Solea05jhon")
     stdout, rcode_umount, stderr_umount = mountshare.umount()
         
     print(f"\nstderr: {stderr}\n")

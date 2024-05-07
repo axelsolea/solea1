@@ -20,7 +20,7 @@ FICHIER_SERVEUR="$1"
 
 echo -e "---------- ${ROUGE}test NTP${SANS_COULEUR} ----------\n"
 
-refhour=$(timedatectl | grep "Local time" | awk '{print $4}')
+refhour=$(timedatectl | grep "Local time" | awk '{print $5}')
 echo -e "heure de réference: ${VERT}$refhour${SANS_COULEUR}\n"
 
 for serveur in $(cat "$FICHIER_SERVEUR")

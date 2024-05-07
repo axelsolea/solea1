@@ -34,6 +34,7 @@ def main():
 
     for i, rows in data.iterrows():
         testshare: TestShare = TestShare(args.server, rows["utilisateur"], rows["mot de passe"], "/tmp/share")
+        print(testshare)
         testshare.run()
         test_data.append(testshare.export())
 

@@ -118,7 +118,7 @@ class TestShare:
         """
         Reads the contents of the file with the given name and compares it with the expected content.
         """
-        return self._filemanager.read_file(name) == ""
+        return self._filemanager.read_file(name) == expect
 
     def mount(self, share_name: str) -> bool:
         """

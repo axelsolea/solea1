@@ -1,5 +1,4 @@
 from colorama import Fore, Style
-#from iofile import IoFile
 from filemanager import FileManager
 from ping import Ping
 from mountshare import MountShare

@@ -155,7 +155,7 @@ class TestShare:
             self._data.append({"desc": "création du fichier de partage", "status": "NOK"})
 
         # point de montage de la machine
-        if self.mount("Data"): # "solea_document"
+        if self.mount("solea_document"):
             self._cpt += 1
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "OK"})
         else:
@@ -210,8 +210,7 @@ class TestShare:
 
 
 if __name__ == "__main__":
-    testshare: TestShare = TestShare("127.0.0.1", "oem", "wm7ze*2b", "/tmp/share")
-    # testshare: TestShare = TestShare("172.18.0.251", "alexandre", "Solea05alexandre", "/tmp/share")
+    testshare: TestShare = TestShare("172.18.0.251", "alexandre", "Solea05alexandre", "/tmp/share")
     testshare.run()
     print(testshare.export())
 

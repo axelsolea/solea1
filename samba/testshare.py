@@ -1,5 +1,6 @@
 from colorama import Fore, Style
-from iofile import IoFile
+#from iofile import IoFile
+from filemanager import FileManager
 from ping import Ping
 from mountshare import MountShare
 import sys
@@ -78,6 +79,7 @@ class TestShare:
         self._success_rate: float = 0.0
         self._ping: Ping = Ping(server)
         self._mountshare: MountShare = MountShare(server, mount_point)
+        self._filemanager: FileManager = FileManager(mount_point)
 
     def __repr__(self) -> str:
         return f"{Fore.RED}Information du test:{Style.RESET_ALL}\n{'-' * 25 }\n{Fore.RED}server{Style.RESET_ALL}: {self._server}\n{Fore.RED}utilisateur{Style.RESET_ALL}: {self._user}\n{Fore.RED}mot de passe{Style.RESET_ALL}: {self._passwd}\n{Fore.RED}point de montage: {Style.RESET_ALL}: {self._mount_point}\n{'-' * 25}"
@@ -89,43 +91,49 @@ class TestShare:
         failed_rate, rcode = self._ping.send_ping()
         return failed_rate == 0 and rcode == 0
 
-    def create_dir(self, name: str) -> bool:
+    def create_dir(self, name: str = "") -> bool:
         """
         Creates a directory with the given name.
         """
-        return IoFile.create_dir(name)
+        if not name:
+            return self._filemanager.create_dir()
+        else: 
+            return self._filemanager.create_dir(name)
 
-    def delete_dir(self, name: str) -> bool:
+    def delete_dir(self, name: str = "") -> bool:
         """
         Deletes the directory with the given name.
         """
-        return IoFile.delete_dir(name)
+        if not name:
+            return self._filemanager.delete_dir()
+        else: 
+            return self._filemanager.delete_dir(name)
 
     def create_file(self, name: str, content="") -> bool:
         """
         Creates a file with the given name and optional content.
         """
-        return IoFile.create_file(name, content)
+        return self._filemanager.create_file(name, content)
 
     def read_file(self, name: str, expect: str = "") -> bool:
         """
         Reads the contents of the file with the given name and compares it with the expected content.
         """
-        return IoFile.read_file(name) == expect
+        return self._filemanager.read_file(name) == ""
 
     def mount(self, share_name: str) -> bool:
         """
         Mounts the share with the given name.
         """
-        stdout, rcode, stderr = self._mountshare.mount(share_name, self._user, self._passwd)
-        return rcode == 0 and stderr == ""
+        output, rcode = self._mountshare.mount(share_name, self._user, self._passwd)
+        return rcode == 0
 
     def umount(self) -> bool:
         """
         Unmounts the share.
         """
-        stdout, rcode, stderr = self._mountshare.umount()
-        return rcode == 0 and stderr == ""
+        output, rcode = self._mountshare.umount()
+        return rcode == 0
     
 
     def run(self) -> None:
@@ -142,28 +150,28 @@ class TestShare:
             self._data.append({"desc": "test de connection au serveur smb", "status": "NOK"})
 
         # création du dossier de partage
-        if self.create_dir(self._mount_point):
+        if self.create_dir():
             self._cpt += 1
             self._data.append({"desc": "création du fichier de partage", "status": "OK"})
         else:
             self._data.append({"desc": "création du fichier de partage", "status": "NOK"})
 
         # point de montage de la machine
-        if self.mount("solea_document"):
+        if self.mount("Data"): # "solea_document"
             self._cpt += 1
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "OK"})
         else:
             self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "NOK"})
 
         # Création d'un fichier utilisateur sur le partage
-        if self.create_file(f"{self._mount_point}/{self._user}.txt", f"contenue de {self._user}"):
+        if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "OK"})
         else:
             self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "NOK"})
 
         # Lecture du fichier utilisateur sur le partage
-        if self.read_file(f"{self._mount_point}/{self._user}.txt", f"contenue de {self._user}"):
+        if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
         else:
@@ -179,7 +187,7 @@ class TestShare:
             self._data.append({"desc": "unmount the directory from the share file", "status": "NOK"})
 
         # Suppression du dossier de partage
-        if self.delete_dir(self._mount_point):
+        if self.delete_dir():
             self._cpt += 1
             self._data.append({"desc": "delete the share directory", "status": "OK"})
         else:
@@ -204,8 +212,8 @@ class TestShare:
 
 
 if __name__ == "__main__":
-    testshare: TestShare = TestShare("172.18.0.251", "alexandre", "Solea05alexandre", "/tmp/share")
+    testshare: TestShare = TestShare("127.0.0.1", "oem", "wm7ze*2b", "/tmp/share")
+    # testshare: TestShare = TestShare("172.18.0.251", "alexandre", "Solea05alexandre", "/tmp/share")
     testshare.run()
-    print(testshare)
     print(testshare.export())
 

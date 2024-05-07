@@ -28,10 +28,13 @@ class MountShare:
         create_mount_point(self) -> None:
             Creates the mount point directory if it does not exist.
 
-        mount(self, share_name: str, user: str, passwd: str) -> tuple[str, int]:
+        has_sudo_access(self) -> bool:
+            Checks if the user has sudo/root access.
+
+        mount(self, share_name: str, user: str, passwd: str) -> tuple[str, int, str]:
             Mounts the specified Samba share to the mount point.
 
-        umount(self) -> tuple[str, int]:
+        umount(self) -> tuple[str, int, str]:
             Unmounts the Samba share from the mount point.
 
     Raises:
@@ -88,7 +91,7 @@ class MountShare:
         except subprocess.CalledProcessError:
             return False
 
-    def mount(self, share_name: str, user: str, passwd: str) -> tuple[str, int]:
+    def mount(self, share_name: str, user: str, passwd: str) -> tuple[str, int, str]:
         """
         Mounts the specified Samba share to the mount point.
 
@@ -98,7 +101,7 @@ class MountShare:
             passwd (str): The Samba password.
 
         Returns:
-            tuple[str, int]: A tuple containing the mount command output and return code.
+            tuple[str, int, str]: A tuple containing the mount command output, return code, and stderr.
 
         Raises:
             ErrorFileNotFound: If the mount point directory does not exist.
@@ -108,7 +111,7 @@ class MountShare:
             raise PermissionError("Sudo/root access is required to mount shares.")
 
         if not self.check_mount_point_exist():
-            raise ErrorFileNotFound(f"le point de montage {self._mount_point} n'éxiste pas dans le système de fichier")
+            raise ErrorFileNotFound(f"Le point de montage {self._mount_point} n'existe pas dans le système de fichier")
 
         # Check if Samba user exists
         try:
@@ -124,21 +127,21 @@ class MountShare:
 
         return result.stdout, result.returncode, result.stderr
 
-    def umount(self) -> tuple[str, int]:
+    def umount(self) -> tuple[str, int, str]:
         """
-        unmounts the samba share from the mount point.
+        Unmounts the Samba share from the mount point.
 
-        returns:
-            tuple[str, int]: a tuple containing the umount command output and return code.
+        Returns:
+            tuple[str, int, str]: A tuple containing the umount command output, return code, and stderr.
 
-        raises:
-            errorfilenotfound: if the mount point directory does not exist.
+        Raises:
+            ErrorFileNotFound: If the mount point directory does not exist.
         """
         if not self.has_sudo_access():
-            raise permissionerror("sudo/root access is required to unmount shares.")
+            raise PermissionError("sudo/root access is required to unmount shares.")
 
         if not self.check_mount_point_exist():
-            raise errorfilenotfound(f"le point de montage {self._mount_point} n'éxiste pas dans le système de fichier")
+            raise ErrorFileNotFound(f"Le point de montage {self._mount_point} n'existe pas dans le système de fichier")
 
         result = subprocess.run(["sudo", "umount", self._mount_point], capture_output=True, text=True)
 
@@ -149,40 +152,39 @@ if __name__ == "__main__":
     mountshare: MountShare = MountShare("172.18.0.251", "/tmp/share")
 
     ##################################################
-    ### point de montage avec utilisateur éxistant ###
+    ### Point de montage avec utilisateur existant ###
     ##################################################
     stdout, rcode, stderr = mountshare.mount("document_solea", "alexandre", "Solea05alexandre")
-    stdout, rcode_umount, stderr_umount = mountshare.umount()
+    stdout_umount, rcode_umount, stderr_umount = mountshare.umount()
 
     print(f"\nstderr: {stderr}\n")
     print(f"\nstderr umount: {stderr_umount}\n")
 
     if rcode == 0:
-        print(f"point de montage monter avec succès !")
+        print("Point de montage monté avec succès !")
     else:
-        print(f"point de montage monter failed !")
+        print("Échec du montage du point de montage !")
 
     if rcode_umount == 0:
-        print("démontage du point de montage '/tmp/share' avec succès ! ")
+        print("Démontage du point de montage '/tmp/share' avec succès ! ")
     else:
-        print("démontage du point de montage '/tmp/share' failed !")
+        print("Échec du démontage du point de montage '/tmp/share' !")
     
     ####################################################
-    ### point de montage avec utilisateur inéxistant ###
+    ### Point de montage avec utilisateur inexistant ###
     ####################################################
     stdout, rcode, stderr = mountshare.mount("document_solea", "jhon", "Solea05jhon")
-    stdout, rcode_umount, stderr_umount = mountshare.umount()
+    stdout_umount, rcode_umount, stderr_umount = mountshare.umount()
         
     print(f"\nstderr: {stderr}\n")
     print(f"\nstderr umount: {stderr_umount}\n")
 
     if rcode == 0:
-        print(f"point de montage monter avec succès !")
+        print("Point de montage monté avec succès !")
     else:
-        print(f"point de montage monter failed !")
+        print("Échec du montage du point de montage !")
     
     if rcode_umount == 0:
-        print("démontage du point de montage '/tmp/share' avec succès ! ")
+        print("Démontage du point de montage '/tmp/share' avec succès ! ")
     else:
-        print("démontage du point de montage '/tmp/share' failed !")
-
+        print("Échec du démontage du point de montage '/tmp/share' !")

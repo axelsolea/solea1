@@ -125,16 +125,15 @@ class TestShare:
         """
         Mounts the share with the given name.
         """
-        output, rcode = self._mountshare.mount(share_name, self._user, self._passwd)
-        return rcode == 0
+        output, rcode, stderr = self._mountshare.mount(share_name, self._user, self._passwd)
+        return rcode == 0 and stderr == ""
 
     def umount(self) -> bool:
         """
         Unmounts the share.
         """
-        output, rcode = self._mountshare.umount()
-        return rcode == 0
-    
+        output, rcode, stderr = self._mountshare.umount()
+        return rcode == 0 and stderr == ""
 
     def run(self) -> None:
         """

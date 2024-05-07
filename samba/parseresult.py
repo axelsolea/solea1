@@ -66,7 +66,7 @@ class ParseResult:
         j: int = 1
         row += 1
         for step in data.get("result_step", []):
-            worksheet.write(row, 0, j))
+            worksheet.write(row, 0, j)
             worksheet.write(row, 1, step.get("desc", 'NA'))
             worksheet.write(row, 2, step.get("status", 'NA'))
             j += 1

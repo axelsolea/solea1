@@ -102,7 +102,7 @@ class MountShare:
             raise ValueError(f"Samba user '{user}' does not exist.")
 
         # Mount the share
-        result = subprocess.run(["sudo", "mount", "-t", "cifs", f"//{self._server}/{share_name}", self._mount_point, "-o", f"username='{user}',password='{passwd}'"],
+        result = subprocess.run(f"sudo mount -t cifs //{self._server}/{share_name} {self._mount_point} -o username={user},password={passwd}".split(" "),
             capture_output=True,
             text=True
         )

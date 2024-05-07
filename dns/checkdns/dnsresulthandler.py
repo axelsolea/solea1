@@ -230,8 +230,8 @@ class DnsResultHandler:
         row += len(self._data['success_name_record']) + 1
         worksheet.write(row, 0, "Résulat de résolution de nom ayant échoué : ", sub_title_format)
         worksheet.write(row + 1, 0, 'nom', gray_background_format)
-        worksheet.write(row + 1, 1, 'adresse IP attendue', gray_background_format)
-        worksheet.write(row + 1, 2, 'adresse IP obtenue', gray_background_format)
+        worksheet.write(row + 1, 1, 'adresse IP attendu', gray_background_format)
+        worksheet.write(row + 1, 2, 'adresse IP obtenu', gray_background_format)
 
         row += 2 # Aller à la prochaine ligne pour le prochain ensemble de donné
         for i in range(len(self._data['failed_name_record'])):
@@ -241,11 +241,11 @@ class DnsResultHandler:
         
         row += len(self._data['failed_name_record']) + 1
         
-        worksheet.write(row, 0, "Résulat de résolution inverse ayant fonctionnée : ", sub_title_format)
+        worksheet.write(row, 0, "Résulat de résolution inverse ayant fonctionné : ", sub_title_format)
 
         worksheet.write(row + 1, 0, 'adresses IP', gray_background_format)
-        worksheet.write(row + 1, 1, 'nom attendue', gray_background_format)
-        worksheet.write(row + 1, 2, 'nom obtenue', gray_background_format)
+        worksheet.write(row + 1, 1, 'nom attendu', gray_background_format)
+        worksheet.write(row + 1, 2, 'nom obtenu', gray_background_format)
         
         row += 2
         for i in range(len(self._data['success_ptr_record'])):
@@ -256,8 +256,8 @@ class DnsResultHandler:
         row += len(self._data['success_ptr_record']) + 1
         worksheet.write(row, 0, "Résulat de résolution inverse ayant échoué : ", sub_title_format)
         worksheet.write(row + 1, 0, 'adresses IP', gray_background_format)
-        worksheet.write(row + 1 , 1, 'nom attendue', gray_background_format)
-        worksheet.write(row + 1, 2, 'nom obtenue', gray_background_format)
+        worksheet.write(row + 1 , 1, 'nom attendu', gray_background_format)
+        worksheet.write(row + 1, 2, 'nom obtenu', gray_background_format)
 
         row += 2
         for i in range(len(self._data['failed_ptr_record'])):

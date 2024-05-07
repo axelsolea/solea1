@@ -40,7 +40,6 @@ class MountShare:
         """
         self._server: str = server
         self._mount_point: str = mount_point
-        self.create_mount_point()
 
     def __repr__(self) -> str:
         """

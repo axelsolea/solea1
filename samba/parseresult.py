@@ -1,6 +1,11 @@
 from colorama import Fore, Style
 import xlsxwriter
 
+##########################################################################################################
+### Auteur: Djetic Alexandre 
+### Description: Cette classe permet d'exporter les données de test au format word 2007+ 
+###########################################################################################################
+
 class ParseResult:
     """
     Represents a data parsing result and provides methods for displaying and exporting the data.

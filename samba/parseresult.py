@@ -2,11 +2,32 @@ from colorama import Fore, Style
 import xlsxwriter
 
 class ParseResult:
+    """
+    Represents a data parsing result and provides methods for displaying and exporting the data.
+
+    Attributes:
+        _data (list[dict]): The list of dictionaries containing parsed data.
+
+    Methods:
+        __init__: Initializes ParseResult object with optional data.
+        show: Prints the parsed data to the console.
+        user_export: Exports parsed data to an Excel file for a specific user.
+        export: Exports parsed data to Excel files for all users.
+    """
 
     def __init__(self, data: list[dict] = []) -> None:
+        """
+        Initializes a ParseResult object.
+
+        Args:
+            data (list[dict], optional): The list of dictionaries containing parsed data. Defaults to [].
+        """
         self._data: list[dict] = data
 
     def show(self):
+        """
+        Prints the parsed data to the console.
+        """
         for i, dico in enumerate(self._data):
             print(f"\n{Fore.RED}info général test n°{i + 1}: {Style.RESET_ALL}")
             print("-" * 50)
@@ -25,7 +46,14 @@ class ParseResult:
             print("-" * 50)
 
     def user_export(self, file: str, data: dict, title: str) -> None:
+        """
+        Exports parsed data to an Excel file for a specific user.
 
+        Args:
+            file (str): The name of the Excel file to export data to.
+            data (dict): The dictionary containing parsed data for a specific user.
+            title (str): The title of the data being exported.
+        """
         # Créer un classeur Excel et ajouter une feuille de travail
         workbook = xlsxwriter.Workbook(file)
         worksheet = workbook.add_worksheet()
@@ -78,6 +106,13 @@ class ParseResult:
         workbook.close()
         
     def export(self, prefix: str, title: str) -> None:
+        """
+        Exports parsed data to Excel files for all users.
+
+        Args:
+            prefix (str): The prefix for the Excel file names.
+            title (str): The title of the data being exported.
+        """
         for dico in self._data:
             self.user_export(f"{prefix}_{dico['user']}.xlsx", dico, title)
             print(f"export du résultat de {dico['user']} vers {prefix}_{dico['user']}.xlsx")

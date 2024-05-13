@@ -4,6 +4,12 @@ from testshare import TestShare
 from parseresult import ParseResult
 import pandas as pd
 
+############################################################################################
+### Auteur: Djetic Alexandre
+### Description: ce code permet de tester un partage de fichier samba.
+###     Il test plusieurs scénario comme la rédaction, écriture et conenxion au partage.
+############################################################################################
+
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Test SMB server and users.')
     parser.add_argument('-s', '--server', type=str, help='SMB server IP address')
@@ -39,6 +45,9 @@ def main():
         test_data.append(testshare.export())
 
     # parse the result
+    ################################################################
+    ###                  export du résultat                      ###
+    ################################################################
     parseresult: ParseResult = ParseResult(test_data)
     parseresult.show()
     parseresult.export("resultat", "Résulat du test de partage de fichier")

@@ -8,6 +8,11 @@ import logging.config
 import json
 import numpy as np
 
+##########################################################################################################
+### Auteur: Djetic Alexandre 
+### Description: Cette classe permet de tester un partage et d'exporter les donnée au format dictionnaire
+###########################################################################################################
+
 
 class TestShare:
     """

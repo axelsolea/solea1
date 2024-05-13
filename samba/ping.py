@@ -1,6 +1,12 @@
 import re
 import subprocess
 
+##########################################################################################################
+### Auteur: Djetic Alexandre 
+### Description: Cette classe permet de tester la connectiviter à une adresse IP
+###########################################################################################################
+
+
 class Ping:
     """
     A class for sending ping requests to a specified IP address and retrieving success rate.

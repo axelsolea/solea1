@@ -78,7 +78,7 @@ GREEN="\033[0;32m"
 for PORT in ${PORTS}; 
 do
     echo "Accès SSH via l'ip publique (192.168.141.2) sur le port ${PORT}"  
-    ssh -p "${PORT}" $USER@192.168.141.2 "${SCRIPT}" 2>> /dev/null
+    ssh -p "${PORT}" $USER_SSH@192.168.141.2 "${SCRIPT}" 2>> /dev/null
 
     if [ $? -ne 1 ]; then
         echo -e "failed: ${RED}$PORT${NOCOLOR}"

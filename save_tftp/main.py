@@ -74,7 +74,7 @@ def main() -> None:
             command = f"echo 'put {filepath} {remote_path}' | tftp {server}"
             result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 
-            print(f"Commande exécutée: `echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null`")
+            print(f"Commande exécutée: `echo 'put {filepath} {remote_path}' | tftp {server}`")
             if result.returncode == 0 and not result.stderr:
                 print(f"Fichier {filename} téléchargé avec succès sur {remote_path}.")
             else:

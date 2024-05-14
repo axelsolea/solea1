@@ -4,6 +4,8 @@ import sys
 import os
 import subprocess
 from subprocess import PIPE
+import logging
+from systemd.journal import JournalHandler
 
 ##################################################################################
 ### Auteur: Djetic Alexandre                                                   ###
@@ -19,12 +21,20 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 def main() -> None:
+    ####################################
+    ###  log de lancement du script ####
+    ####################################
+    
+    log = logging.getLogger('demo')
+    log.addHandler(JournalHandler())
+    log.setLevel(logging.INFO)
+    log.info("lancement du script ")
+
     ###############################
     ### obtention des arguments ###
     ###############################
 
     args = parse_args()
-
     server = args.server
     port = args.port
     json_file = args.file

@@ -1,7 +1,7 @@
 {
   "dir": "fail2ban",
   "files": {
-    "fail2ban.conf": "/etc/fail2ban/fail2ban.conf.conf",
+    "fail2ban.conf": "/etc/fail2ban/fail2ban.conf",
     "jail.conf": "/etc/fail2ban/jail.conf"
   }
 }

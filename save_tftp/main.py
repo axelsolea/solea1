@@ -75,9 +75,10 @@ def main() -> None:
             result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 
             print(f"Commande exécutée: `echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null`")
-            if result.returncode == 0:
+            if result.returncode == 0 and not result.stderr:
                 print(f"Fichier {filename} téléchargé avec succès sur {remote_path}.")
             else:
+                print(f"erreur: {result.stderr}")
                 print(f"Erreur lors du téléchargement de {filename} sur {remote_path}. Détails : {result.stderr}")
         except Exception as e:
             print(f"Erreur lors du téléchargement de {filename}: {e}")

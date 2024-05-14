@@ -4,6 +4,6 @@
     "named.conf": "/etc/bind/named.conf",
     "solea.local.zone": "/etc/bind/solea.local.zone",
     "reverse.solea.local.zone": "/etc/bind/reverse.solea.local.zone",
-    "reverse.solea.local6.zone": "/etc/bind/reverse.solea.local6.zone",
+    "reverse.solea.local6.zone": "/etc/bind/reverse.solea.local6.zone"
   }
 }

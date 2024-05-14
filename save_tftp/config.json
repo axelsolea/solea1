@@ -1,7 +1,0 @@
-{
-  "dir": "dhcp",
-  "files": {
-    "named.conf": "/etc/bind/named.conf",
-    "dhcpd.conf": "/etc/dhcp/dhcpd.conf"
-  }
-}

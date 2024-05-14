@@ -1,0 +1,8 @@
+{
+  "dir": "dhcp",
+  "files": {
+    "dhcpd.conf": "/etc/dhcp/dhcpd.conf",
+    "dhcpd6.conf": "/etc/dhcp/dhcpd6.conf",
+    "isc-dhcp-server": "/etc/default/isc-dhcp-server",
+  }
+}

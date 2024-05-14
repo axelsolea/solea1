@@ -28,7 +28,7 @@ def main() -> None:
     log = logging.getLogger('demo')
     log.addHandler(JournalHandler())
     log.setLevel(logging.INFO)
-    log.info("lancement du script ")
+    log.info("lancement du script save_tftp !")
 
     ###############################
     ### obtention des arguments ###

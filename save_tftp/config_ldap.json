@@ -1,5 +1,5 @@
 {
-  "dir": "ldpap",
+  "dir": "ldap",
   "files": {
     "ou": "/home/alex/ou",
     "user": "/home/alex/user",

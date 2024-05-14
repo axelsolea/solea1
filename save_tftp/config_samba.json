@@ -1,0 +1,6 @@
+{
+  "dir": "smb",
+  "files": {
+    "smb.conf": "/etc/samba/smb.conf"
+  }
+}

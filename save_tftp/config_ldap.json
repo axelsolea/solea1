@@ -1,0 +1,8 @@
+{
+  "dir": "ldpap",
+  "files": {
+    "ou": "/home/alex/ou",
+    "user": "/home/alex/user",
+    "group": "/home/alex/group"  
+  }
+}

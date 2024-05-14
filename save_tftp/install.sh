@@ -9,5 +9,5 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
-echo "install requirement: python3 python3-pip tftp"
+echo "install requirement: python3 python3-pip tftp-hpa"
 apt install python3 python3-pip tftp -y

@@ -8,6 +8,6 @@
     "asterisk.conf": "/etc/asterisk/asterisk.conf",
     "modules.conf": "/etc/asterisk/modules.conf",
     "res_pgsql.conf": "/etc/asterisk/res_pgsql.conf",
-    "cdr_pgsql.conf": "/etc/asterisk/cdr_pgsql.conf",
+    "cdr_pgsql.conf": "/etc/asterisk/cdr_pgsql.conf"
   }
 }

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Author: Djetic Alexandre
+# Date: 14/05/2024
+# Modified: 14/05/2024
+# Description: this script install all requirement for the script save_tftp.py
+
+if [ $EUID -eq 0 ]; then
+  echo "require sudo/root access"
+  exit 1
+fi
+
+echo "install requirement: python3 python3-pip"
+apt install python3 python3-pip -y
+pip install -r requirement.txt
+

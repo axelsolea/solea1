@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page avec des cartes</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Personnalisation des cartes */
+        .card {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Accès webmin</h1>
+        
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">zone1</h2>
+            <p class="text-gray-700"> le serveur zone1 est le serveur gerant la zone solea.local.</p>
+            <a href="http://zone1.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+         <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">resolver1</h2>
+            <p class="text-gray-700"> le serveur resolver1 fait office de serveur de cache.</p>
+            <a href="http://resolver1.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">smb</h2>
+            <p class="text-gray-700"> le serveur smb est le serveur de partage de fichier.</p>
+            <a href="http://smb.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">dhcp</h2>
+            <p class="text-gray-700"> le serveur dhcp permet d'obtenir une adresse IP automatiquement.</p>
+            <a href="http://dhcp.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">ldap</h2>
+            <p class="text-gray-700"> le serveur ldap contient l'annuaire des utilisateurs et groupes de l'entreprise Solea.</p>
+            <a href="http://ldap.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">asterisk</h2>
+            <p class="text-gray-700"> le serveur asterisk permet de gerer la téléphonie de l'entreprise Solea.</p>
+            <a href="http://toip.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+        <br>
+        <div class="card p-4 rounded-lg shadow-md">
+            <h2 class="text-lg font-semibold mb-2">smtp</h2>
+            <p class="text-gray-700"> le serveur smtp permet de gerer les email de l'entreprise Solea.</p>
+            <a href="http://smtp.solea.local:10000" class="inline-block bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition duration-300">y acceder</a>
+        </div>
+    </div>
+</body>
+</html>

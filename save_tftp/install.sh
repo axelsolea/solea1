@@ -4,7 +4,7 @@
 # Modified: 14/05/2024
 # Description: this script install all requirement for the script save_tftp.py
 
-if [ $EUID -eq 0 ]; then
+if [ $EUID -ne 0 ]; then
   echo "require sudo/root access"
   exit 1
 fi

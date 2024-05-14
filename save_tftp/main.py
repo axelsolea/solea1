@@ -2,7 +2,8 @@ import json
 import argparse
 import sys
 import os
-import tftpy
+import subprocess
+from subprocess import PIPE
 
 ##################################################################################
 ### Auteur: Djetic Alexandre                                                   ###
@@ -53,8 +54,6 @@ def main() -> None:
     ###       sauvegarde des fichiers        ###
     ############################################
 
-    client = tftpy.TftpClient(server, port)
-
     for filename, filepath in files.items():
         if not os.path.isfile(filepath):
             print(f"Erreur: le fichier {filepath} n'a pas été trouvé sur le système local.")
@@ -62,8 +61,14 @@ def main() -> None:
 
         remote_path = f"{dir_name}/{filename}"
         try:
-            client.upload(remote_path, filepath)
-            print(f"Fichier {filename} téléchargé avec succès sur {remote_path}.")
+            command = f"echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null"
+            result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
+
+            print(f"Commande exécutée: `echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null`")
+            if result.returncode == 0:
+                print(f"Fichier {filename} téléchargé avec succès sur {remote_path}.")
+            else:
+                print(f"Erreur lors du téléchargement de {filename} sur {remote_path}. Détails : {result.stderr}")
         except Exception as e:
             print(f"Erreur lors du téléchargement de {filename}: {e}")
 

@@ -10,4 +10,4 @@ if [ $EUID -ne 0 ]; then
 fi
 
 echo "install requirement: python3 python3-pip tftp-hpa"
-apt install python3 python3-pip tftp-hpa -y
+apt install python3 python3-pip tftp-hpa cron -y

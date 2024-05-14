@@ -1,0 +1,12 @@
+{
+  "dir": "asterisk",
+  "files": {
+    "pjsip.conf":  "/etc/asterisk/pjsip.conf",
+    "extensions.conf":  "/etc/asterisk/extensions.conf",
+    "features.conf":  "/etc/asterisk/features.conf",
+    "voicemail.conf": "/etc/asterisk/voicemail.conf",
+    "asterisk.conf": "/etc/asterisk/asterisk.conf",
+    "modules.conf": "/etc/asterisk/modules.conf",
+    "res_pgsql.conf": "/etc/asterisk/res_pgsql.conf"
+  }
+}

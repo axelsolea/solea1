@@ -9,7 +9,5 @@ if [ $EUID -ne 0 ]; then
   exit 1
 fi
 
-echo "install requirement: python3 python3-pip"
-apt install python3 python3-pip -y
-pip install -r requirement.txt --break-system-packages
-
+echo "install requirement: python3 python3-pip tftp"
+apt install python3 python3-pip tftp -y

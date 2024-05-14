@@ -1,8 +1,21 @@
 {
   "dir": "ldap",
   "files": {
-    "ou": "/home/alex/ou",
-    "user": "/home/alex/user",
-    "group": "/home/alex/group"  
+    "ou/users.ldif": "/home/alex/ou/users.ldif",
+    "ou/aix.ldif": "/home/alex/ou/aix.ldif",
+    "ou/groups.ldif": "/home/alex/ou/groups.ldif",
+    "ou/valence.ldif": "/home/alex/ou/valence.ldif",
+    "user/alexandre.ldif": "/home/alex/user/alexandre.ldif",
+    "user/jhon.ldif": "/home/alex/user/jhon.ldif",
+    "user/thomas.ldif": "/home/alex/user/thomas.ldif",
+    "user/axel.ldif": "/home/alex/user/axel.ldif",
+    "user/admin-solea.ldif": "/home/alex/user/admin-solea.ldif",
+    "user/emeline.ldif": "/home/alex/user/emeline.ldif",
+    "group/sudo.ldif": "/home/alex/group/sudo.ldif",
+    "group/rnd.ldif": "/home/alex/group/rnd.ldif",
+    "group/responsable.ldif": "/home/alex/group/responsable.ldif",
+    "group/employer.ldif": "/home/alex/group/employer.ldif",
+    "group/direction.ldif": "/home/alex/group/direction.ldif",
+    "root.ldif": "/home/alex/root.ldif"
   }
 }

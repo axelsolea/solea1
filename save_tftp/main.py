@@ -2,54 +2,76 @@ from ftplib import FTP
 import json
 import argparse
 import sys
+import os
 
 ##################################################################################
 ### Auteur: Djetic Alexandre                                                   ###
-### Description: ce script permet de sauvegarder plusieurs fichier sur         ###
-###     un serveur tftp                                                        ###
+### Description: ce script permet de sauvegarder plusieurs fichiers sur        ###
+###     un serveur FTP                                                         ###
 ##################################################################################
 
-
-def parser() -> dict:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--server", help="Il s'agit du serveur tftp")
-    parser.add_argument("-f", "--file", help="fichier json source")
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Script pour sauvegarder des fichiers sur un serveur FTP")
+    parser.add_argument("-s", "--server", required=True, help="Adresse du serveur FTP")
+    parser.add_argument("-f", "--file", required=True, help="Chemin du fichier JSON source")
     return parser.parse_args()
-
 
 def main() -> None:
     ###############################
-    ### obtiention des argument ###
+    ### obtention des arguments ###
     ###############################
 
-    args = parser()
+    args = parse_args()
 
-    if args.server:
-        print("donner un serveur tftp.")
-        sys.exit(1)
-
-    if args.file:
-        print("donner un fichier ")
-        sys.exit(1)
+    server = args.server
+    json_file = args.file
 
     ############################################
-    ### obtiention des données de sauvegarde ###
+    ### obtention des données de sauvegarde  ###
     ############################################
 
-    data: dict = {}
-    with open("config.json", "r") as f:
-        data: json.load(f)
+    try:
+        with open(json_file, "r") as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(f"Erreur: le fichier {json_file} n'a pas été trouvé.")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        print(f"Erreur: le fichier {json_file} n'est pas un fichier JSON valide.")
+        sys.exit(1)
+
+    dir_name = data.get("dir")
+    files = data.get("files", {})
+
+    if not dir_name or not files:
+        print("Erreur: les données JSON ne contiennent pas les informations nécessaires.")
+        sys.exit(1)
 
     ############################################
     ###       sauvegarde des fichiers        ###
     ############################################
 
-    with FTP("172.18.0.5") as ftp:
-        ftp.login()
-        print(ftp.dir())
-        # création du dossier
-        #créer du fichier: put $keys value pour chaque
+    try:
+        with FTP(server) as ftp:
+            ftp.login()
+            ftp.cwd('/')  # Aller à la racine du serveur FTP
+            if dir_name not in ftp.nlst():
+                ftp.mkd(dir_name)  # Créer le répertoire s'il n'existe pas
 
+            ftp.cwd(dir_name)  # Aller dans le répertoire
+
+            for filename, filepath in files.items():
+                if not os.path.isfile(filepath):
+                    print(f"Erreur: le fichier {filepath} n'a pas été trouvé sur le système local.")
+                    continue
+
+                with open(filepath, "rb") as file:
+                    ftp.storbinary(f"STOR {filename}", file)
+                    print(f"Fichier {filename} téléchargé avec succès.")
+
+    except Exception as e:
+        print(f"Erreur: {e}")
+        sys.exit(1)
 
 if __name__ == '__main__':
     main()

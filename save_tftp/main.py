@@ -71,7 +71,7 @@ def main() -> None:
 
         remote_path = f"{dir_name}/{filename}"
         try:
-            command = f"echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null"
+            command = f"echo 'put {filepath} {remote_path}' | tftp {server}"
             result = subprocess.run(command, shell=True, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 
             print(f"Commande exécutée: `echo 'put {filepath} {remote_path}' | tftp {server} > /dev/null`")

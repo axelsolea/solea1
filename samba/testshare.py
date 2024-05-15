@@ -148,51 +148,51 @@ class TestShare:
         # Connectivité vers le serveur
         if self.is_accessible():
             self._cpt += 1
-            self._data.append({"desc": "test de connection au serveur smb", "status": "OK"})
+            self._data.append({"desc": "Test de connection au serveur smb", "status": "OK"})
         else:
-            self._data.append({"desc": "test de connection au serveur smb", "status": "NOK"})
+            self._data.append({"desc": "Test de connection au serveur smb", "status": "NOK"})
 
         # création du dossier de partage
         if self.create_dir():
             self._cpt += 1
-            self._data.append({"desc": "création du fichier de partage", "status": "OK"})
+            self._data.append({"desc": "Création du fichier de partage", "status": "OK"})
         else:
-            self._data.append({"desc": "création du fichier de partage", "status": "NOK"})
+            self._data.append({"desc": "Création du fichier de partage", "status": "NOK"})
 
         # point de montage de la machine
         if self.mount("solea_document"):
             self._cpt += 1
-            self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "OK"})
+            self._data.append({"desc": f"Montage du dossier {self._mount_point} au partage de fichier", "status": "OK"})
         else:
-            self._data.append({"desc": f"mount the directory {self._mount_point} to the share file", "status": "NOK"})
+            self._data.append({"desc": f"Montage du dossier {self._mount_point} au partage de fichier", "status": "NOK"})
 
         # Création d'un fichier utilisateur sur le partage
         if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
-            self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "OK"})
+            self._data.append({"desc": f"Création d'un fichier text {self._user}.txt", "status": "OK"})
         else:
-            self._data.append({"desc": f"création d'un fichier text {self._user}.txt", "status": "NOK"})
+            self._data.append({"desc": f"Création d'un fichier text {self._user}.txt", "status": "NOK"})
 
         # Lecture du fichier utilisateur sur le partage
         if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
             self._cpt += 1
-            self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
         else:
-            self._data.append({"desc": f"lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
 
         # Suppression du point de montage
         if self.umount():
             self._cpt += 1
-            self._data.append({"desc": "unmount the directory from the share file", "status": "OK"})
+            self._data.append({"desc": "Démontage du dossier de partage {self._mount_point}", "status": "OK"})
         else:
-            self._data.append({"desc": "unmount the directory from the share file", "status": "NOK"})
+            self._data.append({"desc": "Démontage du dossier de partage {self._mount_point}", "status": "NOK"})
 
         # Suppression du dossier de partage
         if self.delete_dir():
             self._cpt += 1
-            self._data.append({"desc": "delete the share directory", "status": "OK"})
+            self._data.append({"desc": "suppression du dossier de partage", "status": "OK"})
         else:
-            self._data.append({"desc": "delete the share directory", "status": "NOK"})
+            self._data.append({"desc": "suppression du dossier de partage", "status": "NOK"})
 
         # Calculate success rate
         self._success_rate: int = np.round(self._cpt / self._total, 3) * 100

@@ -79,7 +79,7 @@ class DnsResultHandler:
             print(f"- {Fore.RED} Aucune résolution n'a échoué ! {Style.RESET_ALL}") 
         else:
             for failed in self._data['full_failed_name']:
-                print(f"  - {Fore.RED}{failed[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESET_ALL}, statut: {Fore.RED}{failed[3]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{failed[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESET_ALL}, statut: {Fore.RED}{failed[3]}{Style.RESET_ALL}")
         print("-" * 30)
 
     def verbose_level_2(self, zone: str) -> None:
@@ -89,9 +89,9 @@ class DnsResultHandler:
         print(f"\n{Fore.RED}Informations générales de résolution{Style.RESET_ALL}: ")
         print("-" * 30)
         print(f"Résolution DNS: {Fore.RED}{zone}{Style.RESET_ALL}")
-        print(f"Version: {Fore.RED}{self._data['version']}{Style.RESETALL}")
-        print(f"Statut: {Fore.RED}{'Succès' if self._data['status'] else 'Échec'}{Style.RESETALL}")
-        print(f"Taux de réussite: {Fore.RED}{self._data['success_rate']:0.2f}%{Style.RESETALL}")
+        print(f"Version: {Fore.RED}{self._data['version']}{Style.RESET_ALL}")
+        print(f"Statut: {Fore.RED}{'Succès' if self._data['status'] else 'Échec'}{Style.RESET_ALL}")
+        print(f"Taux de réussite: {Fore.RED}{self._data['success_rate']:0.2f}%{Style.RESET_ALL}")
         print("-" * 30)
 
         print(f"\nInformations sur les résolutions: ")
@@ -99,14 +99,14 @@ class DnsResultHandler:
 
         print("\nRésolu avec succès:")
         for success in self._data['full_success']:
-            print(f"  - {Fore.RED}{success[0]}{Style.RESETALL} : {Fore.GREEN}{success[1]}{Style.RESETALL} <> obtenue: {Fore.GREEN}{success[2]}{Style.RESETALL}, statut: {Fore.RED}{success[3]}{Style.RESETALL}")
+            print(f"  - {Fore.RED}{success[0]}{Style.RESET_ALL} : {Fore.GREEN}{success[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success[2]}{Style.RESET_ALL}, statut: {Fore.RED}{success[3]}{Style.RESET_ALL}")
 
         print("\nRésolutions échouées:")
         if not self._data['full_failed_name']:
-            print(f"- {Fore.RED} Aucune résolution n'a échoué ! {Style.RESETALL}") 
+            print(f"- {Fore.RED} Aucune résolution n'a échoué ! {Style.RESET_ALL}") 
         else:
             for failed in self._data['full_failed_name']:
-                print(f"  - {Fore.RED}{failed[0]}{Style.RESETALL} : {Fore.GREEN}{failed[1]}{Style.RESETALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESETALL}, statut: {Fore.RED}{failed[3]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{failed[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed[2]}{Style.RESET_ALL}, statut: {Fore.RED}{failed[3]}{Style.RESET_ALL}")
         print("-" * 30)
         
         print(f"\nDétails des résolutions: ")
@@ -114,31 +114,31 @@ class DnsResultHandler:
 
         print("\nRésolution de noms avec succès:")
         if not self._data['success_name_record']:
-            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a été un succès ! {Style.RESETALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a été un succès ! {Style.RESET_ALL}")
         else:
             for success_name in self._data['success_name_record']:
-                print(f"  - {Fore.RED}{success_name[0]}{Style.RESETALL} : {Fore.GREEN}{success_name[1]}{Style.RESETALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{success_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESET_ALL}")
 
         print("\nRésolution de noms ayant échoué: ")
         if not self._data['failed_name_record']:
-            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a échoué ! {Style.RESETALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a échoué ! {Style.RESET_ALL}")
         else:
             for failed_name in self._data['failed_name_record']:
-                print(f"  - {Fore.RED}{failed_name[0]}{Style.RESETALL} : {Fore.GREEN}{failed_name[1]}{Style.RESETALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{failed_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESET_ALL}")
         
         print("\nRésolution inverse avec succès:")
         if not self._data['success_ptr_record']:
-            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type PTR n'a été un succès ! {Style.RESETALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type PTR n'a été un succès ! {Style.RESET_ALL}")
         else:
             for success_ptr in self._data['success_ptr_record']:
-                print(f"  - {Fore.RED}{success_ptr[0]}{Style.RESETALL} : {Fore.GREEN}{success_ptr[1]}{Style.RESETALL} <> obtenue: {Fore.GREEN}{success_ptr[2]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{success_ptr[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_ptr[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_ptr[2]}{Style.RESET_ALL}")
         
         print("\nRésolution inverse ayant échoué: ")
         if not self._data['failed_ptr_record']:
-            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type PTR n'a échoué ! {Style.RESETALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type PTR n'a échoué ! {Style.RESET_ALL}")
         else:
             for failed_ptr in self._data['failed_ptr_record']:
-                print(f"  - {Fore.RED}{failed_ptr[0]}{Style.RESETALL} : {Fore.GREEN}{failed_ptr[1]}{Style.RESETALL} <> obtenue: {Fore.BLUE}{failed_ptr[2]}{Style.RESETALL}")
+                print(f"  - {Fore.RED}{failed_ptr[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_ptr[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_ptr[2]}{Style.RESET_ALL}")
         print("-" * 30)
 
     def parse_data(self) -> dict:

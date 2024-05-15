@@ -94,7 +94,7 @@ class ParseResult:
         row += 6  # Aller à la prochaine ligne pour le prochain ensemble de données
         worksheet.write(row, 0, "numéro de test", gray_background_format)
         worksheet.write(row, 1, "description", gray_background_format)
-        worksheet.write(row, 2, "status", gray_background_format)
+        worksheet.write(row, 2, "statut", gray_background_format)
 
         j: int = 1
         row += 1

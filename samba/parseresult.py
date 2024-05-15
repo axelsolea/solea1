@@ -120,7 +120,7 @@ class ParseResult:
         """
         for dico in self._data:
             self.user_export(f"{prefix}_{dico['user']}.xlsx", dico, title)
-            print(f"export du résultat de {dico['user']} vers {prefix}_{dico['user']}.xlsx")
+            print(f"- {Fore.GREEN}export du résultat de {dico['user']} vers {prefix}_{dico['user']}.xlsx{Style.RESET_ALL}")
 
 
 if __name__ == "__main__":

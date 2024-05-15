@@ -118,14 +118,14 @@ class DnsResultHandler:
             for success_name in self._data['success_name_record']:
                 print(f"  - {Fore.RED}{success_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{success_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.GREEN}{success_name[2]}{Style.RESET_ALL}")
         else:
-            print(f"- {Fore.RED} Aucune résolution n'a été un succès ! {Style.RESET_ALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a été un succès ! {Style.RESET_ALL}")
 
         print("\nRésolution de noms ayant échoué: ")
         if not self._data['failed_name_record']:
             for failed_name in self._data['failed_name_record']:
                 print(f"  - {Fore.RED}{failed_name[0]}{Style.RESET_ALL} : {Fore.GREEN}{failed_name[1]}{Style.RESET_ALL} <> obtenue: {Fore.BLUE}{failed_name[2]}{Style.RESET_ALL}")
         else:
-            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a été un succès ! {Style.RESET_ALL}")
+            print(f"- {Fore.RED} Aucune résolution d'enregistrement de type A ou AAAA n'a échouer ! {Style.RESET_ALL}")
         
         print("\nRésolution inverse avec succès:")
         if not self._data['success_ptr_record']:

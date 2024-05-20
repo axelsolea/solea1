@@ -56,3 +56,9 @@ sudo python3 main.py -s smb.solea.local -l list_users.csv
 ```bash
 ./test_ntp.sh server_name.txt 
 ```
+
+## sauvegarde automatique(TFTP)
+
+```bash
+python3 solea1/save_tftp/main.py -s backup.solea.local -f solea1/save_tftp/config_dhcp.json
+```

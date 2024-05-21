@@ -36,12 +36,12 @@ sudo  ./test_dhcp.sh ens160
 
 - enregistrement valide :
 ```bash
-python3 dns/test_dns.py -s 172.18.0.200 -f dns/list_name.csv -4 –6 –v
+python3 dns/test_dns.py -s 172.18.0.200 -f dns/list_name.csv -4 -6 -v
 ```
 
 - enregistrement non valide :
 ```bash
-python3 dns/test_dns.py -s 172.18.0.200 -f dns/list_name_false_data.csv -4 –6 –v
+python3 dns/test_dns.py -s 172.18.0.200 -f dns/list_name_false_data.csv -4 -6 -v
 ```
 
 ## samba

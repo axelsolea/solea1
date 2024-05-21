@@ -167,25 +167,25 @@ class TestShare:
             self._data.append({"desc": f"Montage du dossier {self._mount_point} au partage de fichier", "status": "NOK"})
 
         # Création d'un fichier utilisateur sur le partage
-        if self.create_file(f"{self._user}.txt", f"contenue de {self._user}"):
+        if self.create_file(f"{self._user}.txt", f"contenu de {self._user}"):
             self._cpt += 1
             self._data.append({"desc": f"Création d'un fichier text {self._user}.txt", "status": "OK"})
         else:
             self._data.append({"desc": f"Création d'un fichier text {self._user}.txt", "status": "NOK"})
 
         # Lecture du fichier utilisateur sur le partage
-        if self.read_file(f"{self._user}.txt", f"contenue de {self._user}"):
+        if self.read_file(f"{self._user}.txt", f"contenu de {self._user}"):
             self._cpt += 1
-            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "OK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenue de {self._user}'", "status": "OK"})
         else:
-            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenue: 'contenue de {self._user}'", "status": "NOK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenue de {self._user}'", "status": "NOK"})
 
         # Suppression du point de montage
         if self.umount():
             self._cpt += 1
-            self._data.append({"desc": "Démontage du dossier de partage {self._mount_point}", "status": "OK"})
+            self._data.append({"desc": f"Démontage du dossier de partage {self._mount_point}", "status": "OK"})
         else:
-            self._data.append({"desc": "Démontage du dossier de partage {self._mount_point}", "status": "NOK"})
+            self._data.append({"desc": f"Démontage du dossier de partage {self._mount_point}", "status": "NOK"})
 
         # Suppression du dossier de partage
         if self.delete_dir():

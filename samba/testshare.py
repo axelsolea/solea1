@@ -176,9 +176,9 @@ class TestShare:
         # Lecture du fichier utilisateur sur le partage
         if self.read_file(f"{self._user}.txt", f"contenu de {self._user}"):
             self._cpt += 1
-            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenue de {self._user}'", "status": "OK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenu de {self._user}'", "status": "OK"})
         else:
-            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenue de {self._user}'", "status": "NOK"})
+            self._data.append({"desc": f"Lecture d'un fichier text {self._user}.txt avec le contenu: 'contenu de {self._user}'", "status": "NOK"})
 
         # Suppression du point de montage
         if self.umount():
